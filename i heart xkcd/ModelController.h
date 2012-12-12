@@ -15,4 +15,6 @@
 - (DataViewController *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard;
 - (NSUInteger)indexOfViewController:(DataViewController *)viewController;
 
+FOUNDATION_EXPORT NSString *const XKCD_API;
+
 @end

@@ -26,6 +26,15 @@
 		455F87CE1677901F0060811E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 455F87A01677901E0060811E /* Foundation.framework */; };
 		455F87D61677901F0060811E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 455F87D41677901F0060811E /* InfoPlist.strings */; };
 		455F87D91677901F0060811E /* i_heart_xkcdTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 455F87D81677901F0060811E /* i_heart_xkcdTests.m */; };
+		455F87E3167790C90060811E /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 455F87E2167790C90060811E /* FacebookSDK.framework */; };
+		455F87E5167790D20060811E /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 455F87E4167790D20060811E /* FacebookSDKResources.bundle */; };
+		455F87E7167790DA0060811E /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 455F87E6167790DA0060811E /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		455F87E9167790DF0060811E /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 455F87E8167790DF0060811E /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		455F87EB167790E40060811E /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 455F87EA167790E40060811E /* Accounts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		455F87F5167796DC0060811E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 455F87F4167796DC0060811E /* SystemConfiguration.framework */; };
+		455F87F71677974F0060811E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 455F87F61677974F0060811E /* MobileCoreServices.framework */; };
+		455F87FA1678C08B0060811E /* ComicData.m in Sources */ = {isa = PBXBuildFile; fileRef = 455F87F91678C08B0060811E /* ComicData.m */; };
+		6818A5818E8C498CB0C59D49 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 20AA35C19E044FD9BF7D6F78 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +48,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		20AA35C19E044FD9BF7D6F78 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		455F879A1677901E0060811E /* i heart xkcd.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "i heart xkcd.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		455F879E1677901E0060811E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		455F87A01677901E0060811E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -66,6 +76,16 @@
 		455F87D51677901F0060811E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		455F87D71677901F0060811E /* i_heart_xkcdTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = i_heart_xkcdTests.h; sourceTree = "<group>"; };
 		455F87D81677901F0060811E /* i_heart_xkcdTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = i_heart_xkcdTests.m; sourceTree = "<group>"; };
+		455F87E2167790C90060811E /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
+		455F87E4167790D20060811E /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKResources.bundle; path = ../../../Documents/FacebookSDK/FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle; sourceTree = "<group>"; };
+		455F87E6167790DA0060811E /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		455F87E8167790DF0060811E /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		455F87EA167790E40060811E /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		455F87F4167796DC0060811E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		455F87F61677974F0060811E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		455F87F81678C08B0060811E /* ComicData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComicData.h; sourceTree = "<group>"; };
+		455F87F91678C08B0060811E /* ComicData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComicData.m; sourceTree = "<group>"; };
+		95100619255547B1A0FF29B8 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,9 +93,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				455F87F71677974F0060811E /* MobileCoreServices.framework in Frameworks */,
+				455F87F5167796DC0060811E /* SystemConfiguration.framework in Frameworks */,
+				455F87EB167790E40060811E /* Accounts.framework in Frameworks */,
+				455F87E9167790DF0060811E /* Social.framework in Frameworks */,
+				455F87E7167790DA0060811E /* AdSupport.framework in Frameworks */,
 				455F879F1677901E0060811E /* UIKit.framework in Frameworks */,
 				455F87A11677901E0060811E /* Foundation.framework in Frameworks */,
 				455F87A31677901E0060811E /* CoreGraphics.framework in Frameworks */,
+				455F87E3167790C90060811E /* FacebookSDK.framework in Frameworks */,
+				6818A5818E8C498CB0C59D49 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,10 +122,12 @@
 		455F878F1677901E0060811E = {
 			isa = PBXGroup;
 			children = (
+				455F87F61677974F0060811E /* MobileCoreServices.framework */,
 				455F87A41677901F0060811E /* i heart xkcd */,
 				455F87D11677901F0060811E /* i heart xkcdTests */,
 				455F879D1677901E0060811E /* Frameworks */,
 				455F879B1677901E0060811E /* Products */,
+				95100619255547B1A0FF29B8 /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -114,10 +143,17 @@
 		455F879D1677901E0060811E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				455F87F4167796DC0060811E /* SystemConfiguration.framework */,
+				455F87EA167790E40060811E /* Accounts.framework */,
+				455F87E8167790DF0060811E /* Social.framework */,
+				455F87E6167790DA0060811E /* AdSupport.framework */,
+				455F87E4167790D20060811E /* FacebookSDKResources.bundle */,
+				455F87E2167790C90060811E /* FacebookSDK.framework */,
 				455F879E1677901E0060811E /* UIKit.framework */,
 				455F87A01677901E0060811E /* Foundation.framework */,
 				455F87A21677901E0060811E /* CoreGraphics.framework */,
 				455F87CB1677901F0060811E /* SenTestingKit.framework */,
+				20AA35C19E044FD9BF7D6F78 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -136,6 +172,8 @@
 				455F87BF1677901F0060811E /* MainStoryboard_iPhone.storyboard */,
 				455F87C21677901F0060811E /* MainStoryboard_iPad.storyboard */,
 				455F87A51677901F0060811E /* Supporting Files */,
+				455F87F81678C08B0060811E /* ComicData.h */,
+				455F87F91678C08B0060811E /* ComicData.m */,
 			);
 			path = "i heart xkcd";
 			sourceTree = "<group>";
@@ -183,6 +221,7 @@
 				455F87961677901E0060811E /* Sources */,
 				455F87971677901E0060811E /* Frameworks */,
 				455F87981677901E0060811E /* Resources */,
+				21B54AF235CF4337A0379FFB /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -250,6 +289,7 @@
 				455F87B51677901F0060811E /* Default-568h@2x.png in Resources */,
 				455F87C11677901F0060811E /* MainStoryboard_iPhone.storyboard in Resources */,
 				455F87C41677901F0060811E /* MainStoryboard_iPad.storyboard in Resources */,
+				455F87E5167790D20060811E /* FacebookSDKResources.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,6 +304,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		21B54AF235CF4337A0379FFB /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+		};
 		455F87C81677901F0060811E /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -289,6 +343,7 @@
 				455F87B81677901F0060811E /* RootViewController.m in Sources */,
 				455F87BB1677901F0060811E /* DataViewController.m in Sources */,
 				455F87BE1677901F0060811E /* ModelController.m in Sources */,
+				455F87FA1678C08B0060811E /* ComicData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -399,10 +454,24 @@
 		};
 		455F87DD1677901F0060811E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 95100619255547B1A0FF29B8 /* Pods.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../Documents/FacebookSDK\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "i heart xkcd/i heart xkcd-Prefix.pch";
 				INFOPLIST_FILE = "i heart xkcd/i heart xkcd-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-framework",
+					MobileCoreServices,
+					"-framework",
+					SystemConfiguration,
+					"-lsqlite3.0",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -410,10 +479,24 @@
 		};
 		455F87DE1677901F0060811E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 95100619255547B1A0FF29B8 /* Pods.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../Documents/FacebookSDK\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "i heart xkcd/i heart xkcd-Prefix.pch";
 				INFOPLIST_FILE = "i heart xkcd/i heart xkcd-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-framework",
+					MobileCoreServices,
+					"-framework",
+					SystemConfiguration,
+					"-lsqlite3.0",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -472,6 +555,7 @@
 				455F87DE1677901F0060811E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		455F87DF1677901F0060811E /* Build configuration list for PBXNativeTarget "i heart xkcdTests" */ = {
 			isa = XCConfigurationList;
@@ -480,6 +564,7 @@
 				455F87E11677901F0060811E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

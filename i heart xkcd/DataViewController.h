@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+#import "ComicData.h"
+
 @interface DataViewController : UIViewController
 
 @property (strong, nonatomic) IBOutlet UILabel *dataLabel;
-@property (strong, nonatomic) id dataObject;
+@property (strong, nonatomic) ComicData *dataObject;
 
 @end

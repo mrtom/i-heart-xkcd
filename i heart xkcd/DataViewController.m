@@ -29,7 +29,18 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.dataLabel.text = [self.dataObject description];
+    [self configureView];
+}
+
+- (void)configureView
+{
+    self.dataLabel.text = [self.dataObject title];
+}
+
+- (void)setDataObject:(ComicData *)dataObject
+{
+    _dataObject = dataObject;
+    [self configureView];
 }
 
 @end
