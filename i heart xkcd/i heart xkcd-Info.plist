@@ -47,12 +47,15 @@
 	</array>
 	<key>FacebookApplicationID</key>
 	<string>331148560332763</string>
+	<key>UIStatusBarHidden</key>
+	<true/>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>fb331148560332763</string>
+				<string></string>
 			</array>
 		</dict>
 	</array>

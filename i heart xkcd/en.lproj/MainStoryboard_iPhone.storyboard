@@ -13,24 +13,30 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Avg-LS-5KP"/>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="10">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.70000000000000007" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="10">
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" size="system"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="JEh-ZD-9dT"/>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Avg-LS-5KP" firstAttribute="centerY" secondItem="6" secondAttribute="centerY" type="default" id="5D8-i8-4Sv"/>
+                            <constraint firstItem="10" firstAttribute="trailing" secondItem="6" secondAttribute="trailing" type="default" id="8lW-vI-oba"/>
+                            <constraint firstItem="JEh-ZD-9dT" firstAttribute="trailing" secondItem="6" secondAttribute="trailing" type="default" id="HjS-Od-OZl"/>
+                            <constraint firstItem="JEh-ZD-9dT" firstAttribute="bottom" secondItem="10" secondAttribute="bottom" type="default" id="Z4K-B9-Vc2"/>
                             <constraint firstItem="Avg-LS-5KP" firstAttribute="trailing" secondItem="6" secondAttribute="trailing" type="default" id="bPj-R7-U2V"/>
-                            <constraint firstAttribute="trailing" secondItem="10" secondAttribute="trailing" constant="8" type="user" id="e6E-Yf-T9W"/>
+                            <constraint firstItem="10" firstAttribute="top" secondItem="6" secondAttribute="top" type="default" id="e4o-a4-Qgj"/>
+                            <constraint firstItem="JEh-ZD-9dT" firstAttribute="top" secondItem="6" secondAttribute="top" type="default" id="gFL-JB-lbj"/>
                             <constraint firstItem="Avg-LS-5KP" firstAttribute="leading" secondItem="6" secondAttribute="leading" type="default" id="hPO-hJ-IKm"/>
-                            <constraint firstItem="Avg-LS-5KP" firstAttribute="top" secondItem="6" secondAttribute="top" constant="-5" id="jUo-Cu-tKY"/>
-                            <constraint firstItem="10" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="8" type="user" id="l5K-zv-Glu"/>
-                            <constraint firstItem="10" firstAttribute="top" secondItem="6" secondAttribute="top" constant="2" id="nha-OD-MHy"/>
+                            <constraint firstItem="Avg-LS-5KP" firstAttribute="top" secondItem="6" secondAttribute="top" constant="-6" id="ikB-ps-Apd"/>
+                            <constraint firstItem="10" firstAttribute="leading" secondItem="6" secondAttribute="leading" type="default" id="ud9-wB-ruJ"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="loadingView" destination="JEh-ZD-9dT" id="v1S-ZD-O55"/>
                         <outlet property="scrollView" destination="Avg-LS-5KP" id="fkY-re-5tM"/>
                         <outlet property="titleLabel" destination="10" id="EIP-Yt-gPZ"/>
                     </connections>
@@ -58,6 +64,7 @@
         <class className="DataViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/DataViewController.h"/>
             <relationships>
+                <relationship kind="outlet" name="loadingView" candidateClass="UIActivityIndicatorView"/>
                 <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
             </relationships>

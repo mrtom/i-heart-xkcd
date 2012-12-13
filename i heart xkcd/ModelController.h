@@ -10,7 +10,14 @@
 
 @class DataViewController;
 
+@protocol ModelControllerDelegate <NSObject>
+@required
+- (void) handleLatestComicLoaded:(NSInteger) index;
+@end
+
 @interface ModelController : NSObject <UIPageViewControllerDataSource>
+
+@property (strong, nonatomic) id<ModelControllerDelegate> delegate;
 
 - (DataViewController *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard;
 - (NSUInteger)indexOfViewController:(DataViewController *)viewController;

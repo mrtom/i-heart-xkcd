@@ -38,6 +38,8 @@
     NSString *_transcript;
     NSString *_alt;
     NSURL    *_imageURL;
+    
+    BOOL      _isLoaded;
 }
 
 @property (nonatomic) NSInteger day;
@@ -53,6 +55,8 @@
 @property (nonatomic, strong) NSString *transcript;
 @property (nonatomic, strong) NSString *alt;
 @property (nonatomic, strong) NSURL    *imageURL;
+
+@property (nonatomic) BOOL isLoaded;
 
 - (id)initWithJSON:(id)json;
 - (void)updateDataWithValuesFromAPI:(id)json;

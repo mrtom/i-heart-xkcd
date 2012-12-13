@@ -24,9 +24,20 @@
 @synthesize alt = _alt;
 @synthesize imageURL = _imageURL;
 
-- (id)initWithJSON:(id)json
+@synthesize isLoaded = _isLoaded;
+
+- (id)init
 {
     self = [super init];
+    if (self) {
+        [self setIsLoaded:NO];
+    }
+    return self;
+}
+
+- (id)initWithJSON:(id)json
+{
+    self = [self init];
     if (self) {
         [self configureFromJSON:json];
     }
@@ -53,6 +64,8 @@
     [self setTranscript:[json valueForKey:@"transcript"]];
     [self setAlt:[json valueForKey:@"alt"]];
     [self setImageURL:[NSURL URLWithString:[json valueForKey:@"img"]]];
+    
+    [self setIsLoaded:YES];
 }
 
 @end

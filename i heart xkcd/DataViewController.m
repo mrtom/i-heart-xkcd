@@ -25,7 +25,7 @@
     
     self.scrollView.minimumZoomScale=0.5;
     self.scrollView.maximumZoomScale=6.0;
-    self.scrollView.contentSize = CGSizeMake(768,1024);
+    self.scrollView.contentSize = CGSizeMake(self.view.bounds.size.width, self.view.bounds.size.height);
     self.scrollView.delegate=self;
     
     [self.scrollView addSubview:self.imageView];
@@ -48,12 +48,19 @@
     self.titleLabel.text = [self.dataObject title];
     
     [self.imageView setImageWithURL:[self.dataObject imageURL] placeholderImage:[UIImage imageNamed:@"terrible_small_logo"]];
+    
     // UIImage *image = [UIImage imageNamed:@"terrible_small_logo"];
     // [self.imageView setImage:image];
     [self.imageView setFrame:CGRectMake(0, 0, 768, 1024)];
     
     // NSLog(@"%f, %f", image.size.width, image.size.height);
     // self.scrollView.contentSize = CGSizeMake(image.size.height, image.size.width);
+    
+    if ([self.dataObject isLoaded]) {
+        [self.loadingView stopAnimating];
+    } else {
+        [self.loadingView startAnimating];
+    }
 }
 
 - (void)setDataObject:(ComicData *)dataObject

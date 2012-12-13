@@ -14,6 +14,7 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *loadingView;
 
 @property (strong, nonatomic) ComicData *dataObject;
 

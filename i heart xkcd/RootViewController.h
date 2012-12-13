@@ -7,9 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ModelController.h"
 
-@interface RootViewController : UIViewController <UIPageViewControllerDelegate>
+@interface RootViewController : UIViewController <UIPageViewControllerDelegate, ModelControllerDelegate> {
+    UIView *pageCover;
+}
 
 @property (strong, nonatomic) UIPageViewController *pageViewController;
+@property (strong, nonatomic) UIView *pageCover;
 
 @end
