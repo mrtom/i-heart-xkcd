@@ -13,6 +13,9 @@
 #import "DataViewController.h"
 #import "ComicData.h"
 
+#define ModelControllerFrontPageID 0
+#define ModelControllerBlankComicID -1
+
 /*
  A controller object that manages a simple model -- a collection of month names.
  
@@ -60,9 +63,25 @@ NSString *const XKCD_API = @"http://dynamic.xkcd.com/api-0/jsonp/";
         _latestPage = 0;
         _lastUpdateTime = -1; // TODO: We should save this to disk and re-read
 
-        [self configureComicDataFromXkcd];
+        ComicData *frontPage = [[ComicData alloc] init];
         
-        [self.comicsData setValue:[self generateLoadingComic] forKey:[NSString stringWithFormat:@"%d", 0]];
+        [frontPage setDay:NSNotFound];
+        [frontPage setMonth:NSNotFound];
+        [frontPage setYear:NSNotFound];
+        
+        [frontPage setComicID:ModelControllerFrontPageID];
+        
+        [frontPage setLink:@""];
+        [frontPage setNews:@""];
+        [frontPage setTitle:@"Welcome to i heart xkcd"];
+        [frontPage setSafeTitle:@""];
+        [frontPage setTranscript:@""];
+        [frontPage setAlt:@""];
+        [frontPage setImageURL:Nil];
+        
+        [self.comicsData setValue:frontPage forKey:[NSString stringWithFormat:@"%d", 0]];
+        
+        [self configureComicDataFromXkcd];
     }
     return self;
 }
@@ -86,9 +105,10 @@ NSString *const XKCD_API = @"http://dynamic.xkcd.com/api-0/jsonp/";
 
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         ComicData *comicData = [self.comicsData objectForKey:[JSON valueForKeyPath:@"num"]];
+        NSString *index = [NSString stringWithFormat:@"%@", [JSON valueForKeyPath:@"num"]];
         if (!comicData) {
             comicData = [[ComicData alloc] initWithJSON:JSON];
-            [self.comicsData setValue:comicData forKey:[JSON valueForKeyPath:@"num"]];
+            [self.comicsData setValue:comicData forKey:index];
         } else {
             [comicData updateDataWithValuesFromAPI:JSON];
         }
@@ -96,16 +116,12 @@ NSString *const XKCD_API = @"http://dynamic.xkcd.com/api-0/jsonp/";
         if (dataVC != Nil) {
             dataVC.dataObject = comicData;
         }
-        
-        if (setView) {
-            
-        }
     } failure:nil];
     
     [operation start];
 }
 
-- (ComicData *)generateLoadingComic
+- (ComicData *)generateBlankComic
 {
     // Setup a blank comic
     ComicData *blankComicData = [[ComicData alloc] init];
@@ -114,11 +130,11 @@ NSString *const XKCD_API = @"http://dynamic.xkcd.com/api-0/jsonp/";
     [blankComicData setMonth:NSNotFound];
     [blankComicData setYear:NSNotFound];
     
-    [blankComicData setComicID:0];
+    [blankComicData setComicID:ModelControllerBlankComicID];
     
     [blankComicData setLink:@""];
     [blankComicData setNews:@""];
-    [blankComicData setTitle:@"Loading comic from XKCD. Please be patient!"];
+    [blankComicData setTitle:@" "];
     [blankComicData setSafeTitle:@""];
     [blankComicData setTranscript:@""];
     [blankComicData setAlt:@""];
@@ -137,18 +153,20 @@ NSString *const XKCD_API = @"http://dynamic.xkcd.com/api-0/jsonp/";
     // Create a new view controller and pass suitable data.
     DataViewController *dataViewController = [storyboard instantiateViewControllerWithIdentifier:@"DataViewController"];
     
-    ComicData *data = [self.comicsData objectForKey:[NSString stringWithFormat:@"%d", index]];
-    if (!data || [data comicID] == 0) {
+    NSString *key = [NSString stringWithFormat:@"%d", index];
+    ComicData *comicData = [self.comicsData objectForKey:key];
+    if (!comicData || [comicData comicID] == ModelControllerBlankComicID) {
         [self configureComicDataFromXkcdForComidID:index andAddToViewController:dataViewController andSetAsView:NO];
-        data = [self generateLoadingComic];
+        comicData = [self generateBlankComic];
+        [self.comicsData setValue:comicData forKey:key];
     }
     
-    dataViewController.dataObject = data;
+    dataViewController.dataObject = comicData;
     return dataViewController;
 }
 
 - (NSUInteger)indexOfViewController:(DataViewController *)viewController
-{   
+{
     return viewController.dataObject.comicID;
 }
 

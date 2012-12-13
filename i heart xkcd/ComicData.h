@@ -29,7 +29,7 @@
     NSInteger _month;
     NSInteger _year;
     
-    NSInteger _comicID;
+    NSUInteger _comicID;
     
     NSString *_link;
     NSString *_news;
@@ -44,7 +44,7 @@
 @property (nonatomic) NSInteger month;
 @property (nonatomic) NSInteger year;
 
-@property (nonatomic) NSInteger comicID;
+@property (nonatomic) NSUInteger comicID;
 
 @property (nonatomic, strong) NSString *link;
 @property (nonatomic, strong) NSString *news;

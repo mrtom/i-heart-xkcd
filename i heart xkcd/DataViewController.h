@@ -10,9 +10,12 @@
 
 #import "ComicData.h"
 
-@interface DataViewController : UIViewController
+@interface DataViewController : UIViewController <UIScrollViewDelegate>
 
-@property (strong, nonatomic) IBOutlet UILabel *dataLabel;
+@property (strong, nonatomic) IBOutlet UILabel *titleLabel;
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
+
 @property (strong, nonatomic) ComicData *dataObject;
+
 
 @end

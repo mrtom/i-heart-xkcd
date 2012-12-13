@@ -34,6 +34,7 @@
 		455F87F5167796DC0060811E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 455F87F4167796DC0060811E /* SystemConfiguration.framework */; };
 		455F87F71677974F0060811E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 455F87F61677974F0060811E /* MobileCoreServices.framework */; };
 		455F87FA1678C08B0060811E /* ComicData.m in Sources */ = {isa = PBXBuildFile; fileRef = 455F87F91678C08B0060811E /* ComicData.m */; };
+		456E4E2F1679E63B0099B88E /* terrible_small_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 456E4E2E1679E63B0099B88E /* terrible_small_logo.png */; };
 		6818A5818E8C498CB0C59D49 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 20AA35C19E044FD9BF7D6F78 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -85,6 +86,7 @@
 		455F87F61677974F0060811E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		455F87F81678C08B0060811E /* ComicData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComicData.h; sourceTree = "<group>"; };
 		455F87F91678C08B0060811E /* ComicData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComicData.m; sourceTree = "<group>"; };
+		456E4E2E1679E63B0099B88E /* terrible_small_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = terrible_small_logo.png; sourceTree = "<group>"; };
 		95100619255547B1A0FF29B8 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -181,6 +183,7 @@
 		455F87A51677901F0060811E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				456E4E2E1679E63B0099B88E /* terrible_small_logo.png */,
 				455F87A61677901F0060811E /* i heart xkcd-Info.plist */,
 				455F87A71677901F0060811E /* InfoPlist.strings */,
 				455F87AA1677901F0060811E /* main.m */,
@@ -290,6 +293,7 @@
 				455F87C11677901F0060811E /* MainStoryboard_iPhone.storyboard in Resources */,
 				455F87C41677901F0060811E /* MainStoryboard_iPad.storyboard in Resources */,
 				455F87E5167790D20060811E /* FacebookSDKResources.bundle in Resources */,
+				456E4E2F1679E63B0099B88E /* terrible_small_logo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,8 +7,11 @@
 //
 
 #import "DataViewController.h"
+#import <AFNetworking/UIImageView+AFNetworking.h>
 
 @interface DataViewController ()
+
+@property UIImageView *imageView;
 
 @end
 
@@ -17,7 +20,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    
+    self.imageView = [[UIImageView alloc] init];
+    
+    self.scrollView.minimumZoomScale=0.5;
+    self.scrollView.maximumZoomScale=6.0;
+    self.scrollView.contentSize = CGSizeMake(768,1024);
+    self.scrollView.delegate=self;
+    
+    [self.scrollView addSubview:self.imageView];
 }
 
 - (void)didReceiveMemoryWarning
@@ -34,13 +45,27 @@
 
 - (void)configureView
 {
-    self.dataLabel.text = [self.dataObject title];
+    self.titleLabel.text = [self.dataObject title];
+    
+    [self.imageView setImageWithURL:[self.dataObject imageURL] placeholderImage:[UIImage imageNamed:@"terrible_small_logo"]];
+    // UIImage *image = [UIImage imageNamed:@"terrible_small_logo"];
+    // [self.imageView setImage:image];
+    [self.imageView setFrame:CGRectMake(0, 0, 768, 1024)];
+    
+    // NSLog(@"%f, %f", image.size.width, image.size.height);
+    // self.scrollView.contentSize = CGSizeMake(image.size.height, image.size.width);
 }
 
 - (void)setDataObject:(ComicData *)dataObject
 {
     _dataObject = dataObject;
     [self configureView];
+}
+
+#pragma mark - UIScrollViewDelegate classes
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
+{
+    return self.imageView;
 }
 
 @end
