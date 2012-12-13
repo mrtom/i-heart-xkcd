@@ -7,6 +7,7 @@
 //
 
 #import "DataViewController.h"
+#import <AFNetworking/AFNetworking.h>
 #import <AFNetworking/UIImageView+AFNetworking.h>
 
 @interface DataViewController ()
@@ -25,8 +26,10 @@
     
     self.scrollView.minimumZoomScale=0.5;
     self.scrollView.maximumZoomScale=6.0;
-    self.scrollView.contentSize = CGSizeMake(self.view.bounds.size.width, self.view.bounds.size.height);
     self.scrollView.delegate=self;
+    self.scrollView.clipsToBounds = YES;
+    self.scrollView.indicatorStyle = UIScrollViewIndicatorStyleDefault;
+    [self.scrollView setScrollEnabled:YES];
     
     [self.scrollView addSubview:self.imageView];
 }
@@ -47,20 +50,60 @@
 {
     self.titleLabel.text = [self.dataObject title];
     
-    [self.imageView setImageWithURL:[self.dataObject imageURL] placeholderImage:[UIImage imageNamed:@"terrible_small_logo"]];
+    UIImage *placeHolderImage = [UIImage imageNamed:@"terrible_small_logo"];
+    [self.imageView setImageWithURLRequest:[NSURLRequest requestWithURL:[self.dataObject imageURL]] placeholderImage:placeHolderImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image){
+        
+        // Set the content view to be the size of the comid image size
+        CGSize comicSize;
+        NSInteger scale = 1;
+        
+        if ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] &&
+            ([UIScreen mainScreen].scale == 2.0)) {
+            // Retina display
+            scale = 2;
+        }
+        
+        if (UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation])) {
+            comicSize = CGSizeMake(image.size.height*scale, image.size.width*scale);
+        } else {
+            comicSize = CGSizeMake(image.size.width*scale, image.size.height*scale);
+        }
+        
+        self.scrollView.contentSize = comicSize;
+        [self.imageView setFrame:CGRectMake(0, 0, comicSize.width, comicSize.height)];
+        [self.imageView setImage:image];
+        
+        // If the image is smaller than the size of the ipad, stick it in the middle of the page
+        CGFloat paddingLeft = 0;
+        CGFloat paddingTop = 0;
+        if (self.imageView.frame.size.width < self.scrollView.frame.size.width) {
+            paddingLeft = (self.scrollView.frame.size.width - self.imageView.frame.size.width) / 2;
+        }
+        if (self.imageView.frame.size.height < self.scrollView.frame.size.height) {
+            paddingTop = (self.scrollView.frame.size.height - self.imageView.frame.size.height) / 2;
+        }
+        
+        CGRect insetRect = CGRectInset(self.view.bounds, paddingLeft, paddingTop);
+        self.imageView.frame = insetRect;
+        
+    } failure:nil];
+
+    CGSize imageSize;
+    if (UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation])) {
+        imageSize = CGSizeMake(placeHolderImage.size.width, placeHolderImage.size.height);
+    } else {
+        imageSize = CGSizeMake(placeHolderImage.size.height, placeHolderImage.size.width);
+    }
     
-    // UIImage *image = [UIImage imageNamed:@"terrible_small_logo"];
-    // [self.imageView setImage:image];
-    [self.imageView setFrame:CGRectMake(0, 0, 768, 1024)];
-    
-    // NSLog(@"%f, %f", image.size.width, image.size.height);
-    // self.scrollView.contentSize = CGSizeMake(image.size.height, image.size.width);
+    NSLog(@"Image is sized %fx%f", imageSize.width, imageSize.height);
+    [self.imageView setFrame:CGRectMake(0, 0, imageSize.width, imageSize.height)];
     
     if ([self.dataObject isLoaded]) {
         [self.loadingView stopAnimating];
     } else {
         [self.loadingView startAnimating];
     }
+    self.scrollView.contentSize = imageSize;
 }
 
 - (void)setDataObject:(ComicData *)dataObject
