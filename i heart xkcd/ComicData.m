@@ -107,7 +107,6 @@
     [aCoder encodeObject:_safeTitle forKey:@"safe_title"];
     [aCoder encodeObject:_transcript forKey:@"transcript"];
     [aCoder encodeObject:_alt forKey:@"alt"];
-    NSLog(@"Sanity check... URL for image is %@", [_imageURL absoluteString]);
     [aCoder encodeObject:[_imageURL absoluteString] forKey:@"img"];
     
     [aCoder encodeBool:_isLoaded forKey:@"is_loaded"];
