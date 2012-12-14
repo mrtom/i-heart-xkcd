@@ -22,7 +22,9 @@
 @property UIView *altTextBackgroundView;
 @property UIScrollView *altTextScrollView;
 @property UILabel *altTextView;
+
 @property (readwrite, nonatomic) double lastTimeOverlaysToggled;
+@property BOOL shouldHideTitle;
 
 @end
 
@@ -66,6 +68,7 @@
     self.altTextScrollView.maximumZoomScale=1.0;
     self.altTextScrollView.clipsToBounds = YES;
     self.altTextScrollView.indicatorStyle = UIScrollViewIndicatorStyleDefault;
+    [self.altTextScrollView setBackgroundColor:[UIColor clearColor]];
     [self.altTextScrollView setScrollEnabled:YES];
     [self.altTextScrollView addSubview:self.altTextView];
     
@@ -131,10 +134,13 @@
         [self.imageView setImage:image];
         self.imageView.center = CGPointMake((self.scrollView.bounds.size.width/2),(self.scrollView.bounds.size.height/2));
         
-        // Fade out the title
-        [UIView animateWithDuration:pageOverlayToggleAnimationTime
-                         animations:^{self.titleLabel.alpha = 0;}
-                         completion:nil];
+        // Fade out the title if it's covering the image
+        self.shouldHideTitle = (self.imageView.frame.origin.x < self.titleLabel.frame.size.height);
+        if (self.shouldHideTitle) {
+            [UIView animateWithDuration:2+pageOverlayToggleAnimationTime
+                             animations:^{self.titleLabel.alpha = 0;}
+                             completion:nil];            
+        }
         
         [this checkLoadedState];
         
@@ -151,26 +157,27 @@
     [self.altTextView setFont:labelFont];
     [self.altTextView setLineBreakMode:lineBreakMode];
     
+    float titleBarHeight = self.titleLabel.frame.size.height;
     float maxWidthForAltText  = self.view.bounds.size.width - 2*altTextBackgroundPadding - 2*altTextPadding;
-    float maxHeightForAltText = self.view.bounds.size.height - 2*altTextBackgroundPadding - 2*altTextPadding;
+    float maxHeightForAltText = self.view.bounds.size.height - 2*altTextBackgroundPadding - 2*altTextPadding - titleBarHeight;
     
-    CGSize altTextSize = [[self.dataObject alt] sizeWithFont:labelFont forWidth:maxWidthForAltText lineBreakMode:lineBreakMode];
+    CGSize altTextSize = [altText sizeWithFont:labelFont constrainedToSize:CGSizeMake(maxWidthForAltText, 9999) lineBreakMode:lineBreakMode];
     
-    float altTextWidth  = altTextSize.width < maxWidthForAltText ? altTextSize.width : maxWidthForAltText;
-    float altTextHeight = altTextSize.height < maxHeightForAltText ? altTextSize.height : maxHeightForAltText;
+    float altTextScrollWidth  = altTextSize.width < maxWidthForAltText ? altTextSize.width : maxWidthForAltText;
+    float altTextScrollHeight = altTextSize.height < maxHeightForAltText ? altTextSize.height : maxHeightForAltText;
     
     [self.altTextView setFrame:CGRectMake(0, 0, altTextSize.width, altTextSize.height)];
     
     [self.altTextScrollView setFrame:CGRectMake((altTextPadding+altTextBackgroundPadding),
-                                          (altTextPadding+altTextBackgroundPadding),
-                                          altTextWidth, altTextHeight)];
-    self.altTextScrollView.center = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2);
+                                          (altTextPadding+altTextBackgroundPadding+titleBarHeight),
+                                          altTextScrollWidth, altTextScrollHeight)];
+    self.altTextScrollView.center = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2+titleBarHeight/2);
     [self.altTextScrollView setContentSize:self.altTextView.bounds.size];
     
     [self.altTextBackgroundView setFrame:CGRectMake(altTextBackgroundPadding,
-                                                    altTextBackgroundPadding,
-                                                    altTextSize.width+2*altTextPadding, altTextSize.height+2*altTextPadding)];
-    self.altTextBackgroundView.center = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2);
+                                                    (altTextBackgroundPadding+titleBarHeight),
+                                                    altTextScrollWidth+2*altTextPadding, altTextScrollHeight+2*altTextPadding)];
+    self.altTextBackgroundView.center = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2+titleBarHeight/2);
 }
 
 -(void)checkLoadedState
@@ -227,9 +234,11 @@
         [UIView animateWithDuration:pageOverlayToggleAnimationTime
                          animations:^{self.altTextScrollView.alpha = 0.8;}
                          completion:nil];
-        [UIView animateWithDuration:pageOverlayToggleAnimationTime
-                         animations:^{self.titleLabel.alpha = 0.8;}
-                         completion:nil];
+        if (self.shouldHideTitle) {
+            [UIView animateWithDuration:pageOverlayToggleAnimationTime
+                             animations:^{self.titleLabel.alpha = 0.8;}
+                             completion:nil];
+        }
     } else {
         [UIView animateWithDuration:pageOverlayToggleAnimationTime
                          animations:^{self.altTextBackgroundView.alpha = 0;}
@@ -237,9 +246,11 @@
         [UIView animateWithDuration:pageOverlayToggleAnimationTime
                          animations:^{self.altTextScrollView.alpha = 0;}
                          completion:nil];
-        [UIView animateWithDuration:pageOverlayToggleAnimationTime
-                         animations:^{self.titleLabel.alpha = 0;}
-                         completion:nil];
+        if (self.shouldHideTitle) {
+            [UIView animateWithDuration:pageOverlayToggleAnimationTime
+                             animations:^{self.titleLabel.alpha = 0;}
+                             completion:nil];
+        }
     }
 }
 
