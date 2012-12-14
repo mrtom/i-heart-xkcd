@@ -154,7 +154,6 @@ NSString *const XKCD_API = @"http://dynamic.xkcd.com/api-0/jsonp/";
     ComicData *comicData = [self.comicsData objectForKey:key];
     if (!comicData || ![comicData isLoaded]) {
         [self configureComicDataFromXkcdForComidID:index withCallback:^(NSUInteger index, ComicData *newComicData){
-            NSLog(@"DataObject about to be set in URL callback %@", newComicData);
             [dataViewController setDataObject:newComicData];
         }];
         comicData = [[ComicData alloc]initWithIndex:index];
