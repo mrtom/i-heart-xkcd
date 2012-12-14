@@ -47,7 +47,7 @@ NSString *const XKCD_API = @"http://dynamic.xkcd.com/api-0/jsonp/";
 @interface ModelController()
 @property (nonatomic) NSInteger latestPage;
 @property (nonatomic) NSInteger lastUpdateTime;
-@property (readonly, strong, nonatomic) NSDictionary *comicsData;
+@property (readonly, strong, nonatomic) NSMutableDictionary *comicsData;
 @end
 
 
@@ -60,10 +60,21 @@ NSString *const XKCD_API = @"http://dynamic.xkcd.com/api-0/jsonp/";
     self = [super init];
     if (self) {
         // Create the data model.
-        _comicsData = [[NSMutableDictionary alloc] initWithCapacity:1];
+        NSString *path = [self itemArchivePath];
+        _comicsData = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+        
+        if (!_comicsData) {
+            _comicsData = [[NSMutableDictionary alloc] initWithCapacity:1];            
+        }
+        
         _latestPage = 0;
         _lastUpdateTime = -1; // TODO: We should save this to disk and re-read
-
+        
+        // Handle memory warnings - clear the cache
+        NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+        [nc addObserver:self selector:@selector(clearCache:) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
+        
+        // Setup the cover page
         ComicData *frontPage = [[ComicData alloc] init];
         
         [frontPage setDay:NSNotFound];
@@ -116,6 +127,7 @@ NSString *const XKCD_API = @"http://dynamic.xkcd.com/api-0/jsonp/";
         if (!comicData) {
             comicData = [[ComicData alloc] initWithJSON:JSON];
             [self.comicsData setValue:comicData forKey:index];
+            [self saveChanges];
         } else {
             [comicData updateDataWithValuesFromAPI:JSON];
         }
@@ -176,6 +188,29 @@ NSString *const XKCD_API = @"http://dynamic.xkcd.com/api-0/jsonp/";
 - (NSUInteger)indexOfViewController:(DataViewController *)viewController
 {
     return viewController.dataObject.comicID;
+}
+
+- (void)clearCache:(NSNotification *)note
+{
+    NSLog(@"Flushing %d comics from the cache", [_comicsData count]);
+    [_comicsData removeAllObjects];
+}
+
+- (NSString *)itemArchivePath
+{
+    NSArray *documentDirectories =
+    NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    
+    NSString *documentDirectory = [documentDirectories objectAtIndex:0];
+    
+    return [documentDirectory stringByAppendingPathComponent:@"comics.archive"];
+}
+
+- (BOOL)saveChanges
+{
+    NSString *path = [self itemArchivePath];
+    
+    return [NSKeyedArchiver archiveRootObject:_comicsData toFile:path];
 }
 
 #pragma mark - Page View Controller Data Source

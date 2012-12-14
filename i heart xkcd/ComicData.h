@@ -24,7 +24,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ComicData : NSObject {
+@interface ComicData : NSObject <NSCoding> {
     NSInteger _day;
     NSInteger _month;
     NSInteger _year;

@@ -9,11 +9,11 @@
          condition = "index == @&quot;1145&quot;"
          continueAfterRunningActions = "No"
          filePath = "i heart xkcd/ModelController.m"
-         timestampString = "377102792.206641"
+         timestampString = "377183707.941917"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "116"
-         endingLineNumber = "116"
+         startingLineNumber = "127"
+         endingLineNumber = "127"
          landmarkName = "-configureComicDataFromXkcdForComidID:withCallback:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -35,11 +35,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "i heart xkcd/ModelController.m"
-         timestampString = "377102801.608896"
+         timestampString = "377183707.941917"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "156"
-         endingLineNumber = "156"
+         startingLineNumber = "168"
+         endingLineNumber = "168"
          landmarkName = "-viewControllerAtIndex:storyboard:"
          landmarkType = "5">
       </FileBreakpoint>

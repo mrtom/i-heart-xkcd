@@ -68,4 +68,49 @@
     [self setIsLoaded:YES];
 }
 
+#pragma mark - NSCoding protocol methods
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super init];
+    if (self) {
+        [self setDay:[aDecoder decodeIntForKey:@"day"]];
+        [self setMonth:[aDecoder decodeIntForKey:@"month"]];
+        [self setYear:[aDecoder decodeIntForKey:@"year"]];
+        
+        [self setComicID:[aDecoder decodeIntForKey:@"num"]];
+        
+        [self setLink:[aDecoder decodeObjectForKey:@"link"]];
+        [self setNews:[aDecoder decodeObjectForKey:@"news"]];
+        [self setTitle:[aDecoder decodeObjectForKey:@"title"]];
+        [self setSafeTitle:[aDecoder decodeObjectForKey:@"safe_title"]];
+        [self setTranscript:[aDecoder decodeObjectForKey:@"transcript"]];
+        [self setAlt:[aDecoder decodeObjectForKey:@"alt"]];
+        [self setImageURL:[NSURL URLWithString:[aDecoder decodeObjectForKey:@"img"]]];
+        
+        [self setIsLoaded:[aDecoder decodeBoolForKey:@"is_loaded"]];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeInt:_day forKey:@"day"];
+    [aCoder encodeInt:_month forKey:@"month"];
+    [aCoder encodeInt:_year forKey:@"year"];
+    
+    [aCoder encodeInt:_comicID forKey:@"num"];
+    
+    [aCoder encodeObject:_link forKey:@"link"];
+    [aCoder encodeObject:_news forKey:@"news"];
+    [aCoder encodeObject:_title forKey:@"title"];
+    [aCoder encodeObject:_safeTitle forKey:@"safe_title"];
+    [aCoder encodeObject:_transcript forKey:@"transcript"];
+    [aCoder encodeObject:_alt forKey:@"alt"];
+    NSLog(@"Sanity check... URL for image is %@", [_imageURL absoluteString]);
+    [aCoder encodeObject:[_imageURL absoluteString] forKey:@"img"];
+    
+    [aCoder encodeBool:_isLoaded forKey:@"is_loaded"];
+}
+
 @end
