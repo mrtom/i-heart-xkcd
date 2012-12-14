@@ -15,9 +15,6 @@
 
 #define ModelControllerFrontPageID 0
 
-#define UserDefaultLatestPage @"latestPage"
-#define UserDefaultLastUpdate @"lastUpdate"
-
 /*
  A controller object that manages a simple model -- a collection of month names.
  
@@ -143,30 +140,6 @@ NSString *const XKCD_API = @"http://dynamic.xkcd.com/api-0/jsonp/";
     [operation start];
 }
 
-- (ComicData *)generateBlankComic:(NSUInteger)index
-{
-    // Setup a blank comic
-    ComicData *blankComicData = [[ComicData alloc] init];
-    
-    [blankComicData setDay:NSNotFound];
-    [blankComicData setMonth:NSNotFound];
-    [blankComicData setYear:NSNotFound];
-    
-    [blankComicData setComicID:index];
-    
-    [blankComicData setLink:@""];
-    [blankComicData setNews:@""];
-    [blankComicData setTitle:@" "];
-    [blankComicData setSafeTitle:@""];
-    [blankComicData setTranscript:@""];
-    [blankComicData setAlt:@""];
-    [blankComicData setImageURL:Nil];
-    
-    [blankComicData setIsLoaded:NO];
-    
-    return blankComicData;
-}
-
 - (DataViewController *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard
 {   
     // Return the data view controller for the given index.
@@ -181,9 +154,10 @@ NSString *const XKCD_API = @"http://dynamic.xkcd.com/api-0/jsonp/";
     ComicData *comicData = [self.comicsData objectForKey:key];
     if (!comicData || ![comicData isLoaded]) {
         [self configureComicDataFromXkcdForComidID:index withCallback:^(NSUInteger index, ComicData *newComicData){
+            NSLog(@"DataObject about to be set in URL callback %@", newComicData);
             [dataViewController setDataObject:newComicData];
         }];
-        comicData = [self generateBlankComic:index];
+        comicData = [[ComicData alloc]initWithIndex:index];
         [self.comicsData setValue:comicData forKey:key];
     }
     

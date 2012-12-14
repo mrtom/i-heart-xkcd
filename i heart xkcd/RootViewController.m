@@ -16,6 +16,7 @@
 
 @interface RootViewController ()
 @property (readonly, strong, nonatomic) ModelController *modelController;
+@property NSUInteger currentIndex;
 @end
 
 @implementation RootViewController
@@ -32,8 +33,11 @@
     self.pageViewController.delegate = self;
     
     [self.modelController setDelegate:self];
+    
+    int latestPage = [[NSUserDefaults standardUserDefaults] integerForKey:UserDefaultLatestPage];
+    self.currentIndex = latestPage;
 
-    DataViewController *startingViewController = [self.modelController viewControllerAtIndex:0 storyboard:self.storyboard];
+    DataViewController *startingViewController = [self.modelController viewControllerAtIndex:self.currentIndex storyboard:self.storyboard];
     NSArray *viewControllers = @[startingViewController];
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:NULL];
 
@@ -94,17 +98,19 @@
 {
     [UIView animateWithDuration:pageCoverAnimationTime
                      animations:^{pageCover.alpha = 0.0;}
-                     completion:nil];    
+                     completion:nil];
+    
+    [self loadPageAtIndex:self.currentIndex];
 }
 
 #pragma mark - UIPageViewController delegate methods
 
-/*
+
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
 {
-    
+    DataViewController *currentViewController = [[pageViewController viewControllers] objectAtIndex:0];
+    self.currentIndex = [[currentViewController dataObject] comicID];
 }
- */
 
 - (UIPageViewControllerSpineLocation)pageViewController:(UIPageViewController *)pageViewController spineLocationForInterfaceOrientation:(UIInterfaceOrientation)orientation
 {
@@ -115,6 +121,8 @@
 #pragma mark - DataViewController delegate methods
 - (void) handleLatestComicLoaded:(NSInteger) index
 {
+    if (self.currentIndex == index) return;
+    
     RootViewController *this = self;
     [UIView animateWithDuration:pageCoverAnimationTime
                      animations:^{pageCover.alpha = 1.0;}

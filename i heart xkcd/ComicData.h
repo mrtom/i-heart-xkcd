@@ -59,6 +59,7 @@
 @property (nonatomic) BOOL isLoaded;
 
 - (id)initWithJSON:(id)json;
+- (id)initWithIndex:(NSUInteger)index;
 - (void)updateDataWithValuesFromAPI:(id)json;
 
 @end

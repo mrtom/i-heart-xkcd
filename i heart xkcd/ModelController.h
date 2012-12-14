@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+#define UserDefaultLatestPage @"latestPage"
+#define UserDefaultLastUpdate @"lastUpdate"
+
 @class DataViewController;
 
 @protocol ModelControllerDelegate <NSObject>

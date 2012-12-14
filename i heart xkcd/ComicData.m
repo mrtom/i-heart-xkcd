@@ -44,6 +44,30 @@
     return self;
 }
 
+- (id)initWithIndex:(NSUInteger)index
+{
+    self = [self init];
+    if (self) {
+        // Setup a blank comic
+        [self setDay:NSNotFound];
+        [self setMonth:NSNotFound];
+        [self setYear:NSNotFound];
+        
+        [self setComicID:index];
+        
+        [self setLink:@""];
+        [self setNews:@""];
+        [self setTitle:@" "];
+        [self setSafeTitle:@""];
+        [self setTranscript:@""];
+        [self setAlt:@""];
+        [self setImageURL:Nil];
+        
+        [self setIsLoaded:NO];
+    }
+    return self;
+}
+
 - (void)updateDataWithValuesFromAPI:(id)json
 {
     [self configureFromJSON:json];

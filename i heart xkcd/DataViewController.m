@@ -35,6 +35,8 @@
     [self.scrollView setScrollEnabled:YES];
     
     [self.scrollView addSubview:self.imageView];
+    
+    [self.view bringSubviewToFront:self.titleLabel];
 }
 
 - (void)didReceiveMemoryWarning
@@ -55,6 +57,7 @@
 
 - (void)configureView
 {
+    DataViewController *this = self;
     self.scrollView.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
     
     UIImage *placeHolderImage = [UIImage imageNamed:@"terrible_small_logo"];
@@ -84,10 +87,15 @@
         [self.imageView setImage:image];
         self.imageView.center = CGPointMake((self.scrollView.bounds.size.width/2),(self.scrollView.bounds.size.height/2));
         
+        [this checkLoadedState];
+        
     } failure:nil];
     
     self.titleLabel.text = [self.dataObject safeTitle];
-    
+}
+
+-(void)checkLoadedState
+{
     if ([self.dataObject isLoaded]) {
         [self.loadingView stopAnimating];
     } else {
@@ -95,14 +103,8 @@
     }
 }
 
--(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    NSLog(@"%d", [self.dataObject comicID]);
-}
-
 -(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    NSLog(@"%d", [self.dataObject comicID]);
     [self configureView];
 }
 
