@@ -21,6 +21,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    // NSLog(@"ViewDidLoad");
     
     self.imageView = [[UIImageView alloc] init];
     
@@ -43,14 +44,36 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    // NSLog(@"View size in viewWillAppear: %fx%f", self.view.frame.size.width, self.view.frame.size.height);
+    // NSLog(@"Scroll view size in viewWillAppear: %fx%f", self.scrollView.bounds.size.width, self.scrollView.bounds.size.height);
+
     [self configureView];
+}
+
+- (void)viewDidLayoutSubviews
+{
+    // NSLog(@"View size in viewDidLayoutSubviews: %fx%f", self.view.frame.size.width, self.view.frame.size.height);
+    // NSLog(@"Scroll view size in viewDidLayoutSubviews: %fx%f", self.scrollView.bounds.size.width, self.scrollView.bounds.size.height);
+    // [self configureView];
 }
 
 - (void)configureView
 {
-    self.titleLabel.text = [self.dataObject title];
-    
     UIImage *placeHolderImage = [UIImage imageNamed:@"terrible_small_logo"];
+    
+    self.titleLabel.text = [self.dataObject safeTitle];
+    CGSize imageSize;
+    if (UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation])) {
+        imageSize = CGSizeMake(placeHolderImage.size.width, placeHolderImage.size.height);
+    } else {
+        imageSize = CGSizeMake(placeHolderImage.size.height, placeHolderImage.size.width);
+    }
+    self.scrollView.contentSize = imageSize;
+    
+    // NSLog(@"View size in configureView: %fx%f", self.view.frame.size.width, self.view.frame.size.height);
+    // NSLog(@"Scroll view size in configureView: %fx%f", self.scrollView.bounds.size.width, self.scrollView.bounds.size.height);
+    
+    
     [self.imageView setImageWithURLRequest:[NSURLRequest requestWithURL:[self.dataObject imageURL]] placeholderImage:placeHolderImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image){
         
         // Set the content view to be the size of the comid image size
@@ -76,6 +99,8 @@
         // If the image is smaller than the size of the ipad, stick it in the middle of the page
         CGFloat paddingLeft = 0;
         CGFloat paddingTop = 0;
+        // NSLog(@"Scroll view size2: %fx%f", self.scrollView.bounds.size.width, self.scrollView.bounds.size.height);
+        // NSLog(@"Comic size: %fx%f", self.imageView.frame.size.width, self.imageView.frame.size.height);
         if (self.imageView.frame.size.width < self.scrollView.frame.size.width) {
             paddingLeft = (self.scrollView.frame.size.width - self.imageView.frame.size.width) / 2;
         }
@@ -84,18 +109,13 @@
         }
         
         CGRect insetRect = CGRectInset(self.view.bounds, paddingLeft, paddingTop);
+        // NSLog(@"Setting imageview rect to %fx%f at (%f,%f)", insetRect.size.width, insetRect.size.height, insetRect.origin.x, insetRect.origin.y);
         self.imageView.frame = insetRect;
         
     } failure:nil];
 
-    CGSize imageSize;
-    if (UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation])) {
-        imageSize = CGSizeMake(placeHolderImage.size.width, placeHolderImage.size.height);
-    } else {
-        imageSize = CGSizeMake(placeHolderImage.size.height, placeHolderImage.size.width);
-    }
     
-    NSLog(@"Image is sized %fx%f", imageSize.width, imageSize.height);
+    
     [self.imageView setFrame:CGRectMake(0, 0, imageSize.width, imageSize.height)];
     
     if ([self.dataObject isLoaded]) {
@@ -103,7 +123,6 @@
     } else {
         [self.loadingView startAnimating];
     }
-    self.scrollView.contentSize = imageSize;
 }
 
 - (void)setDataObject:(ComicData *)dataObject
