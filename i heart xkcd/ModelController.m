@@ -15,6 +15,9 @@
 
 #define ModelControllerFrontPageID 0
 
+#define UserDefaultLatestPage @"latestPage"
+#define UserDefaultLastUpdate @"lastUpdate"
+
 /*
  A controller object that manages a simple model -- a collection of month names.
  
@@ -59,16 +62,19 @@ NSString *const XKCD_API = @"http://dynamic.xkcd.com/api-0/jsonp/";
 {
     self = [super init];
     if (self) {
-        // Create the data model.
-        NSString *path = [self itemArchivePath];
+        // Load data from disk
+        NSString *path = [self comicsDataArchivePath];
         _comicsData = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
         
         if (!_comicsData) {
             _comicsData = [[NSMutableDictionary alloc] initWithCapacity:1];            
         }
         
-        _latestPage = 0;
-        _lastUpdateTime = -1; // TODO: We should save this to disk and re-read
+        int lP = [[NSUserDefaults standardUserDefaults] integerForKey:UserDefaultLatestPage];
+        _latestPage = lP;
+        
+        int lUT = [[NSUserDefaults standardUserDefaults] integerForKey:UserDefaultLastUpdate];
+        _lastUpdateTime = lUT;
         
         // Handle memory warnings - clear the cache
         NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
@@ -85,8 +91,8 @@ NSString *const XKCD_API = @"http://dynamic.xkcd.com/api-0/jsonp/";
         
         [frontPage setLink:@""];
         [frontPage setNews:@""];
-        [frontPage setTitle:@"Welcome to i heart xkcd"];
-        [frontPage setSafeTitle:@""];
+        [frontPage setTitle:@"i heart xkcd"];
+        [frontPage setSafeTitle:@"i heart xkcd"];
         [frontPage setTranscript:@""];
         [frontPage setAlt:@""];
         [frontPage setImageURL:Nil];
@@ -196,19 +202,27 @@ NSString *const XKCD_API = @"http://dynamic.xkcd.com/api-0/jsonp/";
     [_comicsData removeAllObjects];
 }
 
-- (NSString *)itemArchivePath
+#pragma mark - Persistance methods
+
+- (NSString *)documentDirectory
 {
     NSArray *documentDirectories =
     NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     
-    NSString *documentDirectory = [documentDirectories objectAtIndex:0];
-    
+    return [documentDirectories objectAtIndex:0];
+}
+
+- (NSString *)comicsDataArchivePath
+{
+    NSString *documentDirectory = [self documentDirectory];
     return [documentDirectory stringByAppendingPathComponent:@"comics.archive"];
 }
 
 - (BOOL)saveChanges
 {
-    NSString *path = [self itemArchivePath];
+    NSString *path = [self comicsDataArchivePath];
+    [[NSUserDefaults standardUserDefaults] setInteger:_latestPage forKey:UserDefaultLatestPage];
+    [[NSUserDefaults standardUserDefaults] setInteger:_lastUpdateTime forKey:UserDefaultLastUpdate];
     
     return [NSKeyedArchiver archiveRootObject:_comicsData toFile:path];
 }

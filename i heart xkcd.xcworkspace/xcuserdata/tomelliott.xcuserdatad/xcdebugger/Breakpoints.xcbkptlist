@@ -6,27 +6,13 @@
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
-         condition = "index == @&quot;1145&quot;"
-         continueAfterRunningActions = "No"
-         filePath = "i heart xkcd/ModelController.m"
-         timestampString = "377183707.941917"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "127"
-         endingLineNumber = "127"
-         landmarkName = "-configureComicDataFromXkcdForComidID:withCallback:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "i heart xkcd/DataViewController.m"
-         timestampString = "377179286.562177"
+         timestampString = "377190480.653469"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "65"
-         endingLineNumber = "65"
+         startingLineNumber = "62"
+         endingLineNumber = "62"
          landmarkName = "-configureView"
          landmarkType = "5">
       </FileBreakpoint>
@@ -34,13 +20,13 @@
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "i heart xkcd/ModelController.m"
-         timestampString = "377183707.941917"
+         filePath = "i heart xkcd/DataViewController.m"
+         timestampString = "377190480.653469"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "168"
-         endingLineNumber = "168"
-         landmarkName = "-viewControllerAtIndex:storyboard:"
+         startingLineNumber = "53"
+         endingLineNumber = "53"
+         landmarkName = "-viewDidLayoutSubviews"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

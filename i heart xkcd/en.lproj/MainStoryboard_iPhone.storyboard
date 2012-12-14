@@ -12,7 +12,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Avg-LS-5KP"/>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.70000000000000007" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="10">
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" size="system"/>
@@ -24,22 +23,17 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="10" firstAttribute="trailing" secondItem="6" secondAttribute="trailing" type="default" id="8lW-vI-oba"/>
-                            <constraint firstItem="Avg-LS-5KP" firstAttribute="top" secondItem="6" secondAttribute="top" type="default" id="DyS-ML-ytT"/>
                             <constraint firstItem="JEh-ZD-9dT" firstAttribute="trailing" secondItem="6" secondAttribute="trailing" type="default" id="HjS-Od-OZl"/>
                             <constraint firstItem="JEh-ZD-9dT" firstAttribute="bottom" secondItem="10" secondAttribute="bottom" type="default" id="Z4K-B9-Vc2"/>
-                            <constraint firstItem="Avg-LS-5KP" firstAttribute="trailing" secondItem="6" secondAttribute="trailing" type="default" id="bPj-R7-U2V"/>
                             <constraint firstItem="10" firstAttribute="top" secondItem="6" secondAttribute="top" type="default" id="e4o-a4-Qgj"/>
                             <constraint firstItem="JEh-ZD-9dT" firstAttribute="top" secondItem="6" secondAttribute="top" type="default" id="gFL-JB-lbj"/>
-                            <constraint firstItem="Avg-LS-5KP" firstAttribute="leading" secondItem="6" secondAttribute="leading" type="default" id="hPO-hJ-IKm"/>
                             <constraint firstItem="10" firstAttribute="leading" secondItem="6" secondAttribute="leading" type="default" id="ud9-wB-ruJ"/>
-                            <constraint firstItem="Avg-LS-5KP" firstAttribute="bottom" secondItem="6" secondAttribute="bottom" type="default" id="ycn-5F-kOt"/>
                         </constraints>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="loadingView" destination="JEh-ZD-9dT" id="v1S-ZD-O55"/>
-                        <outlet property="scrollView" destination="Avg-LS-5KP" id="fkY-re-5tM"/>
                         <outlet property="titleLabel" destination="10" id="EIP-Yt-gPZ"/>
                     </connections>
                 </viewController>

@@ -29,7 +29,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kqg-c6-oSz"/>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.70000000000000007" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="14">
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
@@ -41,15 +40,11 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Kqg-c6-oSz" firstAttribute="top" secondItem="12" secondAttribute="top" type="default" id="0jQ-MP-fmh"/>
-                            <constraint firstItem="Kqg-c6-oSz" firstAttribute="bottom" secondItem="12" secondAttribute="bottom" type="default" id="1YL-Hf-4X4"/>
-                            <constraint firstItem="Kqg-c6-oSz" firstAttribute="trailing" secondItem="12" secondAttribute="trailing" type="default" id="502-IQ-oPc"/>
                             <constraint firstItem="OQc-MH-OSG" firstAttribute="top" secondItem="12" secondAttribute="top" type="default" id="5V5-pi-fP2"/>
                             <constraint firstItem="OQc-MH-OSG" firstAttribute="bottom" secondItem="14" secondAttribute="bottom" type="default" id="7UO-WA-AHR"/>
                             <constraint firstItem="14" firstAttribute="leading" secondItem="12" secondAttribute="leading" type="default" id="8vi-94-PO3"/>
                             <constraint firstItem="OQc-MH-OSG" firstAttribute="trailing" secondItem="12" secondAttribute="trailing" type="default" id="UZI-SN-gXB"/>
                             <constraint firstItem="14" firstAttribute="trailing" secondItem="12" secondAttribute="trailing" type="default" id="YNS-KK-5Pd"/>
-                            <constraint firstItem="Kqg-c6-oSz" firstAttribute="leading" secondItem="12" secondAttribute="leading" type="default" id="gQb-ia-qys"/>
                             <constraint firstItem="14" firstAttribute="top" secondItem="12" secondAttribute="top" type="default" id="qmt-rB-xU4"/>
                         </constraints>
                         <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackTranslucent"/>
@@ -58,7 +53,6 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="loadingView" destination="OQc-MH-OSG" id="zbi-YR-6SR"/>
-                        <outlet property="scrollView" destination="Kqg-c6-oSz" id="SJJ-oW-5pB"/>
                         <outlet property="titleLabel" destination="14" id="TlA-qD-Oqc"/>
                     </connections>
                 </viewController>

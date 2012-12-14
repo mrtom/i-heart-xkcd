@@ -53,7 +53,7 @@
     
     // Configure overlay
     pageCover = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.height, self.view.bounds.size.width)];
-    pageCover.backgroundColor = [UIColor blackColor];
+    pageCover.backgroundColor = [UIColor whiteColor];
     pageCover.alpha = 0.0;
     [self.view addSubview:pageCover];
 }
@@ -85,6 +85,18 @@
     return _modelController;
 }
 
+-(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    pageCover.alpha = 1.0;
+}
+
+-(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [UIView animateWithDuration:pageCoverAnimationTime
+                     animations:^{pageCover.alpha = 0.0;}
+                     completion:nil];    
+}
+
 #pragma mark - UIPageViewController delegate methods
 
 /*
@@ -96,10 +108,6 @@
 
 - (UIPageViewControllerSpineLocation)pageViewController:(UIPageViewController *)pageViewController spineLocationForInterfaceOrientation:(UIInterfaceOrientation)orientation
 {
-    UIViewController *currentViewController = self.pageViewController.viewControllers[0];
-    NSArray *viewControllers = @[currentViewController];
-    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:NULL];
-        
     self.pageViewController.doubleSided = NO;
     return UIPageViewControllerSpineLocationMin;
 }
@@ -107,7 +115,12 @@
 #pragma mark - DataViewController delegate methods
 - (void) handleLatestComicLoaded:(NSInteger) index
 {
-    [self loadPageAtIndex:index];
+    RootViewController *this = self;
+    [UIView animateWithDuration:pageCoverAnimationTime
+                     animations:^{pageCover.alpha = 1.0;}
+                     completion:^(BOOL finished){
+                         [this loadPageAtIndex:index];
+                     }];
 }
 
 @end
