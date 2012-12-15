@@ -9,15 +9,8 @@
 #import <UIKit/UIKit.h>
 
 #import "ComicData.h"
-
-@protocol DataViewControlsDelegate <NSObject>
-@required
-- (void)loadFirstComic;
-- (void)loadLastComic;
-- (void)loadPreviousComic;
-- (void)loadRandomComic;
-- (void)loadNextComic;
-@end
+#import "ModelController.h"
+#import "DataViewControlsProtocol.h"
 
 @interface DataViewController : UIViewController <UIScrollViewDelegate>
 
@@ -31,7 +24,7 @@
 @property (strong, nonatomic) IBOutlet UISegmentedControl *controlsViewSegmentEnds;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *controlsViewNextRandom;
 
-@property (strong, nonatomic) id<DataViewControlsDelegate> delegate;
+@property (strong, nonatomic) id<DataViewControlsProtocol> delegate;
 
 @property (strong, nonatomic) ComicData *dataObject;
 

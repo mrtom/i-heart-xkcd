@@ -10,8 +10,8 @@
 
 #import <AFNetworking/AFNetworking.h>
 
-#import "DataViewController.h"
 #import "ComicData.h"
+#import "DataViewController.h"
 
 #define ModelControllerFrontPageID 0
 

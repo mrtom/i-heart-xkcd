@@ -63,6 +63,7 @@
 		453E5C76167BF75000EFD8DB /* UIImage+animatedGIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+animatedGIF.h"; sourceTree = "<group>"; };
 		453E5C77167BF75000EFD8DB /* UIImage+animatedGIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+animatedGIF.m"; sourceTree = "<group>"; };
 		453E5C7A167BF77500EFD8DB /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		453E5C7C167CC66300EFD8DB /* DataViewControlsProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataViewControlsProtocol.h; sourceTree = "<group>"; };
 		455F879A1677901E0060811E /* i heart xkcd.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "i heart xkcd.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		455F879E1677901E0060811E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		455F87A01677901E0060811E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -196,6 +197,7 @@
 				455F87B71677901F0060811E /* RootViewController.m */,
 				455F87B91677901F0060811E /* DataViewController.h */,
 				455F87BA1677901F0060811E /* DataViewController.m */,
+				453E5C7C167CC66300EFD8DB /* DataViewControlsProtocol.h */,
 				455F87BC1677901F0060811E /* ModelController.h */,
 				455F87BD1677901F0060811E /* ModelController.m */,
 				455F87F81678C08B0060811E /* ComicData.h */,

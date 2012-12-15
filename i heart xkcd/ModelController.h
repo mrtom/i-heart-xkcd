@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "DataViewControlsProtocol.h"
+
 #define UserDefaultLatestPage @"latestPage"
 #define UserDefaultLastUpdate @"lastUpdate"
 
@@ -20,7 +22,7 @@
 
 @interface ModelController : NSObject <UIPageViewControllerDataSource>
 
-@property (strong, nonatomic) id<ModelControllerDelegate> delegate;
+@property (strong, nonatomic) id<ModelControllerDelegate, DataViewControlsProtocol> delegate;
 
 - (DataViewController *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard;
 - (NSUInteger)indexOfViewController:(DataViewController *)viewController;
