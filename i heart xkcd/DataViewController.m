@@ -10,6 +10,7 @@
 #import <AFNetworking/AFNetworking.h>
 #import <AFNetworking/UIImageView+AFNetworking.h>
 #import "UIImage+animatedGIF.h"
+#import "ModelController.h"
 
 #define pageOverlayToggleAnimationTime 0.300
 #define pageOverlayToggleBounceLimit pageOverlayToggleAnimationTime+0.025
@@ -30,6 +31,8 @@
 @end
 
 @implementation DataViewController
+
+@synthesize delegate;
 
 - (void)viewDidLoad
 {
@@ -73,6 +76,9 @@
     [self.altTextScrollView setScrollEnabled:YES];
     [self.altTextScrollView addSubview:self.altTextView];
     
+    // Setup controls
+    [self.controlsViewCanvas setAlpha:0];
+    
     // Setup gesture recognisers
     UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     tapRecognizer.numberOfTapsRequired = 1;
@@ -81,10 +87,12 @@
     
     // Setup gesture recognisers
     self.lastTimeOverlaysToggled = 0;
-    UITapGestureRecognizer *twoFingerTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)];
-    twoFingerTapRecognizer.numberOfTapsRequired = 1;
-    twoFingerTapRecognizer.numberOfTouchesRequired = 2;
-    [self.view addGestureRecognizer:twoFingerTapRecognizer];
+    UITapGestureRecognizer *doubleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)];
+    doubleTapRecognizer.numberOfTapsRequired = 2;
+    doubleTapRecognizer.numberOfTouchesRequired = 1;
+    [self.view addGestureRecognizer:doubleTapRecognizer];
+    
+    [tapRecognizer requireGestureRecognizerToFail:doubleTapRecognizer];
 }
 
 - (void)didReceiveMemoryWarning
@@ -189,6 +197,40 @@
                                                     (altTextBackgroundPadding+titleBarHeight),
                                                     altTextScrollWidth+2*altTextPadding, altTextScrollHeight+2*altTextPadding)];
     self.altTextBackgroundView.center = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2+titleBarHeight/2);
+    
+    // Check segment state
+    if ([self.dataObject comicID] == 1 || [self.dataObject comicID] == 0) {
+        if (self.controlsViewSegmentEnds) [self.controlsViewSegmentEnds setEnabled:NO forSegmentAtIndex:0];
+        if (self.controlsViewNextRandom)  [self.controlsViewNextRandom setEnabled:NO forSegmentAtIndex:0];
+        if (self.controlsViewSegmentAll) {
+            [self.controlsViewSegmentAll setEnabled:NO forSegmentAtIndex:0];
+            [self.controlsViewSegmentAll setEnabled:NO forSegmentAtIndex:1];
+        }
+    } else {
+        if (self.controlsViewSegmentEnds) [self.controlsViewSegmentEnds setEnabled:YES forSegmentAtIndex:0];
+        if (self.controlsViewNextRandom)  [self.controlsViewNextRandom setEnabled:YES forSegmentAtIndex:0];
+        if (self.controlsViewSegmentAll) {
+            [self.controlsViewSegmentAll setEnabled:YES forSegmentAtIndex:0];
+            [self.controlsViewSegmentAll setEnabled:YES forSegmentAtIndex:1];
+        }
+    }
+    
+    int latestPage = [[NSUserDefaults standardUserDefaults] integerForKey:UserDefaultLatestPage];
+    if ([self.dataObject comicID] == latestPage) {
+        if (self.controlsViewSegmentEnds) [self.controlsViewSegmentEnds setEnabled:NO forSegmentAtIndex:1];
+        if (self.controlsViewNextRandom)  [self.controlsViewNextRandom setEnabled:NO forSegmentAtIndex:2];
+        if (self.controlsViewSegmentAll) {
+            [self.controlsViewSegmentAll setEnabled:NO forSegmentAtIndex:3];
+            [self.controlsViewSegmentAll setEnabled:NO forSegmentAtIndex:4];
+        }
+    } else {
+        if (self.controlsViewSegmentEnds) [self.controlsViewSegmentEnds setEnabled:YES forSegmentAtIndex:1];
+        if (self.controlsViewNextRandom)  [self.controlsViewNextRandom setEnabled:YES forSegmentAtIndex:2];
+        if (self.controlsViewSegmentAll) {
+            [self.controlsViewSegmentAll setEnabled:YES forSegmentAtIndex:3];
+            [self.controlsViewSegmentAll setEnabled:YES forSegmentAtIndex:4];
+        }
+    }
 }
 
 -(void)checkLoadedState
@@ -220,7 +262,7 @@
     return YES;
 }
 
-- (void) handleTap:(UITapGestureRecognizer *)sender {
+- (void)handleTap:(UITapGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateEnded && [self canToggleOverlays]) {
         self.lastTimeOverlaysToggled = CACurrentMediaTime();
         
@@ -228,11 +270,11 @@
     }
 }
 
-- (void) handleDoubleTap:(UITapGestureRecognizer *)sender {
+- (void)handleDoubleTap:(UITapGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateEnded && [self canToggleOverlays]) {
         self.lastTimeOverlaysToggled = CACurrentMediaTime();
         
-        NSLog(@"Double tap tapped");
+        [self toggleControls];
     }
 }
 
@@ -263,6 +305,95 @@
                              completion:nil];
         }
     }
+}
+
+- (void)toggleControls
+{
+    if ([self.controlsViewCanvas alpha] == 0) {
+        [UIView animateWithDuration:pageOverlayToggleAnimationTime
+                         animations:^{self.controlsViewCanvas.alpha = 1.0;}
+                         completion:nil];
+    } else {
+        [UIView animateWithDuration:pageOverlayToggleAnimationTime
+                         animations:^{self.controlsViewCanvas.alpha = 0;}
+                         completion:nil];
+    }
+}
+
+#pragma mark - Comic control
+-(IBAction)controlsViewSegmentAllIndexChanged
+{
+    switch (self.controlsViewSegmentAll.selectedSegmentIndex) {
+        case 0:
+            [self goFirst];
+            break;
+        case 1:
+            [self goPrevious];
+            break;
+        case 2:
+            [self goRandom];
+            break;
+        case 3:
+            [self goNext];
+            break;
+        case 4:
+            [self goLast];
+            break;
+    }
+    [self.controlsViewSegmentAll setSelectedSegmentIndex:UISegmentedControlNoSegment];
+}
+-(IBAction)controlsViewSegmentEndsIndexChanged
+{
+    switch (self.controlsViewSegmentEnds.selectedSegmentIndex) {
+        case 0:
+            [self goFirst];
+            break;
+        case 1:
+            [self goLast];
+            break;
+    }
+    [self.controlsViewSegmentEnds setSelectedSegmentIndex:UISegmentedControlNoSegment];
+}
+
+-(IBAction)controlsViewNextRandomIndexChanged
+{
+    switch (self.controlsViewNextRandom.selectedSegmentIndex) {
+        case 0:
+            [self goPrevious];
+            break;
+        case 1:
+            [self goRandom];
+            break;
+        case 2:
+            [self goNext];
+            break;
+    }
+    [self.controlsViewNextRandom setSelectedSegmentIndex:UISegmentedControlNoSegment];
+}
+
+- (void)goFirst
+{
+    [self.delegate loadFirstComic];
+}
+
+- (void)goLast
+{
+    [self.delegate loadLastComic];
+}
+
+- (void)goPrevious
+{
+    [self.delegate loadPreviousComic];
+}
+
+- (void)goRandom
+{
+    [self.delegate loadRandomComic];
+}
+
+- (void)goNext
+{
+    [self.delegate loadNextComic];
 }
 
 #pragma mark - UIScrollViewDelegate classes

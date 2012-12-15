@@ -37,14 +37,46 @@
                                 <color key="shadowColor" red="0.49259086279999997" green="0.49259086279999997" blue="0.49259086279999997" alpha="1" colorSpace="calibratedRGB"/>
                             </label>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="OQc-MH-OSG"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dax-VM-jfU">
+                                <subviews>
+                                    <view alpha="0.80000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TBH-Wu-Uhc">
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" translatesAutoresizingMaskIntoConstraints="NO" id="4Ls-cv-gOA">
+                                        <segments>
+                                            <segment title="First"/>
+                                            <segment title="Prev"/>
+                                            <segment title="Random"/>
+                                            <segment title="Next"/>
+                                            <segment title="Last"/>
+                                        </segments>
+                                        <connections>
+                                            <action selector="controlsViewSegmentAllIndexChanged" destination="5" eventType="valueChanged" id="na2-da-aeQ"/>
+                                        </connections>
+                                    </segmentedControl>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="TBH-Wu-Uhc" firstAttribute="bottom" secondItem="dax-VM-jfU" secondAttribute="bottom" type="default" id="0dA-jL-AAO"/>
+                                    <constraint firstAttribute="trailing" secondItem="TBH-Wu-Uhc" secondAttribute="trailing" constant="132" id="17P-5z-xl0"/>
+                                    <constraint firstAttribute="bottom" secondItem="4Ls-cv-gOA" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="3bt-yQ-qsG"/>
+                                    <constraint firstItem="4Ls-cv-gOA" firstAttribute="centerX" secondItem="dax-VM-jfU" secondAttribute="centerX" type="default" id="aY3-km-CpP"/>
+                                    <constraint firstItem="TBH-Wu-Uhc" firstAttribute="leading" secondItem="dax-VM-jfU" secondAttribute="leading" constant="131" id="f2e-m8-QHT"/>
+                                    <constraint firstItem="TBH-Wu-Uhc" firstAttribute="top" secondItem="dax-VM-jfU" secondAttribute="top" type="default" id="r7y-YP-Yyt"/>
+                                    <constraint firstItem="4Ls-cv-gOA" firstAttribute="top" secondItem="dax-VM-jfU" secondAttribute="top" constant="20" symbolic="YES" type="default" id="t7O-uE-pbZ"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="OQc-MH-OSG" firstAttribute="top" secondItem="12" secondAttribute="top" type="default" id="5V5-pi-fP2"/>
                             <constraint firstItem="OQc-MH-OSG" firstAttribute="bottom" secondItem="14" secondAttribute="bottom" type="default" id="7UO-WA-AHR"/>
                             <constraint firstItem="14" firstAttribute="leading" secondItem="12" secondAttribute="leading" type="default" id="8vi-94-PO3"/>
+                            <constraint firstAttribute="bottom" secondItem="dax-VM-jfU" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="FLL-9T-3gr"/>
                             <constraint firstItem="OQc-MH-OSG" firstAttribute="trailing" secondItem="12" secondAttribute="trailing" type="default" id="UZI-SN-gXB"/>
                             <constraint firstItem="14" firstAttribute="trailing" secondItem="12" secondAttribute="trailing" type="default" id="YNS-KK-5Pd"/>
+                            <constraint firstItem="dax-VM-jfU" firstAttribute="leading" secondItem="12" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="f6L-GA-mEn"/>
+                            <constraint firstAttribute="trailing" secondItem="dax-VM-jfU" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="li5-Pe-EUr"/>
                             <constraint firstItem="14" firstAttribute="top" secondItem="12" secondAttribute="top" type="default" id="qmt-rB-xU4"/>
                         </constraints>
                         <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackTranslucent"/>
@@ -52,6 +84,9 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
+                        <outlet property="controlsViewBacking" destination="TBH-Wu-Uhc" id="xj9-gg-CeT"/>
+                        <outlet property="controlsViewCanvas" destination="dax-VM-jfU" id="Pfb-ZA-eJe"/>
+                        <outlet property="controlsViewSegmentAll" destination="4Ls-cv-gOA" id="hqn-UN-jKO"/>
                         <outlet property="loadingView" destination="OQc-MH-OSG" id="zbi-YR-6SR"/>
                         <outlet property="titleLabel" destination="14" id="TlA-qD-Oqc"/>
                     </connections>
@@ -65,6 +100,14 @@
         <class className="DataViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/DataViewController.h"/>
             <relationships>
+                <relationship kind="action" name="controlsViewNextRandomIndexChanged"/>
+                <relationship kind="action" name="controlsViewSegmentAllIndexChanged"/>
+                <relationship kind="action" name="controlsViewSegmentEndsIndexChanged"/>
+                <relationship kind="outlet" name="controlsViewBacking" candidateClass="UIView"/>
+                <relationship kind="outlet" name="controlsViewCanvas" candidateClass="UIView"/>
+                <relationship kind="outlet" name="controlsViewNextRandom" candidateClass="UISegmentedControl"/>
+                <relationship kind="outlet" name="controlsViewSegmentAll" candidateClass="UISegmentedControl"/>
+                <relationship kind="outlet" name="controlsViewSegmentEnds" candidateClass="UISegmentedControl"/>
                 <relationship kind="outlet" name="loadingView" candidateClass="UIActivityIndicatorView"/>
                 <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>

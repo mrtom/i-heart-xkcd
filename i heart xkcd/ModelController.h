@@ -24,6 +24,7 @@
 
 - (DataViewController *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard;
 - (NSUInteger)indexOfViewController:(DataViewController *)viewController;
+- (NSUInteger)indexOfLastComic;
 
 FOUNDATION_EXPORT NSString *const XKCD_API;
 

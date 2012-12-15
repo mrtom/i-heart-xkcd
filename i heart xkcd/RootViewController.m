@@ -70,7 +70,9 @@
     
     [UIView animateWithDuration:pageCoverAnimationTime
                      animations:^{pageCover.alpha = 0.0;}
-                     completion:nil];
+                     completion:^(BOOL finished){
+                         if (finished) self.currentIndex = index;
+                     }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -118,8 +120,7 @@
     return UIPageViewControllerSpineLocationMin;
 }
 
-#pragma mark - DataViewController delegate methods
-- (void) handleLatestComicLoaded:(NSInteger) index
+- (void) switchToPageViewControllerWithoutPageTurnForIndex:(NSInteger) index
 {
     if (self.currentIndex == index) return;
     
@@ -129,6 +130,51 @@
                      completion:^(BOOL finished){
                          [this loadPageAtIndex:index];
                      }];
+}
+
+#pragma mark - ModelController delegate methods
+
+- (void) handleLatestComicLoaded:(NSInteger) index
+{
+    [self switchToPageViewControllerWithoutPageTurnForIndex:index];
+}
+
+#pragma mark - DataViewController delegate methods
+
+- (void)loadFirstComic
+{
+    [self switchToPageViewControllerWithoutPageTurnForIndex:1];
+}
+
+- (void)loadLastComic
+{
+    NSLog(@"Loading %d", [self.modelController indexOfLastComic]);
+    [self switchToPageViewControllerWithoutPageTurnForIndex:[self.modelController indexOfLastComic]];
+}
+
+- (void)loadPreviousComic
+{
+    if (self.currentIndex <= 1) {
+        return;
+    }
+    
+    [self switchToPageViewControllerWithoutPageTurnForIndex:self.currentIndex-1];
+}
+
+- (void)loadRandomComic
+{
+    NSInteger randomIndex = arc4random() % [self.modelController indexOfLastComic];
+    
+    [self switchToPageViewControllerWithoutPageTurnForIndex:randomIndex];
+}
+
+- (void)loadNextComic
+{
+    if (self.currentIndex >= [self.modelController indexOfLastComic]) {
+        return;
+    }
+    
+    [self switchToPageViewControllerWithoutPageTurnForIndex:self.currentIndex+1];
 }
 
 @end

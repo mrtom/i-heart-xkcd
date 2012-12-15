@@ -140,6 +140,11 @@ NSString *const XKCD_API = @"http://dynamic.xkcd.com/api-0/jsonp/";
     [operation start];
 }
 
+- (NSUInteger)indexOfLastComic
+{
+    return self.latestPage;
+}
+
 - (DataViewController *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard
 {   
     // Return the data view controller for the given index.
@@ -149,6 +154,7 @@ NSString *const XKCD_API = @"http://dynamic.xkcd.com/api-0/jsonp/";
     
     // Create a new view controller and pass suitable data.
     DataViewController *dataViewController = [storyboard instantiateViewControllerWithIdentifier:@"DataViewController"];
+    [dataViewController setDelegate:self.delegate];
     
     NSString *key = [NSString stringWithFormat:@"%d", index];
     ComicData *comicData = [self.comicsData objectForKey:key];

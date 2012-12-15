@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "ModelController.h"
+#import "DataViewController.h"
 
-@interface RootViewController : UIViewController <UIPageViewControllerDelegate, ModelControllerDelegate> {
+@interface RootViewController : UIViewController <UIPageViewControllerDelegate, ModelControllerDelegate, DataViewControlsDelegate> {
     UIView *pageCover;
 }
 
