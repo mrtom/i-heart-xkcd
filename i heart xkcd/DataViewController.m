@@ -128,51 +128,64 @@
     [self.imageView setFrame:CGRectMake(0, 0, imageSize.width, imageSize.height)];
     self.imageView.center = CGPointMake((self.scrollView.bounds.size.width/2),(self.scrollView.bounds.size.height/2));
 
+    // Get the image from XKCD. This is async!
     [self.imageView setImageWithURLRequest:[NSURLRequest requestWithURL:[self.dataObject imageURL]] placeholderImage:placeHolderImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image){
         
-        // Set the content view to be the size of the comid image size
-        CGSize comicSize;
-        NSInteger scale = 1;
-        
-        if ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] &&
-            ([UIScreen mainScreen].scale == 2.0)) {
-            // Retina display
-            scale = 2;
-        }
-        
-        comicSize = CGSizeMake(image.size.width*scale, image.size.height*scale);
-        
-        self.scrollView.contentSize = comicSize;
-        
-        // If gif, start animating
-        NSString *urlString = [[self.dataObject imageURL] absoluteString];
-        if ([@"gif" isEqualToString:[urlString substringFromIndex:[urlString length]-3]]) {
-            // FIXME: Would be good if we could set the proper duration, not just make one up
-            // Should also refactor and move this outside the AFNetworking code, so we don't fetch it twice
-            image = [UIImage animatedImageWithAnimatedGIFURL:[self.dataObject imageURL] duration:30];
-        }
-        
-        [self.imageView setFrame:CGRectMake(0, 0, comicSize.width, comicSize.height)];
-        [self.imageView setImage:image];
-        
-        self.imageView.center = CGPointMake((self.scrollView.bounds.size.width/2),(self.scrollView.bounds.size.height/2));
-        
-        // Fade out the title if it's covering the image
-        self.shouldHideTitle = (self.imageView.frame.origin.y < self.titleLabel.frame.size.height);
-        if (self.shouldHideTitle) {
-            [UIView animateWithDuration:2+pageOverlayToggleAnimationTime
-                             animations:^{self.titleLabel.alpha = 0;}
-                             completion:nil];            
-        }
-        
-        [this checkLoadedState];
+        [this configureImageLoadedFromXkcdWithImage:image];
         
     } failure:nil];
     
     self.titleLabel.text = [self.dataObject safeTitle];
     
     // Setup the alt text view
-    // CGSize partialStringSize  = [partialString sizeWithFont:label.font constrainedToSize:sizeForText lineBreakMode:label.lineBreakMode];
+    [self configureAltTextViews];
+    
+    // Check segment state
+    [self configureSegmentedControlsState];
+}
+
+-(void)configureImageLoadedFromXkcdWithImage:(UIImage *)image
+{
+    // Set the content view to be the size of the comid image size
+    CGSize comicSize;
+    NSInteger scale = 1;
+    
+    if ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] &&
+        ([UIScreen mainScreen].scale == 2.0)) {
+        // Retina display
+        scale = 2;
+    }
+    
+    comicSize = CGSizeMake(image.size.width*scale, image.size.height*scale);
+    
+    self.scrollView.contentSize = comicSize;
+    
+    // If gif, start animating
+    NSString *urlString = [[self.dataObject imageURL] absoluteString];
+    if ([@"gif" isEqualToString:[urlString substringFromIndex:[urlString length]-3]]) {
+        // FIXME: Would be good if we could set the proper duration, not just make one up
+        // Should also refactor and move this outside the AFNetworking code, so we don't fetch it twice
+        image = [UIImage animatedImageWithAnimatedGIFURL:[self.dataObject imageURL] duration:30];
+    }
+    
+    [self.imageView setFrame:CGRectMake(0, 0, comicSize.width, comicSize.height)];
+    [self.imageView setImage:image];
+    
+    self.imageView.center = CGPointMake((self.scrollView.bounds.size.width/2),(self.scrollView.bounds.size.height/2));
+    
+    // Fade out the title if it's covering the image
+    self.shouldHideTitle = (self.imageView.frame.origin.y < self.titleLabel.frame.size.height);
+    if (self.shouldHideTitle) {
+        [UIView animateWithDuration:2+pageOverlayToggleAnimationTime
+                         animations:^{self.titleLabel.alpha = 0;}
+                         completion:nil];
+    }
+    
+    [self checkLoadedState];
+}
+
+-(void)configureAltTextViews
+{
     NSString *altText = [[self dataObject] alt];
     NSLineBreakMode lineBreakMode = NSLineBreakByWordWrapping;
     UIFont *labelFont = [UIFont systemFontOfSize:17];
@@ -192,8 +205,8 @@
     [self.altTextView setFrame:CGRectMake(0, 0, altTextSize.width, altTextSize.height)];
     
     [self.altTextScrollView setFrame:CGRectMake((altTextPadding+altTextBackgroundPadding),
-                                          (altTextPadding+altTextBackgroundPadding+titleBarHeight),
-                                          altTextScrollWidth, altTextScrollHeight)];
+                                                (altTextPadding+altTextBackgroundPadding+titleBarHeight),
+                                                altTextScrollWidth, altTextScrollHeight)];
     self.altTextScrollView.center = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2+titleBarHeight/2);
     [self.altTextScrollView setContentSize:self.altTextView.bounds.size];
     
@@ -201,8 +214,10 @@
                                                     (altTextBackgroundPadding+titleBarHeight),
                                                     altTextScrollWidth+2*altTextPadding, altTextScrollHeight+2*altTextPadding)];
     self.altTextBackgroundView.center = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2+titleBarHeight/2);
-    
-    // Check segment state
+}
+
+-(void)configureSegmentedControlsState
+{
     if ([self.dataObject comicID] == 1 || [self.dataObject comicID] == 0) {
         if (self.controlsViewSegmentEnds) [self.controlsViewSegmentEnds setEnabled:NO forSegmentAtIndex:0];
         if (self.controlsViewNextRandom)  [self.controlsViewNextRandom setEnabled:NO forSegmentAtIndex:0];
