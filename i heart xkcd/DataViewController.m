@@ -45,17 +45,14 @@
     
     self.imageView = [[UIImageView alloc] init];
     
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(comicPadding,
-                                                                     comicPadding,
-                                                                     self.view.bounds.size.width-2*comicPadding,
-                                                                     self.view.bounds.size.height-2*comicPadding)];
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
     [self.view addSubview:self.scrollView];
     [self.view sendSubviewToBack:self.scrollView];
     
     self.scrollView.minimumZoomScale=0.1;
     self.scrollView.maximumZoomScale=1.0;
     self.scrollView.delegate=self;
-    self.scrollView.clipsToBounds = NO;
+    self.scrollView.clipsToBounds = YES;
     self.scrollView.indicatorStyle = UIScrollViewIndicatorStyleDefault;
     [self.scrollView setScrollEnabled:YES];
     
@@ -162,8 +159,9 @@
     }
     
     comicSize = CGSizeMake(image.size.width*scale, image.size.height*scale);
+    CGSize comicWithPaddingSize = CGSizeMake(comicSize.width+2*comicPadding, comicSize.height+2*comicPadding);
     
-    self.scrollView.contentSize = comicSize;
+    self.scrollView.contentSize = comicWithPaddingSize;
     
     // If gif, start animating
     NSString *urlString = [[self.dataObject imageURL] absoluteString];
@@ -173,25 +171,25 @@
         image = [UIImage animatedImageWithAnimatedGIFURL:[self.dataObject imageURL] duration:30];
     }
     
-    [self.imageView setFrame:CGRectMake(0, 0, comicSize.width, comicSize.height)];
+    [self.imageView setFrame:CGRectMake(comicPadding, comicPadding, comicSize.width, comicSize.height)];
     [self.imageView setImage:image];
     
     // Assume image is smaller than view and center it
     self.imageView.center = CGPointMake((self.scrollView.bounds.size.width/2),(self.scrollView.bounds.size.height/2));
     
     // Check if this is actually true. If not, set to 0 and allow scroll view to handle position
-    if (self.imageView.frame.size.width > self.scrollView.bounds.size.width) {
+    if (self.imageView.frame.size.width > self.scrollView.bounds.size.width-2*comicPadding) {
         self.imageIsLargerThanScrollView = YES;
         
         CGRect currentRect = self.imageView.frame;
-        currentRect.origin.x = 0;
+        currentRect.origin.x = comicPadding;
         [self.imageView setFrame:currentRect];
     }
-    if (self.imageView.frame.size.height > self.scrollView.bounds.size.height) {
+    if (self.imageView.frame.size.height > self.scrollView.bounds.size.height-2*comicPadding) {
         self.imageIsLargerThanScrollView = YES;
         
         CGRect currentRect = self.imageView.frame;
-        currentRect.origin.y = 0;
+        currentRect.origin.y = comicPadding;
         [self.imageView setFrame:currentRect];
     }
     
