@@ -9,6 +9,7 @@
 #import "DataViewController.h"
 #import <AFNetworking/AFNetworking.h>
 #import <AFNetworking/UIImageView+AFNetworking.h>
+#import "UIImage+animatedGIF.h"
 
 #define pageOverlayToggleAnimationTime 0.300
 #define pageOverlayToggleBounceLimit pageOverlayToggleAnimationTime+0.025
@@ -130,12 +131,22 @@
         comicSize = CGSizeMake(image.size.width*scale, image.size.height*scale);
         
         self.scrollView.contentSize = comicSize;
+        
+        // If gif, start animating
+        NSString *urlString = [[self.dataObject imageURL] absoluteString];
+        if ([@"gif" isEqualToString:[urlString substringFromIndex:[urlString length]-3]]) {
+            // FIXME: Would be good if we could set the proper duration, not just make one up
+            // Should also refactor and move this outside the AFNetworking code, so we don't fetch it twice
+            image = [UIImage animatedImageWithAnimatedGIFURL:[self.dataObject imageURL] duration:30];
+        }
+        
         [self.imageView setFrame:CGRectMake(0, 0, comicSize.width, comicSize.height)];
         [self.imageView setImage:image];
+        
         self.imageView.center = CGPointMake((self.scrollView.bounds.size.width/2),(self.scrollView.bounds.size.height/2));
         
         // Fade out the title if it's covering the image
-        self.shouldHideTitle = (self.imageView.frame.origin.x < self.titleLabel.frame.size.height);
+        self.shouldHideTitle = (self.imageView.frame.origin.y < self.titleLabel.frame.size.height);
         if (self.shouldHideTitle) {
             [UIView animateWithDuration:2+pageOverlayToggleAnimationTime
                              animations:^{self.titleLabel.alpha = 0;}
@@ -163,8 +174,8 @@
     
     CGSize altTextSize = [altText sizeWithFont:labelFont constrainedToSize:CGSizeMake(maxWidthForAltText, 9999) lineBreakMode:lineBreakMode];
     
-    float altTextScrollWidth  = altTextSize.width < maxWidthForAltText ? altTextSize.width : maxWidthForAltText;
-    float altTextScrollHeight = altTextSize.height < maxHeightForAltText ? altTextSize.height : maxHeightForAltText;
+    float altTextScrollWidth = MIN(altTextSize.width, maxWidthForAltText);
+    float altTextScrollHeight = MIN(altTextSize.height, maxHeightForAltText);
     
     [self.altTextView setFrame:CGRectMake(0, 0, altTextSize.width, altTextSize.height)];
     

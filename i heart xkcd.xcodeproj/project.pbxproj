@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		453E5C78167BF75000EFD8DB /* UIImage+animatedGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 453E5C77167BF75000EFD8DB /* UIImage+animatedGIF.m */; };
+		453E5C7B167BF77500EFD8DB /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 453E5C7A167BF77500EFD8DB /* ImageIO.framework */; };
 		455F879F1677901E0060811E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 455F879E1677901E0060811E /* UIKit.framework */; };
 		455F87A11677901E0060811E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 455F87A01677901E0060811E /* Foundation.framework */; };
 		455F87A31677901E0060811E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 455F87A21677901E0060811E /* CoreGraphics.framework */; };
@@ -58,6 +60,9 @@
 
 /* Begin PBXFileReference section */
 		20AA35C19E044FD9BF7D6F78 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		453E5C76167BF75000EFD8DB /* UIImage+animatedGIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+animatedGIF.h"; sourceTree = "<group>"; };
+		453E5C77167BF75000EFD8DB /* UIImage+animatedGIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+animatedGIF.m"; sourceTree = "<group>"; };
+		453E5C7A167BF77500EFD8DB /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		455F879A1677901E0060811E /* i heart xkcd.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "i heart xkcd.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		455F879E1677901E0060811E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		455F87A01677901E0060811E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -111,6 +116,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				453E5C7B167BF77500EFD8DB /* ImageIO.framework in Frameworks */,
 				45E238E2167BB51200FC38C4 /* QuartzCore.framework in Frameworks */,
 				455F87F71677974F0060811E /* MobileCoreServices.framework in Frameworks */,
 				455F87F5167796DC0060811E /* SystemConfiguration.framework in Frameworks */,
@@ -141,7 +147,6 @@
 		455F878F1677901E0060811E = {
 			isa = PBXGroup;
 			children = (
-				455F87F61677974F0060811E /* MobileCoreServices.framework */,
 				455F87A41677901F0060811E /* i heart xkcd */,
 				455F87D11677901F0060811E /* i heart xkcdTests */,
 				455F879D1677901E0060811E /* Frameworks */,
@@ -162,6 +167,8 @@
 		455F879D1677901E0060811E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				453E5C7A167BF77500EFD8DB /* ImageIO.framework */,
+				455F87F61677974F0060811E /* MobileCoreServices.framework */,
 				45E238E1167BB51200FC38C4 /* QuartzCore.framework */,
 				455F87F4167796DC0060811E /* SystemConfiguration.framework */,
 				455F87EA167790E40060811E /* Accounts.framework */,
@@ -181,6 +188,8 @@
 		455F87A41677901F0060811E /* i heart xkcd */ = {
 			isa = PBXGroup;
 			children = (
+				453E5C76167BF75000EFD8DB /* UIImage+animatedGIF.h */,
+				453E5C77167BF75000EFD8DB /* UIImage+animatedGIF.m */,
 				455F87AD1677901F0060811E /* AppDelegate.h */,
 				455F87AE1677901F0060811E /* AppDelegate.m */,
 				455F87B61677901F0060811E /* RootViewController.h */,
@@ -380,6 +389,7 @@
 				455F87BB1677901F0060811E /* DataViewController.m in Sources */,
 				455F87BE1677901F0060811E /* ModelController.m in Sources */,
 				455F87FA1678C08B0060811E /* ComicData.m in Sources */,
+				453E5C78167BF75000EFD8DB /* UIImage+animatedGIF.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
