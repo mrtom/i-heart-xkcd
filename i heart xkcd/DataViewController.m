@@ -15,8 +15,9 @@
 #define pageOverlayToggleAnimationTime 0.300
 #define pageOverlayToggleBounceLimit pageOverlayToggleAnimationTime+0.025
 
-#define altTextBackgroundPadding 15 // Padding between the alt text background and the parent view
-#define altTextPadding 10           // Padding between the alt text and the alt text background
+#define altTextBackgroundPadding 15           // Padding between the alt text background and the parent view
+#define altTextPadding 10                     // Padding between the alt text and the alt text background
+#define comicPadding altTextBackgroundPadding // Padding between the scroll view housing the comic and the parent view
 
 @interface DataViewController ()
 
@@ -44,14 +45,17 @@
     
     self.imageView = [[UIImageView alloc] init];
     
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(comicPadding,
+                                                                     comicPadding,
+                                                                     self.view.bounds.size.width-2*comicPadding,
+                                                                     self.view.bounds.size.height-2*comicPadding)];
     [self.view addSubview:self.scrollView];
     [self.view sendSubviewToBack:self.scrollView];
     
     self.scrollView.minimumZoomScale=0.1;
     self.scrollView.maximumZoomScale=1.0;
     self.scrollView.delegate=self;
-    self.scrollView.clipsToBounds = YES;
+    self.scrollView.clipsToBounds = NO;
     self.scrollView.indicatorStyle = UIScrollViewIndicatorStyleDefault;
     [self.scrollView setScrollEnabled:YES];
     
@@ -115,10 +119,11 @@
     [self configureView];
 }
 
+#pragma mark - View configuration
+
 - (void)configureView
 {
     DataViewController *this = self;
-    self.scrollView.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
     
     UIImage *placeHolderImage = [UIImage imageNamed:@"terrible_small_logo"];
     
@@ -164,14 +169,32 @@
     NSString *urlString = [[self.dataObject imageURL] absoluteString];
     if ([@"gif" isEqualToString:[urlString substringFromIndex:[urlString length]-3]]) {
         // FIXME: Would be good if we could set the proper duration, not just make one up
-        // Should also refactor and move this outside the AFNetworking code, so we don't fetch it twice
+        // FIXME: Should also refactor and move this outside the AFNetworking code, so we don't fetch it twice
         image = [UIImage animatedImageWithAnimatedGIFURL:[self.dataObject imageURL] duration:30];
     }
     
     [self.imageView setFrame:CGRectMake(0, 0, comicSize.width, comicSize.height)];
     [self.imageView setImage:image];
     
+    // Assume image is smaller than view and center it
     self.imageView.center = CGPointMake((self.scrollView.bounds.size.width/2),(self.scrollView.bounds.size.height/2));
+    
+    // Check if this is actually true. If not, set to 0 and allow scroll view to handle position
+    if (self.imageView.frame.size.width > self.scrollView.bounds.size.width) {
+        self.imageIsLargerThanScrollView = YES;
+        
+        CGRect currentRect = self.imageView.frame;
+        currentRect.origin.x = 0;
+        [self.imageView setFrame:currentRect];
+    }
+    if (self.imageView.frame.size.height > self.scrollView.bounds.size.height) {
+        self.imageIsLargerThanScrollView = YES;
+        
+        CGRect currentRect = self.imageView.frame;
+        currentRect.origin.y = 0;
+        [self.imageView setFrame:currentRect];
+    }
+    
     
     // Fade out the title if it's covering the image
     self.shouldHideTitle = (self.imageView.frame.origin.y < self.titleLabel.frame.size.height);
@@ -271,6 +294,8 @@
     _dataObject = dataObject;
     [self configureView];
 }
+
+#pragma mark - Handle gestures
 
 - (BOOL)canToggleOverlays
 {
