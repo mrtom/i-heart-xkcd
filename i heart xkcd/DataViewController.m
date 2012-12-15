@@ -27,6 +27,7 @@
 
 @property (readwrite, nonatomic) double lastTimeOverlaysToggled;
 @property BOOL shouldHideTitle;
+@property BOOL imageIsLargerThanScrollView;
 
 @end
 
@@ -37,6 +38,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.shouldHideTitle = NO;
+    self.imageIsLargerThanScrollView = NO;
     
     self.imageView = [[UIImageView alloc] init];
     
@@ -281,6 +285,8 @@
 - (void)toggleTitleAndAltText
 {
     if ([self.altTextBackgroundView alpha] == 0) {
+        [self.scrollView setScrollEnabled:NO];
+        
         [UIView animateWithDuration:pageOverlayToggleAnimationTime
                          animations:^{self.altTextBackgroundView.alpha = 0.8;}
                          completion:nil];
@@ -293,6 +299,8 @@
                              completion:nil];
         }
     } else {
+        [self.scrollView setScrollEnabled:YES];
+        
         [UIView animateWithDuration:pageOverlayToggleAnimationTime
                          animations:^{self.altTextBackgroundView.alpha = 0;}
                          completion:nil];
