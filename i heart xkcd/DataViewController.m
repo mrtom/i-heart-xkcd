@@ -121,6 +121,7 @@
 - (void)configureView
 {
     DataViewController *this = self;
+    [self.scrollView setFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
     
     UIImage *placeHolderImage = [UIImage imageNamed:@"terrible_small_logo"];
     
