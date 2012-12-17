@@ -49,8 +49,9 @@
     [self.view addSubview:self.scrollView];
     [self.view sendSubviewToBack:self.scrollView];
     
-    self.scrollView.minimumZoomScale=0.1;
+    self.scrollView.minimumZoomScale=1.0;
     self.scrollView.maximumZoomScale=1.0;
+    self.scrollView.bouncesZoom = NO;
     self.scrollView.delegate=self;
     self.scrollView.clipsToBounds = YES;
     self.scrollView.indicatorStyle = UIScrollViewIndicatorStyleDefault;
@@ -149,7 +150,7 @@
 
 -(void)configureImageLoadedFromXkcdWithImage:(UIImage *)image
 {
-    // Set the content view to be the size of the comid image size
+    // Set the content view to be the size of the comic image size
     CGSize comicSize;
     NSInteger scale = 1;
     
@@ -175,18 +176,21 @@
     [self.imageView setFrame:CGRectMake(comicPadding, comicPadding, comicSize.width, comicSize.height)];
     [self.imageView setImage:image];
     
+    // Canvas size is the total 'drawable' size within the scroll view content area, ie not including the padding
+    CGSize canvasSize = CGSizeMake(self.scrollView.bounds.size.width-2*comicPadding, self.scrollView.bounds.size.height-2*comicPadding);
+    
     // Assume image is smaller than view and center it
     self.imageView.center = CGPointMake((self.scrollView.bounds.size.width/2),(self.scrollView.bounds.size.height/2));
     
     // Check if this is actually true. If not, set to 0 and allow scroll view to handle position
-    if (self.imageView.frame.size.width > self.scrollView.bounds.size.width-2*comicPadding) {
+    if (self.imageView.frame.size.width > canvasSize.width) {
         self.imageIsLargerThanScrollView = YES;
         
         CGRect currentRect = self.imageView.frame;
         currentRect.origin.x = comicPadding;
         [self.imageView setFrame:currentRect];
     }
-    if (self.imageView.frame.size.height > self.scrollView.bounds.size.height-2*comicPadding) {
+    if (self.imageView.frame.size.height > canvasSize.height) {
         self.imageIsLargerThanScrollView = YES;
         
         CGRect currentRect = self.imageView.frame;
@@ -194,6 +198,12 @@
         [self.imageView setFrame:currentRect];
     }
     
+    // If image is larger than scroll view, allow it to be shrunk
+    if (self.imageIsLargerThanScrollView) {
+        self.scrollView.bouncesZoom = YES;
+        float zoomScale = MIN(canvasSize.width/comicSize.width, canvasSize.height/comicSize.height);
+        self.scrollView.minimumZoomScale = zoomScale;
+    }
     
     // Fade out the title if it's covering the image
     self.shouldHideTitle = (self.imageView.frame.origin.y < self.titleLabel.frame.size.height);
