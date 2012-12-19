@@ -10,10 +10,11 @@
 
 #import "DataViewControlsProtocol.h"
 
-#define UserDefaultLatestPage @"latestPage"
-#define UserDefaultLastUpdate @"lastUpdate"
+#define iheartxkcd_UserDefaultLatestPage @"latestPage"
+#define iheartxkcd_UserDefaultLastUpdate @"lastUpdate"
 
 @class DataViewController;
+@class ComicData;
 
 @protocol ModelControllerDelegate <NSObject>
 @required

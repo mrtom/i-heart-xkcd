@@ -24,6 +24,16 @@
 @synthesize modelController = _modelController;
 @synthesize pageCover;
 
++ (void)initialize
+{
+    NSDictionary *defaults = [NSDictionary dictionaryWithObjectsAndKeys:
+                              [NSNumber numberWithInt:1], iheartxkcd_UserDefaultLatestPage,
+                              [NSNumber numberWithInt:0], iheartxkcd_UserDefaultLastUpdate,
+                              nil];
+    
+    [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -34,7 +44,7 @@
     
     [self.modelController setDelegate:self];
     
-    int latestPage = [[NSUserDefaults standardUserDefaults] integerForKey:UserDefaultLatestPage];
+    int latestPage = [[NSUserDefaults standardUserDefaults] integerForKey:iheartxkcd_UserDefaultLatestPage];
     self.currentIndex = latestPage;
 
     DataViewController *startingViewController = [self.modelController viewControllerAtIndex:self.currentIndex storyboard:self.storyboard];

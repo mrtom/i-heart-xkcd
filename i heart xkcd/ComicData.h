@@ -40,6 +40,7 @@
     NSURL    *_imageURL;
     
     BOOL      _isLoaded;
+    BOOL      _isFavourite;
 }
 
 @property (nonatomic) NSInteger day;
@@ -57,6 +58,7 @@
 @property (nonatomic, strong) NSURL    *imageURL;
 
 @property (nonatomic) BOOL isLoaded;
+@property (nonatomic) BOOL isFavourite;
 
 - (id)initWithJSON:(id)json;
 - (id)initWithIndex:(NSUInteger)index;

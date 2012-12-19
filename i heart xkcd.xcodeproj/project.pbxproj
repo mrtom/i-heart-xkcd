@@ -36,6 +36,7 @@
 		455F87F71677974F0060811E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 455F87F61677974F0060811E /* MobileCoreServices.framework */; };
 		455F87FA1678C08B0060811E /* ComicData.m in Sources */ = {isa = PBXBuildFile; fileRef = 455F87F91678C08B0060811E /* ComicData.m */; };
 		456E4E2F1679E63B0099B88E /* terrible_small_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 456E4E2E1679E63B0099B88E /* terrible_small_logo.png */; };
+		45A0D0D11680C18200B589A6 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 45A0D0D01680C18200B589A6 /* Settings.bundle */; };
 		45E238E2167BB51200FC38C4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45E238E1167BB51200FC38C4 /* QuartzCore.framework */; };
 		45E238F2167BC77E00FC38C4 /* xkcd-heart_57.png in Resources */ = {isa = PBXBuildFile; fileRef = 45E238EE167BC77D00FC38C4 /* xkcd-heart_57.png */; };
 		45E238F3167BC77E00FC38C4 /* xkcd-heart_72.png in Resources */ = {isa = PBXBuildFile; fileRef = 45E238EF167BC77D00FC38C4 /* xkcd-heart_72.png */; };
@@ -45,6 +46,9 @@
 		45E238FD167BC78D00FC38C4 /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 45E238F7167BC78D00FC38C4 /* Default-Landscape@2x~ipad.png */; };
 		45E238FE167BC78D00FC38C4 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 45E238F8167BC78D00FC38C4 /* Default-Landscape~ipad.png */; };
 		45E238FF167BC78D00FC38C4 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 45E238F9167BC78D00FC38C4 /* Default-Portrait~ipad.png */; };
+		45E334791680E8E600ED1E53 /* ComicImageStoreController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E334781680E8E600ED1E53 /* ComicImageStoreController.m */; };
+		45E334841681E15800ED1E53 /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E334831681E15800ED1E53 /* Settings.m */; };
+		45E334871681F8EA00ED1E53 /* ComicStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E334861681F8EA00ED1E53 /* ComicStore.m */; };
 		6818A5818E8C498CB0C59D49 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 20AA35C19E044FD9BF7D6F78 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -100,6 +104,7 @@
 		455F87F81678C08B0060811E /* ComicData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComicData.h; sourceTree = "<group>"; };
 		455F87F91678C08B0060811E /* ComicData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComicData.m; sourceTree = "<group>"; };
 		456E4E2E1679E63B0099B88E /* terrible_small_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = terrible_small_logo.png; sourceTree = "<group>"; };
+		45A0D0D01680C18200B589A6 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		45E238E1167BB51200FC38C4 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		45E238EE167BC77D00FC38C4 /* xkcd-heart_57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xkcd-heart_57.png"; sourceTree = "<group>"; };
 		45E238EF167BC77D00FC38C4 /* xkcd-heart_72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xkcd-heart_72.png"; sourceTree = "<group>"; };
@@ -109,6 +114,12 @@
 		45E238F7167BC78D00FC38C4 /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
 		45E238F8167BC78D00FC38C4 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
 		45E238F9167BC78D00FC38C4 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = "<group>"; };
+		45E334771680E8E600ED1E53 /* ComicImageStoreController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComicImageStoreController.h; sourceTree = "<group>"; };
+		45E334781680E8E600ED1E53 /* ComicImageStoreController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComicImageStoreController.m; sourceTree = "<group>"; };
+		45E334821681E15800ED1E53 /* Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Settings.h; sourceTree = "<group>"; };
+		45E334831681E15800ED1E53 /* Settings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Settings.m; sourceTree = "<group>"; };
+		45E334851681F8EA00ED1E53 /* ComicStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComicStore.h; sourceTree = "<group>"; };
+		45E334861681F8EA00ED1E53 /* ComicStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComicStore.m; sourceTree = "<group>"; };
 		95100619255547B1A0FF29B8 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -202,9 +213,16 @@
 				455F87BD1677901F0060811E /* ModelController.m */,
 				455F87F81678C08B0060811E /* ComicData.h */,
 				455F87F91678C08B0060811E /* ComicData.m */,
+				45E334851681F8EA00ED1E53 /* ComicStore.h */,
+				45E334861681F8EA00ED1E53 /* ComicStore.m */,
+				45E334771680E8E600ED1E53 /* ComicImageStoreController.h */,
+				45E334781680E8E600ED1E53 /* ComicImageStoreController.m */,
+				45E334821681E15800ED1E53 /* Settings.h */,
+				45E334831681E15800ED1E53 /* Settings.m */,
 				455F87BF1677901F0060811E /* MainStoryboard_iPhone.storyboard */,
 				455F87C21677901F0060811E /* MainStoryboard_iPad.storyboard */,
 				455F87A51677901F0060811E /* Supporting Files */,
+				45A0D0D01680C18200B589A6 /* Settings.bundle */,
 			);
 			path = "i heart xkcd";
 			sourceTree = "<group>";
@@ -337,6 +355,7 @@
 				45E238FD167BC78D00FC38C4 /* Default-Landscape@2x~ipad.png in Resources */,
 				45E238FE167BC78D00FC38C4 /* Default-Landscape~ipad.png in Resources */,
 				45E238FF167BC78D00FC38C4 /* Default-Portrait~ipad.png in Resources */,
+				45A0D0D11680C18200B589A6 /* Settings.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -392,6 +411,9 @@
 				455F87BE1677901F0060811E /* ModelController.m in Sources */,
 				455F87FA1678C08B0060811E /* ComicData.m in Sources */,
 				453E5C78167BF75000EFD8DB /* UIImage+animatedGIF.m in Sources */,
+				45E334791680E8E600ED1E53 /* ComicImageStoreController.m in Sources */,
+				45E334841681E15800ED1E53 /* Settings.m in Sources */,
+				45E334871681F8EA00ED1E53 /* ComicStore.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

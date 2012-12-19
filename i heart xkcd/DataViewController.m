@@ -11,6 +11,7 @@
 #import <AFNetworking/UIImageView+AFNetworking.h>
 #import "UIImage+animatedGIF.h"
 #import "ModelController.h"
+#import "ComicImageStoreController.h"
 
 #define pageOverlayToggleAnimationTime 0.300
 #define pageOverlayToggleBounceLimit pageOverlayToggleAnimationTime+0.025
@@ -132,12 +133,31 @@
     [self.imageView setFrame:CGRectMake(0, 0, imageSize.width, imageSize.height)];
     self.imageView.center = CGPointMake((self.scrollView.bounds.size.width/2),(self.scrollView.bounds.size.height/2));
 
-    // Get the image from XKCD. This is async!
-    [self.imageView setImageWithURLRequest:[NSURLRequest requestWithURL:[self.dataObject imageURL]] placeholderImage:placeHolderImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image){
-        
-        [this configureImageLoadedFromXkcdWithImage:image];
-        
-    } failure:nil];
+    // Note: The scale stuff here is a *lot* hacky.
+    // Asumption: The comics have been designed to look good at about 1024, i.e. a 'normal' web viewing experience
+    // This means they should be doubled up on the retina iPad, but not the other iOS devices.
+    // However, when we save the image to the image store, we store it doubled up, so don't double again
+    ComicImageStoreController *imageStore = [ComicImageStoreController sharedStore];
+    UIImage *storedImage = [imageStore imageForComic:self.dataObject];
+    if (storedImage) {
+        [self.imageView setImage:storedImage];
+        [self configureImageLoadedFromXkcdWithImage:storedImage forScale:1];
+    } else {
+        // Get the image from XKCD. This is async!
+        [self.imageView setImageWithURLRequest:[NSURLRequest requestWithURL:[self.dataObject imageURL]] placeholderImage:placeHolderImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image){
+            
+            NSInteger scale = 1;
+            if ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] &&
+                ([UIScreen mainScreen].scale == 2.0)) {
+                // Retina display
+                scale = 2;
+            }
+
+            [this configureImageLoadedFromXkcdWithImage:image forScale:scale];
+            [[ComicImageStoreController sharedStore] pushComic:self.dataObject withImage:image];
+            
+        } failure:nil];
+    }
     
     self.titleLabel.text = [self.dataObject safeTitle];
     
@@ -148,17 +168,10 @@
     [self configureSegmentedControlsState];
 }
 
--(void)configureImageLoadedFromXkcdWithImage:(UIImage *)image
+-(void)configureImageLoadedFromXkcdWithImage:(UIImage *)image forScale:(NSInteger)scale
 {
     // Set the content view to be the size of the comic image size
     CGSize comicSize;
-    NSInteger scale = 1;
-    
-    if ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] &&
-        ([UIScreen mainScreen].scale == 2.0)) {
-        // Retina display
-        scale = 2;
-    }
     
     comicSize = CGSizeMake(image.size.width*scale, image.size.height*scale);
     CGSize comicWithPaddingSize = CGSizeMake(comicSize.width+2*comicPadding, comicSize.height+2*comicPadding);
@@ -266,7 +279,7 @@
         }
     }
     
-    int latestPage = [[NSUserDefaults standardUserDefaults] integerForKey:UserDefaultLatestPage];
+    int latestPage = [[NSUserDefaults standardUserDefaults] integerForKey:iheartxkcd_UserDefaultLatestPage];
     if ([self.dataObject comicID] == latestPage) {
         if (self.controlsViewSegmentEnds) [self.controlsViewSegmentEnds setEnabled:NO forSegmentAtIndex:1];
         if (self.controlsViewNextRandom)  [self.controlsViewNextRandom setEnabled:NO forSegmentAtIndex:2];

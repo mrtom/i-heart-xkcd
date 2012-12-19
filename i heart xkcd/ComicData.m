@@ -25,12 +25,14 @@
 @synthesize imageURL = _imageURL;
 
 @synthesize isLoaded = _isLoaded;
+@synthesize isFavourite = _isFavourite;
 
 - (id)init
 {
     self = [super init];
     if (self) {
         [self setIsLoaded:NO];
+        [self setIsFavourite:NO];
     }
     return self;
 }
@@ -61,9 +63,7 @@
         [self setSafeTitle:@""];
         [self setTranscript:@""];
         [self setAlt:@""];
-        [self setImageURL:Nil];
-        
-        [self setIsLoaded:NO];
+        [self setImageURL:Nil];        
     }
     return self;
 }
@@ -92,6 +92,16 @@
     [self setIsLoaded:YES];
 }
 
+- (NSString *)description
+{
+    NSString *descriptionString =
+    [[NSString alloc] initWithFormat:@"%d (%@)",
+     _comicID,
+     [_imageURL absoluteString]];
+
+    return descriptionString;
+}
+
 #pragma mark - NSCoding protocol methods
 
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -113,6 +123,7 @@
         [self setImageURL:[NSURL URLWithString:[aDecoder decodeObjectForKey:@"img"]]];
         
         [self setIsLoaded:[aDecoder decodeBoolForKey:@"is_loaded"]];
+        [self setIsFavourite:[aDecoder decodeBoolForKey:@"is_favourite"]];
     }
     return self;
 }
@@ -134,6 +145,7 @@
     [aCoder encodeObject:[_imageURL absoluteString] forKey:@"img"];
     
     [aCoder encodeBool:_isLoaded forKey:@"is_loaded"];
+    [aCoder encodeBool:_isFavourite forKey:@"is_favourite"];
 }
 
 @end

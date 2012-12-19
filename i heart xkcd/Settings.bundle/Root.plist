@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PreferenceSpecifiers</key>
+	<array>
+		<dict>
+			<key>Title</key>
+			<string>Storage</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Titles</key>
+			<array>
+				<string>No thanks, space is key!</string>
+				<string>Up to 5 comics</string>
+				<string>Up to 10 comics</string>
+				<string>Up to 50 comics</string>
+				<string>Up to 100 comics</string>
+				<string>Up to 500 comics</string>
+				<string>Everything! I can&apos;t live with xkcd</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<string>0</string>
+				<string>1</string>
+				<string>2</string>
+				<string>3</string>
+				<string>4</string>
+				<string>5</string>
+				<string>6</string>
+			</array>
+			<key>Title</key>
+			<string>Cache comic images</string>
+			<key>Key</key>
+			<string>iheartxkcd_maxCacheSize</string>
+			<key>DefaultValue</key>
+			<string>10</string>
+		</dict>
+		<dict>
+			<key>DefaultValue</key>
+			<true/>
+			<key>Key</key>
+			<string>iheartxkcd_cacheFavourites</string>
+			<key>Title</key>
+			<string>Cache Favourites</string>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Clear cache on next load</string>
+			<key>Key</key>
+			<string>iheartxkcd_clearCache</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
+	</array>
+	<key>StringsTable</key>
+	<string>Root</string>
+</dict>
+</plist>

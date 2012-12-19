@@ -11,17 +11,12 @@
 #import <AFNetworking/AFNetworking.h>
 
 #import "ComicData.h"
+#import "ComicStore.h"
 #import "DataViewController.h"
 
 #define ModelControllerFrontPageID 0
 
 /*
- A controller object that manages a simple model -- a collection of month names.
- 
- The controller serves as the data source for the page view controller; it therefore implements pageViewController:viewControllerBeforeViewController: and pageViewController:viewControllerAfterViewController:.
- It also implements a custom method, viewControllerAtIndex: which is useful in the implementation of the data source methods, and in the initial configuration of the application.
- 
- There is no need to actually create view controllers for each page in advance -- indeed doing so incurs unnecessary overhead. Given the data model, these methods create, configure, and return a new view controller on demand.
  
  XKCD JSON API returns results like (without a callback specified):
  
@@ -47,7 +42,7 @@ NSString *const XKCD_API = @"http://dynamic.xkcd.com/api-0/jsonp/";
 @interface ModelController()
 @property (nonatomic) NSInteger latestPage;
 @property (nonatomic) NSInteger lastUpdateTime;
-@property (readonly, strong, nonatomic) NSMutableDictionary *comicsData;
+@property (weak, nonatomic) ComicStore *comicStore;
 @end
 
 
@@ -59,23 +54,13 @@ NSString *const XKCD_API = @"http://dynamic.xkcd.com/api-0/jsonp/";
 {
     self = [super init];
     if (self) {
-        // Load data from disk
-        NSString *path = [self comicsDataArchivePath];
-        _comicsData = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+        self.comicStore = [ComicStore sharedStore];
         
-        if (!_comicsData) {
-            _comicsData = [[NSMutableDictionary alloc] initWithCapacity:1];            
-        }
-        
-        int lP = [[NSUserDefaults standardUserDefaults] integerForKey:UserDefaultLatestPage];
+        int lP = [[NSUserDefaults standardUserDefaults] integerForKey:iheartxkcd_UserDefaultLatestPage];
         _latestPage = lP;
         
-        int lUT = [[NSUserDefaults standardUserDefaults] integerForKey:UserDefaultLastUpdate];
+        int lUT = [[NSUserDefaults standardUserDefaults] integerForKey:iheartxkcd_UserDefaultLastUpdate];
         _lastUpdateTime = lUT;
-        
-        // Handle memory warnings - clear the cache
-        NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-        [nc addObserver:self selector:@selector(clearCache:) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
         
         // Setup the cover page
         ComicData *frontPage = [[ComicData alloc] init];
@@ -96,7 +81,7 @@ NSString *const XKCD_API = @"http://dynamic.xkcd.com/api-0/jsonp/";
         
         [frontPage setIsLoaded:YES];
         
-        [self.comicsData setValue:frontPage forKey:[NSString stringWithFormat:@"%d", 0]];
+        [self.comicStore addComic:frontPage];
         
         [self configureComicDataFromXkcd];
     }
@@ -125,12 +110,15 @@ NSString *const XKCD_API = @"http://dynamic.xkcd.com/api-0/jsonp/";
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        ComicData *comicData = [self.comicsData objectForKey:[JSON valueForKeyPath:@"num"]];
+        ComicData *comicData = [self.comicStore comicForKey:[JSON valueForKeyPath:@"num"]];
         NSString *index = [NSString stringWithFormat:@"%@", [JSON valueForKeyPath:@"num"]];
         if (!comicData) {
             comicData = [[ComicData alloc] initWithJSON:JSON];
-            [self.comicsData setValue:comicData forKey:index];
-            [self saveChanges];
+            [self.comicStore addComic:comicData];
+            BOOL saved = [self.comicStore saveChanges];
+            if (!saved) {
+                NSLog(@"TODO: Cache not working. Make sure I know about this at some point");
+            }
         } else {
             [comicData updateDataWithValuesFromAPI:JSON];
         }
@@ -157,13 +145,13 @@ NSString *const XKCD_API = @"http://dynamic.xkcd.com/api-0/jsonp/";
     [dataViewController setDelegate:self.delegate];
     
     NSString *key = [NSString stringWithFormat:@"%d", index];
-    ComicData *comicData = [self.comicsData objectForKey:key];
+    ComicData *comicData = [self.comicStore comicForKey:key];
     if (!comicData || ![comicData isLoaded]) {
         [self configureComicDataFromXkcdForComidID:index withCallback:^(NSUInteger index, ComicData *newComicData){
             [dataViewController setDataObject:newComicData];
         }];
         comicData = [[ComicData alloc]initWithIndex:index];
-        [self.comicsData setValue:comicData forKey:key];
+        [self.comicStore addComic:comicData];
     }
     
     dataViewController.dataObject = comicData;
@@ -173,37 +161,6 @@ NSString *const XKCD_API = @"http://dynamic.xkcd.com/api-0/jsonp/";
 - (NSUInteger)indexOfViewController:(DataViewController *)viewController
 {
     return viewController.dataObject.comicID;
-}
-
-- (void)clearCache:(NSNotification *)note
-{
-    NSLog(@"Flushing %d comics from the cache", [_comicsData count]);
-    [_comicsData removeAllObjects];
-}
-
-#pragma mark - Persistance methods
-
-- (NSString *)documentDirectory
-{
-    NSArray *documentDirectories =
-    NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    
-    return [documentDirectories objectAtIndex:0];
-}
-
-- (NSString *)comicsDataArchivePath
-{
-    NSString *documentDirectory = [self documentDirectory];
-    return [documentDirectory stringByAppendingPathComponent:@"comics.archive"];
-}
-
-- (BOOL)saveChanges
-{
-    NSString *path = [self comicsDataArchivePath];
-    [[NSUserDefaults standardUserDefaults] setInteger:_latestPage forKey:UserDefaultLatestPage];
-    [[NSUserDefaults standardUserDefaults] setInteger:_lastUpdateTime forKey:UserDefaultLastUpdate];
-    
-    return [NSKeyedArchiver archiveRootObject:_comicsData toFile:path];
 }
 
 #pragma mark - Page View Controller Data Source
@@ -227,7 +184,7 @@ NSString *const XKCD_API = @"http://dynamic.xkcd.com/api-0/jsonp/";
     }
     
     index++;
-    if (index == [self.comicsData count]) {
+    if (index == [[self.comicStore allComics] count]) {
         return nil;
     }
     return [self viewControllerAtIndex:index storyboard:viewController.storyboard];
