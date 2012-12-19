@@ -66,14 +66,12 @@
     
     // Save the image to disk
     NSString *imagePath = [self imagePathForComic:comic];
-    NSLog(@"Writing image to %@", imagePath);
-    NSData *d = UIImageJPEGRepresentation(comicImage, 0.5);
+    NSData *d = UIImageJPEGRepresentation(comicImage, 1.0);
     
     NSError *error;
     BOOL didWrite = [d writeToFile:imagePath options:NSDataWritingAtomic error:&error];
     if (!didWrite) {
-        NSLog(@"TODO: Didn't write image to disk. Do something about this");
-        NSLog(@"Error returned was %@", error);
+        NSLog(@"TODO: Didn't write image to disk. Do something about this! Error returned was %@", error);
     }
 }
 
@@ -81,7 +79,6 @@
 {
     NSString *imagePath = [self imagePathForComic:comic];
     
-    NSLog(@"%@", imagePath);
     UIImage *cachedImage = [UIImage imageWithContentsOfFile:imagePath];
     
     if (cachedImage) {
