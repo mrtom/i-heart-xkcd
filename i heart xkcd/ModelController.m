@@ -94,6 +94,9 @@ NSString *const XKCD_API = @"http://dynamic.xkcd.com/api-0/jsonp/";
     [self configureComicDataFromXkcdForComidID:NSNotFound withCallback:^(NSUInteger index, ComicData *newComicData){
         self.latestPage = index;
         self.lastUpdateTime = [[NSDate date] timeIntervalSince1970];
+        
+        [[NSUserDefaults standardUserDefaults] setInteger:index forKey:iheartxkcd_UserDefaultLatestPage];
+        [[NSUserDefaults standardUserDefaults] setInteger:self.lastUpdateTime forKey:iheartxkcd_UserDefaultLastUpdate];
 
         [self.delegate handleLatestComicLoaded:index];
     }];    
