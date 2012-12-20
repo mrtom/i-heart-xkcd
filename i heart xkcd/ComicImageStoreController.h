@@ -17,8 +17,14 @@
 }
 + (ComicImageStoreController *)sharedStore;
 
-- (void)pushComic:(ComicData *)comic withImage:(UIImage *)comicImage;
+- (BOOL)pushComic:(ComicData *)comic withImage:(UIImage *)comicImage;
+- (BOOL)removeFavourite:(ComicData *)comic;
+
 - (UIImage *)imageForComic:(ComicData *)comic;
 - (NSString *)imagePathForComic:(ComicData *)comic;
+
+- (void)clearCache:(NSNotification *)note;
+
+- (void)logCacheInfo;
 
 @end

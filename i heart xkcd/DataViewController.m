@@ -11,21 +11,35 @@
 #import <AFNetworking/UIImageView+AFNetworking.h>
 #import "UIImage+animatedGIF.h"
 #import "ModelController.h"
+#import "ComicStore.h"
 #import "ComicImageStoreController.h"
+#import "Settings.h"
 
 #define pageOverlayToggleAnimationTime 0.300
 #define pageOverlayToggleBounceLimit pageOverlayToggleAnimationTime+0.025
 
+#define translutentAlpha 0.8
 #define altTextBackgroundPadding 15           // Padding between the alt text background and the parent view
 #define altTextPadding 10                     // Padding between the alt text and the alt text background
+#define favouriteAndFacebookButtonSide 52
 #define comicPadding altTextBackgroundPadding // Padding between the scroll view housing the comic and the parent view
+
+#define comicIsFavouriteBackgroundImage @"heart"
+#define comicIsNotFavouriteBackgroundImage @"heart_add"
 
 @interface DataViewController ()
 
 @property UIImageView *imageView;
+
+@property UIView *altTextCanvasView;
 @property UIView *altTextBackgroundView;
 @property UIScrollView *altTextScrollView;
 @property UILabel *altTextView;
+
+@property UIView *favouriteButtonBackground;
+@property UIView *facebookShareButtonBackground;
+@property UIButton *favouriteButton;
+@property UIButton *facebookShareButton;
 
 @property (readwrite, nonatomic) double lastTimeOverlaysToggled;
 @property BOOL shouldHideTitle;
@@ -61,14 +75,18 @@
     [self.scrollView addSubview:self.imageView];
     
     // Alt text overlay
+    self.altTextCanvasView = [[UIView alloc] initWithFrame:self.view.bounds];
+    [self.altTextCanvasView setBackgroundColor:[UIColor clearColor]];
+    [self.altTextCanvasView setAlpha:0];
+    [self.view addSubview:self.altTextCanvasView];
+    
     self.altTextBackgroundView = [[UIView alloc] init];
-    [self.altTextBackgroundView setAlpha:0];
     [self.altTextBackgroundView setBackgroundColor:[UIColor blackColor]];
-    [self.view addSubview:self.altTextBackgroundView];
+    [self.altTextBackgroundView setAlpha:translutentAlpha];
+    [self.altTextCanvasView addSubview:self.altTextBackgroundView];
     
     self.altTextScrollView = [[UIScrollView alloc] init];
-    [self.altTextScrollView setAlpha:0];
-    [self.view addSubview:self.altTextScrollView];
+    [self.altTextCanvasView addSubview:self.altTextScrollView];
     
     self.altTextView = [[UILabel alloc] init];
     [self.altTextView setBackgroundColor:[UIColor clearColor]];
@@ -82,6 +100,31 @@
     [self.altTextScrollView setBackgroundColor:[UIColor clearColor]];
     [self.altTextScrollView setScrollEnabled:YES];
     [self.altTextScrollView addSubview:self.altTextView];
+    
+    // Favourite and Facebook buttons
+    self.favouriteButtonBackground = [[UIView alloc] initWithFrame:CGRectMake(0, 0, favouriteAndFacebookButtonSide, favouriteAndFacebookButtonSide)];
+    [self.favouriteButtonBackground setBackgroundColor:[UIColor blackColor]];
+    [self.favouriteButtonBackground setAlpha:translutentAlpha];
+    [self.altTextCanvasView addSubview:self.favouriteButtonBackground];
+    
+    self.favouriteButton = [[UIButton alloc] initWithFrame:self.favouriteButtonBackground.frame];
+    [self.favouriteButton setBackgroundColor:[UIColor clearColor]];
+    [self.favouriteButton setBackgroundImage:[UIImage imageNamed:comicIsNotFavouriteBackgroundImage] forState:UIControlStateNormal];
+    [self.favouriteButton addTarget:self action:@selector(toggleFavourite:) forControlEvents:UIControlEventTouchUpInside];
+    [self.favouriteButton setUserInteractionEnabled:YES];
+    [self.altTextCanvasView addSubview:self.favouriteButton];
+    
+    self.facebookShareButtonBackground = [[UIView alloc] initWithFrame:CGRectMake(favouriteAndFacebookButtonSide, 0, favouriteAndFacebookButtonSide, favouriteAndFacebookButtonSide)];
+    [self.facebookShareButtonBackground setBackgroundColor:[UIColor blackColor]];
+    [self.facebookShareButtonBackground setAlpha:translutentAlpha];
+    [self.altTextCanvasView addSubview:self.facebookShareButtonBackground];
+    
+    self.facebookShareButton = [[UIButton alloc] initWithFrame:self.facebookShareButtonBackground.frame];
+    [self.facebookShareButton setBackgroundColor:[UIColor clearColor]];
+    [self.facebookShareButton setBackgroundImage:[UIImage imageNamed:@"f_logo_disabled"] forState:UIControlStateNormal];
+    [self.facebookShareButton addTarget:self action:@selector(facebookShare:) forControlEvents:UIControlEventTouchUpInside];
+    [self.facebookShareButton setUserInteractionEnabled:YES];
+    [self.altTextCanvasView addSubview:self.facebookShareButton];
     
     // Setup controls
     [self.controlsViewCanvas setAlpha:0];
@@ -240,7 +283,7 @@
     
     float titleBarHeight = self.titleLabel.frame.size.height;
     float maxWidthForAltText  = self.view.bounds.size.width - 2*altTextBackgroundPadding - 2*altTextPadding;
-    float maxHeightForAltText = self.view.bounds.size.height - 2*altTextBackgroundPadding - 2*altTextPadding - titleBarHeight;
+    float maxHeightForAltText = self.view.bounds.size.height - 2*altTextBackgroundPadding - 2*altTextPadding - titleBarHeight - favouriteAndFacebookButtonSide;
     
     CGSize altTextSize = [altText sizeWithFont:labelFont constrainedToSize:CGSizeMake(maxWidthForAltText, 9999) lineBreakMode:lineBreakMode];
     
@@ -259,6 +302,28 @@
                                                     (altTextBackgroundPadding+titleBarHeight),
                                                     altTextScrollWidth+2*altTextPadding, altTextScrollHeight+2*altTextPadding)];
     self.altTextBackgroundView.center = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2+titleBarHeight/2);
+    
+    // Place Favourite and FB Share buttons directly on top of alttextview
+    CGRect altTextFrame = [self.altTextBackgroundView frame];
+    CGRect favFrame = [self.favouriteButtonBackground frame];
+    CGRect fbFrame = [self.facebookShareButtonBackground frame];
+    
+    favFrame.origin.x = altTextFrame.origin.x;
+    fbFrame.origin.x = altTextFrame.origin.x + favouriteAndFacebookButtonSide;
+    
+    favFrame.origin.y = altTextFrame.origin.y - favouriteAndFacebookButtonSide;
+    fbFrame.origin.y = altTextFrame.origin.y - favouriteAndFacebookButtonSide;
+    
+    [self.favouriteButtonBackground setFrame:favFrame];
+    [self.facebookShareButtonBackground setFrame:fbFrame];
+    [self.favouriteButton setFrame:favFrame];
+    [self.facebookShareButton setFrame:fbFrame];
+    
+    if ([self.dataObject isFavourite]) {
+        [self.favouriteButton setBackgroundImage:[UIImage imageNamed:comicIsFavouriteBackgroundImage] forState:UIControlStateNormal];
+    } else {
+        [self.favouriteButton setBackgroundImage:[UIImage imageNamed:comicIsNotFavouriteBackgroundImage] forState:UIControlStateNormal];
+    }
 }
 
 -(void)configureSegmentedControlsState
@@ -317,7 +382,7 @@
     [self configureView];
 }
 
-#pragma mark - Handle gestures
+#pragma mark - Handle gestures and touches
 
 - (BOOL)canToggleOverlays
 {
@@ -346,28 +411,22 @@
 
 - (void)toggleTitleAndAltText
 {
-    if ([self.altTextBackgroundView alpha] == 0) {
+    if ([self.altTextCanvasView alpha] == 0) {
         [self.scrollView setScrollEnabled:NO];
         
         [UIView animateWithDuration:pageOverlayToggleAnimationTime
-                         animations:^{self.altTextBackgroundView.alpha = 0.8;}
-                         completion:nil];
-        [UIView animateWithDuration:pageOverlayToggleAnimationTime
-                         animations:^{self.altTextScrollView.alpha = 0.8;}
+                         animations:^{self.altTextCanvasView.alpha = 1.0;}
                          completion:nil];
         if (self.shouldHideTitle) {
             [UIView animateWithDuration:pageOverlayToggleAnimationTime
-                             animations:^{self.titleLabel.alpha = 0.8;}
+                             animations:^{self.titleLabel.alpha = translutentAlpha;}
                              completion:nil];
         }
     } else {
         [self.scrollView setScrollEnabled:YES];
         
         [UIView animateWithDuration:pageOverlayToggleAnimationTime
-                         animations:^{self.altTextBackgroundView.alpha = 0;}
-                         completion:nil];
-        [UIView animateWithDuration:pageOverlayToggleAnimationTime
-                         animations:^{self.altTextScrollView.alpha = 0;}
+                         animations:^{self.altTextCanvasView.alpha = 0;}
                          completion:nil];
         if (self.shouldHideTitle) {
             [UIView animateWithDuration:pageOverlayToggleAnimationTime
@@ -388,6 +447,40 @@
                          animations:^{self.controlsViewCanvas.alpha = 0;}
                          completion:nil];
     }
+}
+
+- (void)toggleFavourite: (id)sender
+{
+    NSLog(@"Favourite toggled");
+    BOOL didSet = YES;
+    ComicImageStoreController *imageStore = [ComicImageStoreController sharedStore];
+    
+    if ([self.dataObject isFavourite]) {
+        [self.dataObject setIsFavourite:NO];
+        if ([Settings shouldCacheFavourites]) {
+            didSet = [imageStore removeFavourite:self.dataObject];
+        }
+        if (didSet) {
+            [self.favouriteButton setBackgroundImage:[UIImage imageNamed:comicIsNotFavouriteBackgroundImage] forState:UIControlStateNormal];            
+        }
+    } else {
+        [self.dataObject setIsFavourite:YES];
+        if ([Settings shouldCacheFavourites]) {
+            didSet = [imageStore pushComic:self.dataObject withImage:[self.imageView image]];
+        }
+        if (didSet) {
+            [self.favouriteButton setBackgroundImage:[UIImage imageNamed:comicIsFavouriteBackgroundImage] forState:UIControlStateNormal];
+        }
+    }
+    
+    ComicStore *store = [ComicStore sharedStore];
+    [store addComic:self.dataObject];
+    [store saveChanges];
+}
+
+- (void)facebookShare: (id)sender
+{
+    NSLog(@"Facebook share happened");
 }
 
 #pragma mark - Comic control

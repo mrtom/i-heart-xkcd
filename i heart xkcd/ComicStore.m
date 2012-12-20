@@ -86,8 +86,14 @@
 
 - (void)clearCache:(NSNotification *)note
 {
-    NSLog(@"Flushing %d comics from the cache", [comicsData count]);
+    NSLog(@"Flushing metadata for %d comics from the cache", [comicsData count]);
     [comicsData removeAllObjects];
+    [self saveChanges];
+}
+
+- (void)logCacheInfo
+{
+    NSLog(@"We have metadata for %d comics in the cache", [[self allComics] count]);
 }
 
 

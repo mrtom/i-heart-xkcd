@@ -19,8 +19,13 @@
 
 - (NSArray *)allComics;
 - (ComicData *)comicForKey:(NSString *)key;
+
 - (void)addComic:(ComicData *)comic;
 - (void)removeComic:(NSString *)key;
+
 - (BOOL)saveChanges;
+- (void)clearCache:(NSNotification *)note;
+
+- (void)logCacheInfo;
 
 @end

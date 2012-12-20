@@ -10,10 +10,12 @@
 
 #define UserDefaultMaxCacheSize @"iheartxkcd_maxCacheSize"
 #define UserDefaultShouldCacheFavourites @"iheartxkcd_cacheFavourites"
+#define UserDefaultShouldClearCache @"iheartxkcd_clearCache"
 
 @interface Settings : NSObject
 
 +(NSUInteger) maxCacheSize;
 +(BOOL) shouldCacheFavourites;
++(BOOL) shouldClearCache;
 
 @end

@@ -38,25 +38,39 @@
     self = [super init];
     if (self) {
         [self setMaxSize:[Settings maxCacheSize]];
+        NSLog(@"General cache max size is %d", self.maxSize);
         
-        store = [[NSMutableDictionary alloc] initWithCapacity:self.maxSize];
-        favouriteStore = [[NSMutableDictionary alloc] initWithCapacity:10];
+        store = [NSKeyedUnarchiver unarchiveObjectWithFile:[self storeArchivePath]];
+        favouriteStore = [NSKeyedUnarchiver unarchiveObjectWithFile:[self favouriteStoreArchivePath]];
+        
+        if (!store) {
+            store = [[NSMutableDictionary alloc] initWithCapacity:self.maxSize];
+        }
+        if (!favouriteStore) {
+            favouriteStore = [[NSMutableDictionary alloc] initWithCapacity:10];            
+        }
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(defaultsChanged) name:NSUserDefaultsDidChangeNotification object:nil];
     }
     
     return self;
 }
 
-- (void)pushComic:(ComicData *)comic withImage:(UIImage *)comicImage
+- (BOOL)pushComic:(ComicData *)comic withImage:(UIImage *)comicImage
 {
     // Our stores links the filename to the time it was added
     NSNumber *addDate = [NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]];
 
     // First, check if comic is favourite and if we're caching all favourites
     if ([comic isFavourite] && [Settings shouldCacheFavourites]) {
+        // Need to remove from the general store if it exists there
+        [store removeObjectForKey:[self keyForComic:comic]];
+        
+        // Then add to favourite store
         [favouriteStore setObject:addDate forKey:[self keyForComic:comic]];
     } else {
         // Otherwise, place in the default store
-        while ([store count] > maxSize) {
+        while ([store count] > maxSize-1) {
             NSArray *sortedKeys = [store keysSortedByValueUsingSelector:@selector(compare:)];
             [self deleteImageFromDiskWithKey:[sortedKeys objectAtIndex:0]];
         }
@@ -73,6 +87,25 @@
     if (!didWrite) {
         NSLog(@"TODO: Didn't write image to disk. Do something about this! Error returned was %@", error);
     }
+    
+    BOOL didSave = [self saveChanges];
+    
+    return didWrite && didSave;
+}
+
+- (BOOL)removeFavourite:(ComicData *)comic
+{
+    UIImage *image = [self imageForComic:comic];
+    
+    // Remove from favourite store
+    [favouriteStore removeObjectForKey:[self keyForComic:comic]];
+    
+    // Add to general cache, as we accessed it recently (i.e. now) :)
+    BOOL pushedComic =  [self pushComic:comic withImage:image];
+    
+    BOOL didSave = [self saveChanges];
+    
+    return pushedComic && didSave;
 }
 
 - (UIImage *)imageForComic:(ComicData *)comic
@@ -122,17 +155,66 @@
     [[NSFileManager defaultManager] removeItemAtPath:path error:NULL];
 }
 
+- (NSString *)storeArchivePath
+{
+    return [self archivePathForStore:@"general"];
+}
+
+- (NSString *)favouriteStoreArchivePath
+{
+    return [self archivePathForStore:@"favourite"];
+}
+
+- (NSString *)archivePathForStore:(NSString *)storeName
+{
+    NSArray *documentDirectories =
+    NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    
+    NSString *documentDirectory = [documentDirectories objectAtIndex:0];
+    
+    return [documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"comic_images_%@.archive", storeName]];
+}
+
+- (BOOL)saveChanges
+{
+    NSString *generalPath = [self storeArchivePath];
+    BOOL savedGeneral = [NSKeyedArchiver archiveRootObject:store toFile:generalPath];
+    
+    NSString *favouritePath = [self favouriteStoreArchivePath];
+    BOOL savedFavourite = [NSKeyedArchiver archiveRootObject:favouriteStore toFile:favouritePath];
+    
+    return (savedGeneral && savedFavourite);
+}
+
 - (void)clearCache:(NSNotification *)note
 {
-    NSLog(@"Flushing %d images out of the cache", [store count]);
+    NSLog(@"Flushing %d images out of the general cache", [store count]);
     // Iterate over the array and remove all the images
-    for (id key in store) {
-        [self deleteImageFromDiskWithKey:key];
+    @synchronized (store){
+        for (id key in store.allKeys) {
+            [self deleteImageFromDiskWithKey:key];
+        }
     }
     
-    for (id key in favouriteStore) {
-        [self deleteImageFromDiskWithKey:key];
+    NSLog(@"Flushing %d images out of the favourite cache", [favouriteStore count]);
+    @synchronized (favouriteStore) {
+        for (id key in favouriteStore.allKeys) {
+            [self deleteImageFromDiskWithKey:key];
+        }        
     }
+    
+    [self saveChanges];
+}
+
+- (void)logCacheInfo
+{
+    NSLog(@"We have images for %d comics in the general cache", [store count]);
+    NSLog(@"We have images for %d comics in the favourite cache", [favouriteStore count]);
+}
+
+- (void)defaultsChanged
+{
+    [self setMaxSize:[Settings maxCacheSize]];
 }
 
 @end

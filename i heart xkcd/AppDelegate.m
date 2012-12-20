@@ -10,11 +10,20 @@
 #import <AFNetworking/AFNetworking.h>
 #import <FacebookSDK/FacebookSDK.h>
 
+#import "Settings.h"
+#import "ComicStore.h"
+#import "ComicImageStoreController.h"
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(defaultsChanged) name:NSUserDefaultsDidChangeNotification object:nil];
+    
+    [[ComicStore sharedStore] logCacheInfo];
+    [[ComicImageStoreController sharedStore] logCacheInfo];
+    
     return YES;
 }
 
@@ -46,6 +55,17 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)defaultsChanged
+{
+    if ([Settings shouldClearCache]) {
+        [[ComicStore sharedStore] clearCache:Nil];
+        [[ComicImageStoreController sharedStore] clearCache:Nil];
+        
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:UserDefaultShouldClearCache];
+    }
 }
 
 @end

@@ -46,4 +46,9 @@
     return [[NSUserDefaults standardUserDefaults] boolForKey:UserDefaultShouldCacheFavourites];
 }
 
++(BOOL) shouldClearCache
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:UserDefaultShouldClearCache];
+}
+
 @end
