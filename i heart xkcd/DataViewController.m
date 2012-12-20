@@ -9,6 +9,9 @@
 #import "DataViewController.h"
 #import <AFNetworking/AFNetworking.h>
 #import <AFNetworking/UIImageView+AFNetworking.h>
+#import <Social/Social.h>
+#import <FacebookSDK/FacebookSDK.h>
+
 #import "UIImage+animatedGIF.h"
 #import "ModelController.h"
 #import "ComicStore.h"
@@ -26,6 +29,8 @@
 
 #define comicIsFavouriteBackgroundImage @"heart"
 #define comicIsNotFavouriteBackgroundImage @"heart_add"
+#define isLoggedIntoFacebookBackgroundImage @"f_logo"
+#define isNotLoggedIntoFacebookBackgroundImage @"f_logo_disabled"
 
 @interface DataViewController ()
 
@@ -324,6 +329,12 @@
     } else {
         [self.favouriteButton setBackgroundImage:[UIImage imageNamed:comicIsNotFavouriteBackgroundImage] forState:UIControlStateNormal];
     }
+    
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
+        [self.facebookShareButton setBackgroundImage:[UIImage imageNamed:isLoggedIntoFacebookBackgroundImage] forState:UIControlStateNormal];
+    } else {
+        [self.facebookShareButton setBackgroundImage:[UIImage imageNamed:isNotLoggedIntoFacebookBackgroundImage] forState:UIControlStateNormal];
+    }
 }
 
 -(void)configureSegmentedControlsState
@@ -451,7 +462,6 @@
 
 - (void)toggleFavourite: (id)sender
 {
-    NSLog(@"Favourite toggled");
     BOOL didSet = YES;
     ComicImageStoreController *imageStore = [ComicImageStoreController sharedStore];
     
@@ -480,7 +490,17 @@
 
 - (void)facebookShare: (id)sender
 {
-    NSLog(@"Facebook share happened");
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
+        [FBNativeDialogs presentShareDialogModallyFrom:self
+                                           initialText:[self.dataObject safeTitle]
+                                                 image:[self.imageView image]
+                                                   url:[self.dataObject imageURL]
+                                               handler:nil];
+
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Facebook Login Needed" message:@"You must log into Facebook in your settings before you can post to Facebook" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+    }
 }
 
 #pragma mark - Comic control

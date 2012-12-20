@@ -38,7 +38,6 @@
     self = [super init];
     if (self) {
         [self setMaxSize:[Settings maxCacheSize]];
-        NSLog(@"General cache max size is %d", self.maxSize);
         
         store = [NSKeyedUnarchiver unarchiveObjectWithFile:[self storeArchivePath]];
         favouriteStore = [NSKeyedUnarchiver unarchiveObjectWithFile:[self favouriteStoreArchivePath]];
