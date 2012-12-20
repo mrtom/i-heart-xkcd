@@ -38,7 +38,7 @@
 			<key>Key</key>
 			<string>iheartxkcd_maxCacheSize</string>
 			<key>DefaultValue</key>
-			<string>10</string>
+			<string>2</string>
 		</dict>
 		<dict>
 			<key>DefaultValue</key>
