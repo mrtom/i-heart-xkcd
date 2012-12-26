@@ -492,7 +492,7 @@
 {
     if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
         [FBNativeDialogs presentShareDialogModallyFrom:self
-                                           initialText:[self.dataObject safeTitle]
+                                           initialText:nil
                                                  image:[self.imageView image]
                                                    url:[self.dataObject imageURL]
                                                handler:nil];
