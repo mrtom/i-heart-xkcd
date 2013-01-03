@@ -49,8 +49,10 @@ typedef enum {
 @property UIScrollView *altTextScrollView;
 @property UILabel *altTextView;
 
+@property UIView *aboutButtonBackground;
 @property UIView *favouriteButtonBackground;
 @property UIView *facebookShareButtonBackground;
+@property UIButton *aboutButton;
 @property UIButton *favouriteButton;
 @property UIButton *facebookShareButton;
 
@@ -118,8 +120,22 @@ typedef enum {
     [self.altTextScrollView setScrollEnabled:YES];
     [self.altTextScrollView addSubview:self.altTextView];
     
-    // Favourite and Facebook buttons
-    self.favouriteButtonBackground = [[UIView alloc] initWithFrame:CGRectMake(0, 0, favouriteAndFacebookButtonSide, favouriteAndFacebookButtonSide)];
+    // About, Favourite and Facebook buttons
+    self.aboutButtonBackground = [[UIView alloc] initWithFrame:CGRectMake(0, 0, favouriteAndFacebookButtonSide, favouriteAndFacebookButtonSide)];
+    [self.aboutButtonBackground setBackgroundColor:[UIColor blackColor]];
+    [self.aboutButtonBackground setAlpha:translutentAlpha];
+    [self.altTextCanvasView addSubview:self.aboutButtonBackground];
+    
+    self.aboutButton = [[UIButton alloc] initWithFrame:self.aboutButtonBackground.frame];
+    [self.aboutButton setBackgroundColor:[UIColor clearColor]];
+    [self.aboutButton setBackgroundImage:[UIImage imageNamed:@"info"] forState:UIControlStateNormal];
+    [self.aboutButton addTarget:self action:@selector(aboutXkcd:) forControlEvents:UIControlEventTouchUpInside];
+    [self.aboutButton setUserInteractionEnabled:YES];
+    [self.altTextCanvasView addSubview:self.aboutButton];
+    
+    CGRect favouriteButtonFrame = self.aboutButtonBackground.frame;
+    favouriteButtonFrame.origin.x += favouriteAndFacebookButtonSide;
+    self.favouriteButtonBackground = [[UIView alloc] initWithFrame:favouriteButtonFrame];
     [self.favouriteButtonBackground setBackgroundColor:[UIColor blackColor]];
     [self.favouriteButtonBackground setAlpha:translutentAlpha];
     [self.altTextCanvasView addSubview:self.favouriteButtonBackground];
@@ -131,7 +147,9 @@ typedef enum {
     [self.favouriteButton setUserInteractionEnabled:YES];
     [self.altTextCanvasView addSubview:self.favouriteButton];
     
-    self.facebookShareButtonBackground = [[UIView alloc] initWithFrame:CGRectMake(favouriteAndFacebookButtonSide, 0, favouriteAndFacebookButtonSide, favouriteAndFacebookButtonSide)];
+    CGRect shareButtonFrame = self.favouriteButtonBackground.frame;
+    shareButtonFrame.origin.x += favouriteAndFacebookButtonSide;
+    self.facebookShareButtonBackground = [[UIView alloc] initWithFrame:shareButtonFrame];
     [self.facebookShareButtonBackground setBackgroundColor:[UIColor blackColor]];
     [self.facebookShareButtonBackground setAlpha:translutentAlpha];
     [self.altTextCanvasView addSubview:self.facebookShareButtonBackground];
@@ -325,19 +343,24 @@ typedef enum {
                                                     altTextScrollWidth+2*altTextPadding, altTextScrollHeight+2*altTextPadding)];
     self.altTextBackgroundView.center = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2+titleBarHeight/2);
     
-    // Place Favourite and FB Share buttons directly on top of alttextview
+    // Place About, Favourite and FB Share buttons directly on top of alttextview
     CGRect altTextFrame = [self.altTextBackgroundView frame];
+    CGRect aboutFrame = [self.aboutButtonBackground frame];
     CGRect favFrame = [self.favouriteButtonBackground frame];
     CGRect fbFrame = [self.facebookShareButtonBackground frame];
     
-    favFrame.origin.x = altTextFrame.origin.x;
-    fbFrame.origin.x = altTextFrame.origin.x + favouriteAndFacebookButtonSide;
+    aboutFrame.origin.x = altTextFrame.origin.x;
+    favFrame.origin.x = aboutFrame.origin.x + favouriteAndFacebookButtonSide;
+    fbFrame.origin.x = favFrame.origin.x + favouriteAndFacebookButtonSide;
     
-    favFrame.origin.y = altTextFrame.origin.y - favouriteAndFacebookButtonSide;
-    fbFrame.origin.y = altTextFrame.origin.y - favouriteAndFacebookButtonSide;
+    aboutFrame.origin.y = altTextFrame.origin.y - favouriteAndFacebookButtonSide;
+    favFrame.origin.y = aboutFrame.origin.y;
+    fbFrame.origin.y = aboutFrame.origin.y;
     
+    [self.aboutButtonBackground setFrame:aboutFrame];
     [self.favouriteButtonBackground setFrame:favFrame];
     [self.facebookShareButtonBackground setFrame:fbFrame];
+    [self.aboutButton setFrame:aboutFrame];
     [self.favouriteButton setFrame:favFrame];
     [self.facebookShareButton setFrame:fbFrame];
     
@@ -501,6 +524,11 @@ typedef enum {
     [UIView animateWithDuration:pageOverlayToggleAnimationTime
                      animations:^{self.controlsViewCanvas.alpha = 0;}
                      completion:nil];
+}
+
+- (void)aboutXkcd: (id)sender
+{
+    NSLog(@"It's great!");
 }
 
 - (void)toggleFavourite: (id)sender
