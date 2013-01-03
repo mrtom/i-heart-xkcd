@@ -207,7 +207,7 @@
         } failure:nil];
     }
     
-    self.titleLabel.text = [self.dataObject safeTitle];
+    self.titleLabel.text = [NSString stringWithFormat:@"#%u: %@", [self.dataObject comicID], [self.dataObject safeTitle]];
     
     // Setup the alt text view
     [self configureAltTextViews];
@@ -423,41 +423,67 @@
 - (void)toggleTitleAndAltText
 {
     if ([self.altTextCanvasView alpha] == 0) {
-        [self.scrollView setScrollEnabled:NO];
-        
-        [UIView animateWithDuration:pageOverlayToggleAnimationTime
-                         animations:^{self.altTextCanvasView.alpha = 1.0;}
-                         completion:nil];
-        if (self.shouldHideTitle) {
-            [UIView animateWithDuration:pageOverlayToggleAnimationTime
-                             animations:^{self.titleLabel.alpha = translutentAlpha;}
-                             completion:nil];
-        }
+        [self showTitleAndAltText];
     } else {
-        [self.scrollView setScrollEnabled:YES];
-        
+        [self hideTitleAndAltText];
+    }
+}
+
+- (void)showTitleAndAltText
+{
+    [self hideControls];
+    [self.scrollView setScrollEnabled:NO];
+    
+    [UIView animateWithDuration:pageOverlayToggleAnimationTime
+                     animations:^{self.altTextCanvasView.alpha = 1.0;}
+                     completion:nil];
+    if (self.shouldHideTitle) {
         [UIView animateWithDuration:pageOverlayToggleAnimationTime
-                         animations:^{self.altTextCanvasView.alpha = 0;}
+                         animations:^{self.titleLabel.alpha = translutentAlpha;}
                          completion:nil];
-        if (self.shouldHideTitle) {
-            [UIView animateWithDuration:pageOverlayToggleAnimationTime
-                             animations:^{self.titleLabel.alpha = 0;}
-                             completion:nil];
-        }
+    }
+}
+
+- (void)hideTitleAndAltText
+{
+    [self.scrollView setScrollEnabled:YES];
+    
+    [UIView animateWithDuration:pageOverlayToggleAnimationTime
+                     animations:^{self.altTextCanvasView.alpha = 0;}
+                     completion:nil];
+    if (self.shouldHideTitle) {
+        [UIView animateWithDuration:pageOverlayToggleAnimationTime
+                         animations:^{self.titleLabel.alpha = 0;}
+                         completion:nil];
     }
 }
 
 - (void)toggleControls
 {
     if ([self.controlsViewCanvas alpha] == 0) {
-        [UIView animateWithDuration:pageOverlayToggleAnimationTime
-                         animations:^{self.controlsViewCanvas.alpha = 1.0;}
-                         completion:nil];
+        [self showControls];
     } else {
-        [UIView animateWithDuration:pageOverlayToggleAnimationTime
-                         animations:^{self.controlsViewCanvas.alpha = 0;}
-                         completion:nil];
+        [self hideControls];
     }
+}
+
+- (void)showControls
+{
+    [self hideTitleAndAltText];
+    [self.scrollView setScrollEnabled:NO];
+
+    [UIView animateWithDuration:pageOverlayToggleAnimationTime
+                     animations:^{self.controlsViewCanvas.alpha = 1.0;}
+                     completion:nil];
+}
+
+- (void)hideControls
+{
+    [self.scrollView setScrollEnabled:YES];
+    
+    [UIView animateWithDuration:pageOverlayToggleAnimationTime
+                     animations:^{self.controlsViewCanvas.alpha = 0;}
+                     completion:nil];
 }
 
 - (void)toggleFavourite: (id)sender

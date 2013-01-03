@@ -15,7 +15,7 @@
 //      "transcript": "",
 //      "alt": "I didn't understand what you meant. I still don't. But I'll figure it out soon!",
 //      "img": "http:\/\/imgs.xkcd.com\/comics\/honest.png",
-//     "title": "Honest"
+//      "title": "Honest"
 //  }
 //
 //  Created by Tom Elliott on 12/12/2012.
