@@ -12,7 +12,7 @@
 #import "ModelController.h"
 #import "DataViewControlsProtocol.h"
 
-@interface DataViewController : UIViewController <UIScrollViewDelegate>
+@interface DataViewController : UIViewController <UIScrollViewDelegate, UIPopoverControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;

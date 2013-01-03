@@ -7,16 +7,18 @@
 //
 
 #import "DataViewController.h"
+
 #import <AFNetworking/AFNetworking.h>
 #import <AFNetworking/UIImageView+AFNetworking.h>
-#import <Social/Social.h>
 #import <FacebookSDK/FacebookSDK.h>
+#import <Social/Social.h>
 
-#import "UIImage+animatedGIF.h"
-#import "ModelController.h"
+#import "AboutViewController.h"
 #import "ComicStore.h"
 #import "ComicImageStoreController.h"
+#import "ModelController.h"
 #import "Settings.h"
+#import "UIImage+animatedGIF.h"
 
 #define pageOverlayToggleAnimationTime 0.300
 #define pageOverlayToggleBounceLimit pageOverlayToggleAnimationTime+0.025
@@ -63,6 +65,8 @@ typedef enum {
 @property BOOL wasAtMaximumLeft;
 @property float previousContentX;
 @property ScrollDirection scrollDirection;
+
+@property UIPopoverController *aboutPopover;
 
 @end
 
@@ -528,7 +532,13 @@ typedef enum {
 
 - (void)aboutXkcd: (id)sender
 {
-    NSLog(@"It's great!");
+    AboutViewController *content = [[AboutViewController alloc] init];
+    UINavigationController *navController = [[UINavigationController alloc]
+                                             initWithRootViewController:content];
+    [navController setModalPresentationStyle:UIModalPresentationFormSheet];
+    [navController setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+    
+    [self presentViewController:navController animated:YES completion:nil];
 }
 
 - (void)toggleFavourite: (id)sender

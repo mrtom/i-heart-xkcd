@@ -16,6 +16,7 @@
 }
 
 @property (strong, nonatomic) UIPageViewController *pageViewController;
+@property (strong, nonatomic) UINavigationController *navigationController;
 @property (strong, nonatomic) UIView *pageCover;
 
 @end

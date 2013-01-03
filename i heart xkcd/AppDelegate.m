@@ -24,6 +24,9 @@
     [[ComicStore sharedStore] logCacheInfo];
     [[ComicImageStoreController sharedStore] logCacheInfo];
     
+    // Configure view
+    self.window.backgroundColor = [UIColor whiteColor];
+    
     return YES;
 }
 
