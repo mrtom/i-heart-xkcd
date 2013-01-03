@@ -72,11 +72,11 @@
     [self.view addSubview:pageCover];
 }
 
-- (void)loadPageAtIndex:(NSInteger)index
+- (void)loadPageAtIndex:(NSInteger)index forDirection:(UIPageViewControllerNavigationDirection) direction andAnimation:(BOOL)animated
 {
     DataViewController *viewController = [self.modelController viewControllerAtIndex:index storyboard:self.storyboard];
     NSArray *viewControllers = @[viewController];
-    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:NULL];
+    [self.pageViewController setViewControllers:viewControllers direction:direction animated:animated completion:NULL];
     
     [UIView animateWithDuration:pageCoverAnimationTime
                      animations:^{pageCover.alpha = 0.0;}
@@ -112,7 +112,7 @@
                      animations:^{pageCover.alpha = 0.0;}
                      completion:nil];
     
-    [self loadPageAtIndex:self.currentIndex];
+    [self loadPageAtIndex:self.currentIndex forDirection:UIPageViewControllerNavigationDirectionForward andAnimation:NO];
 }
 
 #pragma mark - UIPageViewController delegate methods
@@ -138,7 +138,7 @@
     [UIView animateWithDuration:pageCoverAnimationTime
                      animations:^{pageCover.alpha = 1.0;}
                      completion:^(BOOL finished){
-                         [this loadPageAtIndex:index];
+                         [this loadPageAtIndex:index forDirection:UIPageViewControllerNavigationDirectionForward andAnimation:NO];
                      }];
 }
 
@@ -168,7 +168,7 @@
         return;
     }
     
-    [self switchToPageViewControllerWithoutPageTurnForIndex:self.currentIndex-1];
+    [self loadPageAtIndex:self.currentIndex-1 forDirection:UIPageViewControllerNavigationDirectionReverse andAnimation:YES];
 }
 
 - (void)loadRandomComic
@@ -184,7 +184,7 @@
         return;
     }
     
-    [self switchToPageViewControllerWithoutPageTurnForIndex:self.currentIndex+1];
+    [self loadPageAtIndex:self.currentIndex+1 forDirection:UIPageViewControllerNavigationDirectionForward andAnimation:YES];
 }
 
 @end

@@ -32,6 +32,14 @@
 #define isLoggedIntoFacebookBackgroundImage @"f_logo"
 #define isNotLoggedIntoFacebookBackgroundImage @"f_logo_disabled"
 
+typedef enum {
+    ScrollDirectionNone,
+    ScrollDirectionRight,
+    ScrollDirectionLeft,
+    ScrollDirectionUp,
+    ScrollDirectionDown,
+} ScrollDirection;
+
 @interface DataViewController ()
 
 @property UIImageView *imageView;
@@ -49,12 +57,16 @@
 @property (readwrite, nonatomic) double lastTimeOverlaysToggled;
 @property BOOL shouldHideTitle;
 @property BOOL imageIsLargerThanScrollView;
+@property BOOL wasAtMinimumLeft;
+@property BOOL wasAtMaximumLeft;
+@property float previousContentX;
+@property ScrollDirection scrollDirection;
 
 @end
 
 @implementation DataViewController
 
-@synthesize delegate;
+@synthesize delegate, previousContentX;
 
 - (void)viewDidLoad
 {
@@ -140,12 +152,17 @@
     tapRecognizer.numberOfTouchesRequired = 1;
     [self.view addGestureRecognizer:tapRecognizer];
     
-    // Setup gesture recognisers
     self.lastTimeOverlaysToggled = 0;
     UITapGestureRecognizer *doubleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)];
     doubleTapRecognizer.numberOfTapsRequired = 2;
     doubleTapRecognizer.numberOfTouchesRequired = 1;
     [self.view addGestureRecognizer:doubleTapRecognizer];
+
+    // Setup internal state
+    self.wasAtMinimumLeft = NO;
+    self.wasAtMaximumLeft = NO;
+    self.previousContentX = 0.0f;
+    self.scrollDirection = ScrollDirectionNone;
     
     [tapRecognizer requireGestureRecognizerToFail:doubleTapRecognizer];
 }
@@ -609,6 +626,39 @@
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
 {
     return self.imageView;
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    float currentOffset = scrollView.contentOffset.x;
+    if (currentOffset <= 0.0f) {
+        self.wasAtMinimumLeft = YES;
+    }
+    
+    if (currentOffset >= ([self imageView].frame.size.width - [self scrollView].frame.size.width)) {
+        self.wasAtMaximumLeft = YES;
+    }
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (self.previousContentX > scrollView.contentOffset.x) {
+        self.scrollDirection = ScrollDirectionRight;
+    } else if (self.previousContentX < scrollView.contentOffset.x) {
+        self.scrollDirection = ScrollDirectionLeft;        
+    }
+    
+    self.previousContentX = scrollView.contentOffset.x;
+    
+    if (self.wasAtMinimumLeft && self.scrollDirection == ScrollDirectionRight) {
+        [self.scrollView setScrollEnabled:NO];
+        [self goPrevious];
+    } else if (self.wasAtMaximumLeft && self.scrollDirection == ScrollDirectionLeft) {
+        [self.scrollView setScrollEnabled:NO];
+        [self goNext];
+    }
+    self.wasAtMinimumLeft = NO;
+    self.wasAtMaximumLeft = NO;
 }
 
 @end
