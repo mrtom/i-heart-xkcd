@@ -601,6 +601,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 95100619255547B1A0FF29B8 /* Pods.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Thomas Elliott";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Thomas Elliott";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../Documents/FacebookSDK\"",
@@ -618,6 +620,8 @@
 					"-lsqlite3.0",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "31B18602-87AF-4864-B0D0-6D11C3AB9793";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "31B18602-87AF-4864-B0D0-6D11C3AB9793";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
