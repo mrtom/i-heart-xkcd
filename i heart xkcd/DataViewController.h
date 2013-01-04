@@ -12,7 +12,7 @@
 #import "ModelController.h"
 #import "DataViewControlsProtocol.h"
 
-@interface DataViewController : UIViewController <UIScrollViewDelegate, UIPopoverControllerDelegate, UIPickerViewDelegate>
+@interface DataViewController : UIViewController <UIScrollViewDelegate, UIPopoverControllerDelegate, UITableViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -20,7 +20,7 @@
 
 @property (strong, nonatomic) IBOutlet UIView *controlsViewBacking;
 @property (strong, nonatomic) IBOutlet UIView *controlsViewCanvas;
-@property (strong, nonatomic) IBOutlet UIPickerView *favouritePickerView;
+@property (strong, nonatomic) IBOutlet UITableView *favouritePickerView;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *controlsViewSegmentAll;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *controlsViewSegmentEnds;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *controlsViewNextRandom;

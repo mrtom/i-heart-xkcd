@@ -167,6 +167,7 @@ typedef enum {
     
     // Setup controls
     [self.controlsViewCanvas setAlpha:0];
+    
     [self.favouritePickerView setDelegate:self];
     [self.favouritePickerView setDataSource:[ComicStore sharedStore]];
     
@@ -718,23 +719,13 @@ typedef enum {
     self.wasAtMaximumLeft = NO;
 }
 
-#pragma mark - UIPickerViewDelegate methods
+#pragma mark - Table view delegate
 
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ComicStore *store = [ComicStore sharedStore];
     NSArray *comics = [store favouriteComicsByKey];
-    ComicData *comicForRow = [store comicForKey:[comics objectAtIndex:row]];
-    NSLog(@"Title for row %u is %@", row, [comicForRow safeTitle]);
-    
-    return [NSString stringWithFormat:@"%@", [comicForRow safeTitle]];
-}
-
--(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
-{
-    ComicStore *store = [ComicStore sharedStore];
-    NSArray *comics = [store favouriteComicsByKey];
-    ComicData *comicForRow = [store comicForKey:[comics objectAtIndex:row]];
+    ComicData *comicForRow = [store comicForKey:[comics objectAtIndex:[indexPath row]]];
     
     [self.delegate loadComicAtIndex:[comicForRow comicID]];
 }

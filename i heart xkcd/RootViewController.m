@@ -190,7 +190,7 @@
 
 - (void)loadComicAtIndex:(NSInteger)index
 {
-    [self loadPageAtIndex:index forDirection:nil andAnimation:NO];
+    [self loadPageAtIndex:index forDirection:UIPageViewControllerNavigationDirectionForward andAnimation:NO];
 }
 
 @end

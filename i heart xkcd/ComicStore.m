@@ -131,17 +131,34 @@
     NSLog(@"We have metadata for %d comics in the cache and %d favourites in the favourites cache", [comicsData count], [favouritesData count]);
 }
 
-#pragma mark - UIPickerViewDataSource methods
+#pragma mark - Table view data source
 
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"Cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    if (cell==nil) {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+    }
+    
+    ComicStore *store = [ComicStore sharedStore];
+    NSArray *comics = [store favouriteComicsByKey];
+    ComicData *comicForRow = [store comicForKey:[comics objectAtIndex:[indexPath row]]];
+    
+    [cell.textLabel setText:[comicForRow safeTitle]];
+    
+    return cell;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
 }
 
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [favouritesData count];
 }
-
 
 @end

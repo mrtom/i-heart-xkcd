@@ -10,7 +10,7 @@
 
 @class ComicData;
 
-@interface ComicStore : NSObject <UIPickerViewDataSource>
+@interface ComicStore : NSObject <UITableViewDataSource>
 {
     NSMutableDictionary *comicsData;
     NSMutableDictionary *favouritesData;
