@@ -152,6 +152,10 @@ a.button span {
   height: 23px;
 }
 
+#download-app span {
+  background: transparent url(../images/appstore-icon.png) 12px 50% no-repeat;
+}
+
 #download-zip span {
   background: transparent url(../images/zip-icon.png) 12px 50% no-repeat;
 }
