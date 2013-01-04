@@ -102,7 +102,6 @@
                             <constraint firstAttribute="trailing" secondItem="3Dr-k4-E67" secondAttribute="trailing" constant="20" symbolic="YES" type="user" id="YFD-dU-LSb"/>
                             <constraint firstItem="JEh-ZD-9dT" firstAttribute="bottom" secondItem="10" secondAttribute="bottom" type="user" id="Z4K-B9-Vc2"/>
                             <constraint firstItem="10" firstAttribute="top" secondItem="6" secondAttribute="top" type="user" id="e4o-a4-Qgj"/>
-                            <constraint firstItem="3Dr-k4-E67" firstAttribute="top" secondItem="6" secondAttribute="top" priority="1" constant="263" type="user" id="ooA-gj-OBc"/>
                             <constraint firstItem="3Dr-k4-E67" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="20" symbolic="YES" type="user" id="qOE-yM-lJg"/>
                             <constraint firstItem="10" firstAttribute="leading" secondItem="6" secondAttribute="leading" type="user" id="ud9-wB-ruJ"/>
                         </constraints>
