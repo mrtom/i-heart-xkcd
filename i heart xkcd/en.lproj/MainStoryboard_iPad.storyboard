@@ -25,24 +25,24 @@
         <scene sceneID="7">
             <objects>
                 <viewController storyboardIdentifier="DataViewController" id="5" customClass="DataViewController" sceneMemberID="viewController">
-                    <view key="view" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="12">
+                    <view key="view" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="12" userLabel="Superview">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="14">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="14" userLabel="TitleLabel">
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                                 <color key="shadowColor" red="0.49259086279999997" green="0.49259086279999997" blue="0.49259086279999997" alpha="1" colorSpace="calibratedRGB"/>
                             </label>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="OQc-MH-OSG"/>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dax-VM-jfU">
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="OQc-MH-OSG" userLabel="LoadingIndicator"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dax-VM-jfU" userLabel="ControlsCanvas">
                                 <subviews>
-                                    <view alpha="0.80000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TBH-Wu-Uhc">
+                                    <view alpha="0.80000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TBH-Wu-Uhc" userLabel="ControlsBackground">
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
-                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" translatesAutoresizingMaskIntoConstraints="NO" id="4Ls-cv-gOA">
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" translatesAutoresizingMaskIntoConstraints="NO" id="4Ls-cv-gOA" userLabel="FirstPrevRandNextLast">
                                         <segments>
                                             <segment title="First"/>
                                             <segment title="Prev"/>
@@ -59,8 +59,8 @@
                                 <constraints>
                                     <constraint firstItem="TBH-Wu-Uhc" firstAttribute="bottom" secondItem="dax-VM-jfU" secondAttribute="bottom" type="default" id="0dA-jL-AAO"/>
                                     <constraint firstAttribute="trailing" secondItem="TBH-Wu-Uhc" secondAttribute="trailing" constant="132" id="17P-5z-xl0"/>
-                                    <constraint firstAttribute="bottom" secondItem="4Ls-cv-gOA" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="3bt-yQ-qsG"/>
-                                    <constraint firstItem="4Ls-cv-gOA" firstAttribute="centerX" secondItem="dax-VM-jfU" secondAttribute="centerX" type="default" id="aY3-km-CpP"/>
+                                    <constraint firstAttribute="bottom" secondItem="4Ls-cv-gOA" secondAttribute="bottom" constant="20" symbolic="YES" type="user" id="3bt-yQ-qsG"/>
+                                    <constraint firstItem="4Ls-cv-gOA" firstAttribute="centerX" secondItem="dax-VM-jfU" secondAttribute="centerX" type="user" id="aY3-km-CpP"/>
                                     <constraint firstItem="TBH-Wu-Uhc" firstAttribute="leading" secondItem="dax-VM-jfU" secondAttribute="leading" constant="131" id="f2e-m8-QHT"/>
                                     <constraint firstItem="TBH-Wu-Uhc" firstAttribute="top" secondItem="dax-VM-jfU" secondAttribute="top" type="default" id="r7y-YP-Yyt"/>
                                     <constraint firstItem="4Ls-cv-gOA" firstAttribute="top" secondItem="dax-VM-jfU" secondAttribute="top" constant="20" symbolic="YES" type="default" id="t7O-uE-pbZ"/>
@@ -108,6 +108,7 @@
                 <relationship kind="outlet" name="controlsViewNextRandom" candidateClass="UISegmentedControl"/>
                 <relationship kind="outlet" name="controlsViewSegmentAll" candidateClass="UISegmentedControl"/>
                 <relationship kind="outlet" name="controlsViewSegmentEnds" candidateClass="UISegmentedControl"/>
+                <relationship kind="outlet" name="favouritePickerView" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="loadingView" candidateClass="UIActivityIndicatorView"/>
                 <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
