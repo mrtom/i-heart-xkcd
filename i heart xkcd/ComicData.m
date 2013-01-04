@@ -8,6 +8,8 @@
 
 #import "ComicData.h"
 
+#import "ComicStore.h"
+
 @implementation ComicData
 
 @synthesize day = _day;
@@ -146,6 +148,17 @@
     
     [aCoder encodeBool:_isLoaded forKey:@"is_loaded"];
     [aCoder encodeBool:_isFavourite forKey:@"is_favourite"];
+}
+
+- (NSComparisonResult)compare:(ComicData*)aComic
+{
+    NSInteger myId = [self comicID];
+    NSInteger theirId = [aComic comicID];
+    
+    if (myId > theirId) return NSOrderedDescending;
+    if (theirId > myId) return NSOrderedAscending;
+    
+    return NSOrderedSame;
 }
 
 @end

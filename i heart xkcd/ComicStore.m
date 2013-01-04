@@ -36,6 +36,13 @@
             comicsData = [[NSMutableDictionary alloc] init];
         }
         
+        NSString *favPath = [self favouriteComicArchivePath];
+        favouritesData = [NSKeyedUnarchiver unarchiveObjectWithFile:favPath];
+        
+        if (!favouritesData) {
+            favouritesData = [[NSMutableDictionary alloc] init];
+        }
+        
         // Handle memory warnings - clear the cache
         NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
         [nc addObserver:self selector:@selector(clearCache:) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
@@ -46,6 +53,11 @@
 - (NSArray *)allComics
 {
     return [comicsData allValues];
+}
+
+- (NSArray *)favouriteComicsByKey
+{
+    return [favouritesData keysSortedByValueUsingSelector:@selector(compare:)];
 }
 
 - (ComicData *)comicForKey:(NSString *)key
@@ -63,6 +75,16 @@
     [comicsData removeObjectForKey:key];
 }
 
+- (void)setAsFavourite:(ComicData *)comic
+{
+    [favouritesData setObject:comic forKey:[self keyForComic:comic]];
+}
+
+- (void)setAsNotFavourite:(ComicData *)comic
+{
+    [comicsData removeObjectForKey:[self keyForComic:comic]];
+}
+
 - (NSString *)keyForComic:(ComicData *)comic
 {
     return [NSString stringWithFormat:@"%d", [comic comicID]];
@@ -78,22 +100,47 @@
     return [documentDirectory stringByAppendingPathComponent:@"comics.archive"];
 }
 
+- (NSString *)favouriteComicArchivePath
+{
+    NSArray *documentDirectories =
+    NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    
+    NSString *documentDirectory = [documentDirectories objectAtIndex:0];
+    
+    return [documentDirectory stringByAppendingPathComponent:@"fav_comics.archive"];
+}
+
 - (BOOL)saveChanges
 {
     NSString *path = [self comicArchivePath];
-    return [NSKeyedArchiver archiveRootObject:comicsData toFile:path];
+    NSString *favPath = [self favouriteComicArchivePath];
+    return [NSKeyedArchiver archiveRootObject:comicsData toFile:path] && [NSKeyedArchiver archiveRootObject:favouritesData toFile:favPath];
 }
 
 - (void)clearCache:(NSNotification *)note
 {
-    NSLog(@"Flushing metadata for %d comics from the cache", [comicsData count]);
+    NSLog(@"Flushing metadata for %d comics from the cache and %d comics from the favourites cache", [comicsData count], [favouritesData count]);
     [comicsData removeAllObjects];
+    [favouritesData removeAllObjects];
+    
     [self saveChanges];
 }
 
 - (void)logCacheInfo
 {
-    NSLog(@"We have metadata for %d comics in the cache", [[self allComics] count]);
+    NSLog(@"We have metadata for %d comics in the cache and %d favourites in the favourites cache", [comicsData count], [favouritesData count]);
+}
+
+#pragma mark - UIPickerViewDataSource methods
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return [favouritesData count];
 }
 
 

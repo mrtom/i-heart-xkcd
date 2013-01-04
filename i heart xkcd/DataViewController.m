@@ -167,6 +167,8 @@ typedef enum {
     
     // Setup controls
     [self.controlsViewCanvas setAlpha:0];
+    [self.favouritePickerView setDelegate:self];
+    [self.favouritePickerView setDataSource:[ComicStore sharedStore]];
     
     // Setup gesture recognisers
     UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
@@ -464,6 +466,25 @@ typedef enum {
     }
 }
 
+- (void)animateShowTitleBar
+{
+    // If we shouldn't hide it, it'll never be hidden, so we don't have to do anything
+    if (self.shouldHideTitle) {
+        [UIView animateWithDuration:pageOverlayToggleAnimationTime
+                         animations:^{self.titleLabel.alpha = translutentAlpha;}
+                         completion:nil];
+    }
+}
+
+- (void)animateHideTitleBar
+{
+    if (self.shouldHideTitle) {
+        [UIView animateWithDuration:pageOverlayToggleAnimationTime
+                         animations:^{self.titleLabel.alpha = 0;}
+                         completion:nil];
+    }
+}
+
 - (void)toggleTitleAndAltText
 {
     if ([self.altTextCanvasView alpha] == 0) {
@@ -481,11 +502,7 @@ typedef enum {
     [UIView animateWithDuration:pageOverlayToggleAnimationTime
                      animations:^{self.altTextCanvasView.alpha = 1.0;}
                      completion:nil];
-    if (self.shouldHideTitle) {
-        [UIView animateWithDuration:pageOverlayToggleAnimationTime
-                         animations:^{self.titleLabel.alpha = translutentAlpha;}
-                         completion:nil];
-    }
+    [self animateShowTitleBar];
 }
 
 - (void)hideTitleAndAltText
@@ -495,11 +512,7 @@ typedef enum {
     [UIView animateWithDuration:pageOverlayToggleAnimationTime
                      animations:^{self.altTextCanvasView.alpha = 0;}
                      completion:nil];
-    if (self.shouldHideTitle) {
-        [UIView animateWithDuration:pageOverlayToggleAnimationTime
-                         animations:^{self.titleLabel.alpha = 0;}
-                         completion:nil];
-    }
+    [self animateHideTitleBar];
 }
 
 - (void)toggleControls
@@ -519,6 +532,7 @@ typedef enum {
     [UIView animateWithDuration:pageOverlayToggleAnimationTime
                      animations:^{self.controlsViewCanvas.alpha = 1.0;}
                      completion:nil];
+    [self animateShowTitleBar];
 }
 
 - (void)hideControls
@@ -528,6 +542,7 @@ typedef enum {
     [UIView animateWithDuration:pageOverlayToggleAnimationTime
                      animations:^{self.controlsViewCanvas.alpha = 0;}
                      completion:nil];
+    [self animateHideTitleBar];
 }
 
 - (void)aboutXkcd: (id)sender
@@ -548,6 +563,8 @@ typedef enum {
     
     if ([self.dataObject isFavourite]) {
         [self.dataObject setIsFavourite:NO];
+        [[ComicStore sharedStore] setAsNotFavourite:self.dataObject];
+   
         if ([Settings shouldCacheFavourites]) {
             didSet = [imageStore removeFavourite:self.dataObject];
         }
@@ -556,6 +573,8 @@ typedef enum {
         }
     } else {
         [self.dataObject setIsFavourite:YES];
+        [[ComicStore sharedStore] setAsFavourite:self.dataObject];
+        
         if ([Settings shouldCacheFavourites]) {
             didSet = [imageStore pushComic:self.dataObject withImage:[self.imageView image]];
         }
@@ -697,6 +716,27 @@ typedef enum {
     }
     self.wasAtMinimumLeft = NO;
     self.wasAtMaximumLeft = NO;
+}
+
+#pragma mark - UIPickerViewDelegate methods
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    ComicStore *store = [ComicStore sharedStore];
+    NSArray *comics = [store favouriteComicsByKey];
+    ComicData *comicForRow = [store comicForKey:[comics objectAtIndex:row]];
+    NSLog(@"Title for row %u is %@", row, [comicForRow safeTitle]);
+    
+    return [NSString stringWithFormat:@"%@", [comicForRow safeTitle]];
+}
+
+-(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    ComicStore *store = [ComicStore sharedStore];
+    NSArray *comics = [store favouriteComicsByKey];
+    ComicData *comicForRow = [store comicForKey:[comics objectAtIndex:row]];
+    
+    [self.delegate loadComicAtIndex:[comicForRow comicID]];
 }
 
 @end

@@ -8,23 +8,32 @@
         <scene sceneID="8">
             <objects>
                 <viewController storyboardIdentifier="DataViewController" id="5" customClass="DataViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="6">
+                    <view key="view" contentMode="scaleToFill" id="6" userLabel="Superview">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="10">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="10" userLabel="TitleLabel">
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" size="system"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="JEh-ZD-9dT"/>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Dr-k4-E67">
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="JEh-ZD-9dT" userLabel="LoadingIndicator">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" type="user" id="4RF-vr-f8v"/>
+                                    <constraint firstAttribute="height" constant="20" type="user" id="56n-bl-H8b"/>
+                                </constraints>
+                            </activityIndicatorView>
+                            <view contentMode="scaleToFill" restorationIdentifier="Canvas" translatesAutoresizingMaskIntoConstraints="NO" id="3Dr-k4-E67" userLabel="ControlCanvas">
                                 <subviews>
-                                    <view alpha="0.80000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gvg-yW-SHr">
+                                    <view alpha="0.80000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gvg-yW-SHr" userLabel="ControlBackground">
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
-                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" momentary="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pTz-i7-veq">
+                                    <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Il3-aW-mrW" userLabel="FavSpinner"/>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" momentary="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pTz-i7-veq" userLabel="FirstLast">
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" type="user" id="LDh-qp-4eT"/>
+                                        </constraints>
                                         <segments>
                                             <segment title="First"/>
                                             <segment title="Last"/>
@@ -33,7 +42,10 @@
                                             <action selector="controlsViewSegmentEndsIndexChanged" destination="5" eventType="valueChanged" id="pi2-M8-gyt"/>
                                         </connections>
                                     </segmentedControl>
-                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" momentary="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ilh-Id-NVN">
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" momentary="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ilh-Id-NVN" userLabel="PrevRandNext">
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" type="user" id="UZc-MC-PJS"/>
+                                        </constraints>
                                         <segments>
                                             <segment title="Prev"/>
                                             <segment title="Random"/>
@@ -46,31 +58,37 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="pTz-i7-veq" firstAttribute="top" secondItem="3Dr-k4-E67" secondAttribute="top" constant="20" symbolic="YES" type="default" id="6Ac-z8-7ci"/>
-                                    <constraint firstAttribute="height" constant="150" type="user" id="GW9-hM-9ed"/>
-                                    <constraint firstAttribute="trailing" secondItem="ilh-Id-NVN" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="KUE-1U-8Kg"/>
-                                    <constraint firstItem="Gvg-yW-SHr" firstAttribute="leading" secondItem="3Dr-k4-E67" secondAttribute="leading" type="default" id="MbJ-1L-3kO"/>
-                                    <constraint firstItem="Gvg-yW-SHr" firstAttribute="top" secondItem="3Dr-k4-E67" secondAttribute="top" type="default" id="NDE-ZR-aGp"/>
-                                    <constraint firstAttribute="trailing" secondItem="pTz-i7-veq" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="TmV-eo-09e"/>
-                                    <constraint firstItem="Gvg-yW-SHr" firstAttribute="bottom" secondItem="3Dr-k4-E67" secondAttribute="bottom" type="default" id="c2N-jr-paF"/>
-                                    <constraint firstAttribute="bottom" secondItem="ilh-Id-NVN" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="dIX-QV-5Po"/>
-                                    <constraint firstItem="pTz-i7-veq" firstAttribute="leading" secondItem="3Dr-k4-E67" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="nPf-99-0kS"/>
-                                    <constraint firstItem="Gvg-yW-SHr" firstAttribute="trailing" secondItem="3Dr-k4-E67" secondAttribute="trailing" type="default" id="na0-Ux-Lto"/>
-                                    <constraint firstItem="ilh-Id-NVN" firstAttribute="leading" secondItem="3Dr-k4-E67" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="nva-yr-YdZ"/>
+                                    <constraint firstItem="pTz-i7-veq" firstAttribute="top" secondItem="Il3-aW-mrW" secondAttribute="bottom" priority="900" constant="40" type="user" id="2wc-lg-yAT"/>
+                                    <constraint firstItem="Gvg-yW-SHr" firstAttribute="bottom" secondItem="3Dr-k4-E67" secondAttribute="bottom" type="user" id="ALs-PQ-i8w"/>
+                                    <constraint firstAttribute="centerX" secondItem="ilh-Id-NVN" secondAttribute="centerX" type="user" id="DdX-KC-hXd"/>
+                                    <constraint firstAttribute="centerX" secondItem="pTz-i7-veq" secondAttribute="centerX" type="user" id="Iti-A1-AM8"/>
+                                    <constraint firstItem="Gvg-yW-SHr" firstAttribute="leading" secondItem="3Dr-k4-E67" secondAttribute="leading" type="user" id="MbJ-1L-3kO"/>
+                                    <constraint firstItem="Il3-aW-mrW" firstAttribute="leading" secondItem="3Dr-k4-E67" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="XAn-fm-Adp"/>
+                                    <constraint firstItem="ilh-Id-NVN" firstAttribute="top" secondItem="pTz-i7-veq" secondAttribute="bottom" constant="8" symbolic="YES" type="user" id="Xfa-5g-43K"/>
+                                    <constraint firstItem="pTz-i7-veq" firstAttribute="leading" secondItem="3Dr-k4-E67" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="XnT-u5-N5e"/>
+                                    <constraint firstAttribute="bottom" secondItem="ilh-Id-NVN" secondAttribute="bottom" constant="20" symbolic="YES" type="user" id="ZD9-uM-R4A"/>
+                                    <constraint firstItem="Il3-aW-mrW" firstAttribute="top" secondItem="3Dr-k4-E67" secondAttribute="top" priority="1" constant="33" type="user" id="aq7-Yb-bPY"/>
+                                    <constraint firstAttribute="centerX" secondItem="Il3-aW-mrW" secondAttribute="centerX" type="user" id="fgD-1u-eOo"/>
+                                    <constraint firstItem="Gvg-yW-SHr" firstAttribute="top" secondItem="3Dr-k4-E67" secondAttribute="top" type="user" id="hTd-VQ-IuY"/>
+                                    <constraint firstItem="Gvg-yW-SHr" firstAttribute="trailing" secondItem="3Dr-k4-E67" secondAttribute="trailing" type="user" id="na0-Ux-Lto"/>
+                                    <constraint firstItem="ilh-Id-NVN" firstAttribute="leading" secondItem="3Dr-k4-E67" secondAttribute="leading" constant="20" symbolic="YES" type="user" id="yFS-0Z-8tn"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="10" firstAttribute="trailing" secondItem="6" secondAttribute="trailing" type="default" id="2xb-nX-egw"/>
-                            <constraint firstAttribute="trailing" secondItem="3Dr-k4-E67" secondAttribute="trailing" constant="19" id="AE5-G7-tqY"/>
-                            <constraint firstItem="JEh-ZD-9dT" firstAttribute="trailing" secondItem="6" secondAttribute="trailing" type="default" id="HjS-Od-OZl"/>
-                            <constraint firstAttribute="bottom" secondItem="3Dr-k4-E67" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="VfE-ch-eoi"/>
+                            <constraint firstItem="10" firstAttribute="trailing" secondItem="6" secondAttribute="trailing" type="user" id="2xb-nX-egw"/>
+                            <constraint firstItem="JEh-ZD-9dT" firstAttribute="top" secondItem="6" secondAttribute="top" type="user" id="FK5-YR-gRf"/>
+                            <constraint firstItem="JEh-ZD-9dT" firstAttribute="trailing" secondItem="6" secondAttribute="trailing" type="user" id="HjS-Od-OZl"/>
+                            <constraint firstItem="3Dr-k4-E67" firstAttribute="top" secondItem="6" secondAttribute="top" priority="1" constant="226" type="user" id="RNU-80-uNz"/>
+                            <constraint firstAttribute="centerX" secondItem="3Dr-k4-E67" secondAttribute="centerX" type="user" id="UAT-h1-Pdd"/>
+                            <constraint firstAttribute="bottom" secondItem="3Dr-k4-E67" secondAttribute="bottom" constant="20" symbolic="YES" type="user" id="XYi-MO-ck4"/>
+                            <constraint firstAttribute="trailing" secondItem="3Dr-k4-E67" secondAttribute="trailing" constant="20" symbolic="YES" type="user" id="YFD-dU-LSb"/>
                             <constraint firstItem="JEh-ZD-9dT" firstAttribute="bottom" secondItem="10" secondAttribute="bottom" type="default" id="Z4K-B9-Vc2"/>
-                            <constraint firstItem="10" firstAttribute="top" secondItem="6" secondAttribute="top" type="default" id="e4o-a4-Qgj"/>
-                            <constraint firstItem="JEh-ZD-9dT" firstAttribute="top" secondItem="6" secondAttribute="top" type="default" id="gFL-JB-lbj"/>
-                            <constraint firstItem="3Dr-k4-E67" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="21" id="jSz-3m-qJc"/>
-                            <constraint firstItem="10" firstAttribute="leading" secondItem="6" secondAttribute="leading" type="default" id="ud9-wB-ruJ"/>
+                            <constraint firstItem="10" firstAttribute="top" secondItem="6" secondAttribute="top" type="user" id="e4o-a4-Qgj"/>
+                            <constraint firstItem="3Dr-k4-E67" firstAttribute="top" secondItem="6" secondAttribute="top" constant="213" id="eb6-Qk-Ni5"/>
+                            <constraint firstItem="3Dr-k4-E67" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="20" symbolic="YES" type="user" id="qOE-yM-lJg"/>
+                            <constraint firstItem="10" firstAttribute="leading" secondItem="6" secondAttribute="leading" type="user" id="ud9-wB-ruJ"/>
                         </constraints>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
@@ -80,6 +98,7 @@
                         <outlet property="controlsViewCanvas" destination="3Dr-k4-E67" id="TBe-Ki-NK6"/>
                         <outlet property="controlsViewNextRandom" destination="ilh-Id-NVN" id="zLj-rB-6OO"/>
                         <outlet property="controlsViewSegmentEnds" destination="pTz-i7-veq" id="z6m-pr-EFz"/>
+                        <outlet property="favouritePickerView" destination="Il3-aW-mrW" id="ghX-uh-y9N"/>
                         <outlet property="loadingView" destination="JEh-ZD-9dT" id="v1S-ZD-O55"/>
                         <outlet property="titleLabel" destination="10" id="EIP-Yt-gPZ"/>
                     </connections>
@@ -116,6 +135,7 @@
                 <relationship kind="outlet" name="controlsViewNextRandom" candidateClass="UISegmentedControl"/>
                 <relationship kind="outlet" name="controlsViewSegmentAll" candidateClass="UISegmentedControl"/>
                 <relationship kind="outlet" name="controlsViewSegmentEnds" candidateClass="UISegmentedControl"/>
+                <relationship kind="outlet" name="favouritePickerView" candidateClass="UIPickerView"/>
                 <relationship kind="outlet" name="loadingView" candidateClass="UIActivityIndicatorView"/>
                 <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>

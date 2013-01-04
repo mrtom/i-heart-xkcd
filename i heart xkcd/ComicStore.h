@@ -10,18 +10,23 @@
 
 @class ComicData;
 
-@interface ComicStore : NSObject
+@interface ComicStore : NSObject <UIPickerViewDataSource>
 {
     NSMutableDictionary *comicsData;
+    NSMutableDictionary *favouritesData;
 }
 
 + (ComicStore *)sharedStore;
 
 - (NSArray *)allComics;
+- (NSArray *)favouriteComicsByKey;
+
 - (ComicData *)comicForKey:(NSString *)key;
 
 - (void)addComic:(ComicData *)comic;
 - (void)removeComic:(NSString *)key;
+- (void)setAsFavourite:(ComicData *)comic;
+- (void)setAsNotFavourite:(ComicData *)comic;
 
 - (BOOL)saveChanges;
 - (void)clearCache:(NSNotification *)note;
