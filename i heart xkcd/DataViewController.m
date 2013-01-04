@@ -582,6 +582,8 @@ typedef enum {
         if (didSet) {
             [self.favouriteButton setBackgroundImage:[UIImage imageNamed:comicIsFavouriteBackgroundImage] forState:UIControlStateNormal];
         }
+        
+        [self.favouritePickerView reloadData];
     }
     
     ComicStore *store = [ComicStore sharedStore];

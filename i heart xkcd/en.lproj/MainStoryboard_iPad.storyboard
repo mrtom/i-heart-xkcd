@@ -42,7 +42,27 @@
                                     <view alpha="0.80000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TBH-Wu-Uhc" userLabel="ControlsBackground">
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Favourites" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wv7-16-ycG" userLabel="FavouritesLabel">
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="80" type="user" id="kmj-r5-6HP"/>
+                                            <constraint firstAttribute="height" constant="21" type="user" id="xcN-zp-kGO"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Zuo-jP-p4j">
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="434" type="user" id="8ha-HN-uQ5"/>
+                                            <constraint firstAttribute="height" constant="400" type="user" id="dvM-1J-b7Z"/>
+                                        </constraints>
+                                    </tableView>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" translatesAutoresizingMaskIntoConstraints="NO" id="4Ls-cv-gOA" userLabel="FirstPrevRandNextLast">
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="434" type="user" id="ND6-0K-OeA"/>
+                                            <constraint firstAttribute="height" constant="43" type="user" id="Ra9-3n-g6Y"/>
+                                        </constraints>
                                         <segments>
                                             <segment title="First"/>
                                             <segment title="Prev"/>
@@ -57,13 +77,18 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="TBH-Wu-Uhc" firstAttribute="bottom" secondItem="dax-VM-jfU" secondAttribute="bottom" type="default" id="0dA-jL-AAO"/>
-                                    <constraint firstAttribute="trailing" secondItem="TBH-Wu-Uhc" secondAttribute="trailing" constant="132" id="17P-5z-xl0"/>
-                                    <constraint firstAttribute="bottom" secondItem="4Ls-cv-gOA" secondAttribute="bottom" constant="20" symbolic="YES" type="user" id="3bt-yQ-qsG"/>
-                                    <constraint firstItem="4Ls-cv-gOA" firstAttribute="centerX" secondItem="dax-VM-jfU" secondAttribute="centerX" type="user" id="aY3-km-CpP"/>
-                                    <constraint firstItem="TBH-Wu-Uhc" firstAttribute="leading" secondItem="dax-VM-jfU" secondAttribute="leading" constant="131" id="f2e-m8-QHT"/>
-                                    <constraint firstItem="TBH-Wu-Uhc" firstAttribute="top" secondItem="dax-VM-jfU" secondAttribute="top" type="default" id="r7y-YP-Yyt"/>
-                                    <constraint firstItem="4Ls-cv-gOA" firstAttribute="top" secondItem="dax-VM-jfU" secondAttribute="top" constant="20" symbolic="YES" type="default" id="t7O-uE-pbZ"/>
+                                    <constraint firstAttribute="bottom" secondItem="4Ls-cv-gOA" secondAttribute="bottom" constant="20" symbolic="YES" type="user" id="8az-He-0gg"/>
+                                    <constraint firstAttribute="centerX" secondItem="TBH-Wu-Uhc" secondAttribute="centerX" type="user" id="8o1-en-ZHR"/>
+                                    <constraint firstItem="Zuo-jP-p4j" firstAttribute="leading" secondItem="4Ls-cv-gOA" secondAttribute="leading" type="user" id="FFV-ra-tfN"/>
+                                    <constraint firstItem="Wv7-16-ycG" firstAttribute="top" secondItem="dax-VM-jfU" secondAttribute="top" constant="20" symbolic="YES" type="user" id="H6l-qh-mHd"/>
+                                    <constraint firstItem="TBH-Wu-Uhc" firstAttribute="trailing" secondItem="dax-VM-jfU" secondAttribute="trailing" type="user" id="HWJ-qG-Qxr"/>
+                                    <constraint firstItem="4Ls-cv-gOA" firstAttribute="top" secondItem="Zuo-jP-p4j" secondAttribute="bottom" constant="20" type="user" id="KuM-8o-teK"/>
+                                    <constraint firstItem="TBH-Wu-Uhc" firstAttribute="top" secondItem="dax-VM-jfU" secondAttribute="top" type="user" id="XM3-p5-Cfq"/>
+                                    <constraint firstItem="Zuo-jP-p4j" firstAttribute="top" secondItem="Wv7-16-ycG" secondAttribute="bottom" constant="8" symbolic="YES" type="user" id="bga-EY-lux"/>
+                                    <constraint firstItem="Wv7-16-ycG" firstAttribute="leading" secondItem="Zuo-jP-p4j" secondAttribute="leading" type="user" id="ewa-XU-ID3"/>
+                                    <constraint firstAttribute="centerX" secondItem="4Ls-cv-gOA" secondAttribute="centerX" type="user" id="g5b-K3-ecp"/>
+                                    <constraint firstAttribute="bottom" secondItem="TBH-Wu-Uhc" secondAttribute="bottom" type="user" id="hLB-2W-GgJ"/>
+                                    <constraint firstAttribute="centerX" secondItem="Zuo-jP-p4j" secondAttribute="centerX" type="user" id="urr-SU-y0N"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -72,11 +97,12 @@
                             <constraint firstItem="OQc-MH-OSG" firstAttribute="top" secondItem="12" secondAttribute="top" type="default" id="5V5-pi-fP2"/>
                             <constraint firstItem="OQc-MH-OSG" firstAttribute="bottom" secondItem="14" secondAttribute="bottom" type="default" id="7UO-WA-AHR"/>
                             <constraint firstItem="14" firstAttribute="leading" secondItem="12" secondAttribute="leading" type="default" id="8vi-94-PO3"/>
-                            <constraint firstAttribute="bottom" secondItem="dax-VM-jfU" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="FLL-9T-3gr"/>
                             <constraint firstItem="OQc-MH-OSG" firstAttribute="trailing" secondItem="12" secondAttribute="trailing" type="default" id="UZI-SN-gXB"/>
-                            <constraint firstItem="14" firstAttribute="trailing" secondItem="12" secondAttribute="trailing" type="default" id="YNS-KK-5Pd"/>
-                            <constraint firstItem="dax-VM-jfU" firstAttribute="leading" secondItem="12" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="f6L-GA-mEn"/>
-                            <constraint firstAttribute="trailing" secondItem="dax-VM-jfU" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="li5-Pe-EUr"/>
+                            <constraint firstItem="dax-VM-jfU" firstAttribute="top" relation="lessThanOrEqual" secondItem="12" secondAttribute="top" priority="1" constant="320" type="user" id="afV-4b-DGT"/>
+                            <constraint firstAttribute="bottom" secondItem="dax-VM-jfU" secondAttribute="bottom" constant="20" symbolic="YES" type="user" id="bxy-7z-TRh"/>
+                            <constraint firstItem="dax-VM-jfU" firstAttribute="leading" secondItem="12" secondAttribute="leading" constant="152" type="user" id="dx8-Wi-73a"/>
+                            <constraint firstAttribute="centerX" secondItem="dax-VM-jfU" secondAttribute="centerX" type="user" id="l0Y-pX-SCs"/>
+                            <constraint firstItem="dax-VM-jfU" firstAttribute="centerX" secondItem="14" secondAttribute="centerX" type="default" id="md3-QZ-J7U"/>
                             <constraint firstItem="14" firstAttribute="top" secondItem="12" secondAttribute="top" type="default" id="qmt-rB-xU4"/>
                         </constraints>
                         <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackTranslucent"/>
@@ -87,6 +113,7 @@
                         <outlet property="controlsViewBacking" destination="TBH-Wu-Uhc" id="xj9-gg-CeT"/>
                         <outlet property="controlsViewCanvas" destination="dax-VM-jfU" id="Pfb-ZA-eJe"/>
                         <outlet property="controlsViewSegmentAll" destination="4Ls-cv-gOA" id="hqn-UN-jKO"/>
+                        <outlet property="favouritePickerView" destination="Zuo-jP-p4j" id="5Jh-Rn-Dno"/>
                         <outlet property="loadingView" destination="OQc-MH-OSG" id="zbi-YR-6SR"/>
                         <outlet property="titleLabel" destination="14" id="TlA-qD-Oqc"/>
                     </connections>
