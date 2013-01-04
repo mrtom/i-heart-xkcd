@@ -119,9 +119,8 @@
 
 - (void)clearCache:(NSNotification *)note
 {
-    NSLog(@"Flushing metadata for %d comics from the cache and %d comics from the favourites cache", [comicsData count], [favouritesData count]);
+    NSLog(@"Flushing metadata for %d comics from the cache", [comicsData count]);
     [comicsData removeAllObjects];
-    [favouritesData removeAllObjects];
     
     [self saveChanges];
 }
