@@ -50,7 +50,7 @@
 		45E238FD167BC78D00FC38C4 /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 45E238F7167BC78D00FC38C4 /* Default-Landscape@2x~ipad.png */; };
 		45E238FE167BC78D00FC38C4 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 45E238F8167BC78D00FC38C4 /* Default-Landscape~ipad.png */; };
 		45E238FF167BC78D00FC38C4 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 45E238F9167BC78D00FC38C4 /* Default-Portrait~ipad.png */; };
-		45E334791680E8E600ED1E53 /* ComicImageStoreController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E334781680E8E600ED1E53 /* ComicImageStoreController.m */; };
+		45E334791680E8E600ED1E53 /* ComicImageStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E334781680E8E600ED1E53 /* ComicImageStore.m */; };
 		45E334841681E15800ED1E53 /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E334831681E15800ED1E53 /* Settings.m */; };
 		45E334871681F8EA00ED1E53 /* ComicStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E334861681F8EA00ED1E53 /* ComicStore.m */; };
 		45E3348A168350E900ED1E53 /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 45E33488168350E900ED1E53 /* heart.png */; };
@@ -131,8 +131,8 @@
 		45E238F7167BC78D00FC38C4 /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
 		45E238F8167BC78D00FC38C4 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
 		45E238F9167BC78D00FC38C4 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = "<group>"; };
-		45E334771680E8E600ED1E53 /* ComicImageStoreController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComicImageStoreController.h; sourceTree = "<group>"; };
-		45E334781680E8E600ED1E53 /* ComicImageStoreController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComicImageStoreController.m; sourceTree = "<group>"; };
+		45E334771680E8E600ED1E53 /* ComicImageStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComicImageStore.h; sourceTree = "<group>"; };
+		45E334781680E8E600ED1E53 /* ComicImageStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComicImageStore.m; sourceTree = "<group>"; };
 		45E334821681E15800ED1E53 /* Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Settings.h; sourceTree = "<group>"; };
 		45E334831681E15800ED1E53 /* Settings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Settings.m; sourceTree = "<group>"; };
 		45E334851681F8EA00ED1E53 /* ComicStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComicStore.h; sourceTree = "<group>"; };
@@ -240,8 +240,8 @@
 				455F87F91678C08B0060811E /* ComicData.m */,
 				45E334851681F8EA00ED1E53 /* ComicStore.h */,
 				45E334861681F8EA00ED1E53 /* ComicStore.m */,
-				45E334771680E8E600ED1E53 /* ComicImageStoreController.h */,
-				45E334781680E8E600ED1E53 /* ComicImageStoreController.m */,
+				45E334771680E8E600ED1E53 /* ComicImageStore.h */,
+				45E334781680E8E600ED1E53 /* ComicImageStore.m */,
 				45B5A28F1695FB260058A581 /* AboutViewController.h */,
 				45B5A2901695FB260058A581 /* AboutViewController.m */,
 				45B5A2941695FBEA0058A581 /* AboutViewController.xib */,
@@ -460,7 +460,7 @@
 				455F87BE1677901F0060811E /* ModelController.m in Sources */,
 				455F87FA1678C08B0060811E /* ComicData.m in Sources */,
 				453E5C78167BF75000EFD8DB /* UIImage+animatedGIF.m in Sources */,
-				45E334791680E8E600ED1E53 /* ComicImageStoreController.m in Sources */,
+				45E334791680E8E600ED1E53 /* ComicImageStore.m in Sources */,
 				45E334841681E15800ED1E53 /* Settings.m in Sources */,
 				45E334871681F8EA00ED1E53 /* ComicStore.m in Sources */,
 				45B5A2921695FB260058A581 /* AboutViewController.m in Sources */,

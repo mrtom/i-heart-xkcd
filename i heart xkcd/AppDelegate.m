@@ -12,7 +12,7 @@
 
 #import "Settings.h"
 #import "ComicStore.h"
-#import "ComicImageStoreController.h"
+#import "ComicImageStore.h"
 
 @implementation AppDelegate
 
@@ -22,7 +22,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(defaultsChanged) name:NSUserDefaultsDidChangeNotification object:nil];
     
     [[ComicStore sharedStore] logCacheInfo];
-    [[ComicImageStoreController sharedStore] logCacheInfo];
+    [[ComicImageStore sharedStore] logCacheInfo];
     
     // Configure view
     self.window.backgroundColor = [UIColor whiteColor];
@@ -65,7 +65,7 @@
 {
     if ([Settings shouldClearCache]) {
         [[ComicStore sharedStore] clearCache:Nil];
-        [[ComicImageStoreController sharedStore] clearCache:Nil];
+        [[ComicImageStore sharedStore] clearCache:Nil];
         
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:UserDefaultShouldClearCache];
     }

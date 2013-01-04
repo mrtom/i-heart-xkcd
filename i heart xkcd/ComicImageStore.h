@@ -10,12 +10,12 @@
 
 #import "ComicData.h"
 
-@interface ComicImageStoreController : NSObject
+@interface ComicImageStore : NSObject
 {
     NSMutableDictionary *store;
     NSMutableDictionary *favouriteStore;
 }
-+ (ComicImageStoreController *)sharedStore;
++ (ComicImageStore *)sharedStore;
 
 - (BOOL)pushComic:(ComicData *)comic withImage:(UIImage *)comicImage;
 - (BOOL)removeFavourite:(ComicData *)comic;

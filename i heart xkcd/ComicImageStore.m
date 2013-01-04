@@ -6,15 +6,15 @@
 //  Copyright (c) 2012 Tom Elliott. All rights reserved.
 //
 
-#import "ComicImageStoreController.h"
+#import "ComicImageStore.h"
 
 #import "Settings.h"
 
-@interface ComicImageStoreController ()
+@interface ComicImageStore ()
 @property NSUInteger maxSize;
 @end
 
-@implementation ComicImageStoreController
+@implementation ComicImageStore
 
 @synthesize maxSize;
 
@@ -23,9 +23,9 @@
     return [self sharedStore];
 }
 
-+ (ComicImageStoreController *)sharedStore
++ (ComicImageStore *)sharedStore
 {
-    static ComicImageStoreController *sharedStore = nil;
+    static ComicImageStore *sharedStore = nil;
     if (!sharedStore) {
         sharedStore = [[super allocWithZone:NULL] init];
     }

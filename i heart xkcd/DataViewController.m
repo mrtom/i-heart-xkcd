@@ -15,7 +15,7 @@
 
 #import "AboutViewController.h"
 #import "ComicStore.h"
-#import "ComicImageStoreController.h"
+#import "ComicImageStore.h"
 #import "ModelController.h"
 #import "Settings.h"
 #import "UIImage+animatedGIF.h"
@@ -224,7 +224,7 @@ typedef enum {
     // Asumption: The comics have been designed to look good at about 1024, i.e. a 'normal' web viewing experience
     // This means they should be doubled up on the retina iPad, but not the other iOS devices.
     // However, when we save the image to the image store, we store it doubled up, so don't double again
-    ComicImageStoreController *imageStore = [ComicImageStoreController sharedStore];
+    ComicImageStore *imageStore = [ComicImageStore sharedStore];
     UIImage *storedImage = [imageStore imageForComic:self.dataObject];
     if (storedImage) {
         [self.imageView setImage:storedImage];
@@ -241,7 +241,7 @@ typedef enum {
             }
 
             [this configureImageLoadedFromXkcdWithImage:image forScale:scale];
-            [[ComicImageStoreController sharedStore] pushComic:self.dataObject withImage:image];
+            [[ComicImageStore sharedStore] pushComic:self.dataObject withImage:image];
             
         } failure:nil];
     }
@@ -544,7 +544,7 @@ typedef enum {
 - (void)toggleFavourite: (id)sender
 {
     BOOL didSet = YES;
-    ComicImageStoreController *imageStore = [ComicImageStoreController sharedStore];
+    ComicImageStore *imageStore = [ComicImageStore sharedStore];
     
     if ([self.dataObject isFavourite]) {
         [self.dataObject setIsFavourite:NO];
