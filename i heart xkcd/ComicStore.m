@@ -82,7 +82,7 @@
 
 - (void)setAsNotFavourite:(ComicData *)comic
 {
-    [comicsData removeObjectForKey:[self keyForComic:comic]];
+    [favouritesData removeObjectForKey:[self keyForComic:comic]];
 }
 
 - (NSString *)keyForComic:(ComicData *)comic

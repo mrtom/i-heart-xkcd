@@ -19,11 +19,7 @@
     self = [super init];
     
     if (self) {
-        UIBarButtonItem *doneItem = [[UIBarButtonItem alloc]
-                                     initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-                                     target:self
-                                     action:@selector(done:)];
-        [[self navigationItem] setRightBarButtonItem:doneItem];
+        
         
         [self.aboutXkcdTitle setNumberOfLines:1];
         [self.aboutIHeartXkcdTitle setNumberOfLines:1];
@@ -36,7 +32,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    UIBarButtonItem *doneItem = [[UIBarButtonItem alloc]
+                                 initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                 target:self
+                                 action:@selector(done:)];
+    [[self navigationItem] setRightBarButtonItem:doneItem];
 }
 
 - (void)viewDidAppear:(BOOL)animated
