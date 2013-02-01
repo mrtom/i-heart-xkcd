@@ -14,24 +14,13 @@
 
 @implementation AboutViewController
 
-- (id)init
-{
-    self = [super init];
-    
-    if (self) {
-        
-        
-        [self.aboutXkcdTitle setNumberOfLines:1];
-        [self.aboutIHeartXkcdTitle setNumberOfLines:1];
-        
-    }
-    
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.aboutXkcdTitle setNumberOfLines:1];
+    [self.aboutIHeartXkcdTitle setNumberOfLines:1];
+
+    
     UIBarButtonItem *doneItem = [[UIBarButtonItem alloc]
                                  initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                  target:self
