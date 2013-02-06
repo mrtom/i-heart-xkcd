@@ -17,10 +17,10 @@
 #import "ComicStore.h"
 #import "ComicImageStore.h"
 #import "ModelController.h"
+#import "NavigationViewController.h"
 #import "Settings.h"
 #import "UIImage+animatedGIF.h"
 
-#define pageOverlayToggleAnimationTime 0.300
 #define pageOverlayToggleBounceLimit pageOverlayToggleAnimationTime+0.025
 
 #define translutentAlpha 0.8
@@ -165,11 +165,10 @@ typedef enum {
     [self.facebookShareButton setUserInteractionEnabled:YES];
     [self.altTextCanvasView addSubview:self.facebookShareButton];
     
-    // Setup controls
-    [self.controlsViewCanvas setAlpha:0];
-    
-    [self.favouritePickerView setDelegate:self];
-    [self.favouritePickerView setDataSource:[ComicStore sharedStore]];
+    // Setup Navigation Controls
+    self.navViewController = [[NavigationViewController alloc] init];
+    [self.navViewController setDelegate:self.delegate];
+    [self.view addSubview:self.navViewController.view];
     
     // Setup gesture recognisers
     UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
@@ -255,7 +254,7 @@ typedef enum {
     [self configureAltTextViews];
     
     // Check segment state
-    [self configureSegmentedControlsState];
+    [self.navViewController setCurrentComic:[self.dataObject comicID]];
 }
 
 -(void)configureImageLoadedFromXkcdWithImage:(UIImage *)image forScale:(NSInteger)scale
@@ -384,42 +383,6 @@ typedef enum {
     }
 }
 
--(void)configureSegmentedControlsState
-{
-    if ([self.dataObject comicID] == 1 || [self.dataObject comicID] == 0) {
-        if (self.controlsViewSegmentEnds) [self.controlsViewSegmentEnds setEnabled:NO forSegmentAtIndex:0];
-        if (self.controlsViewNextRandom)  [self.controlsViewNextRandom setEnabled:NO forSegmentAtIndex:0];
-        if (self.controlsViewSegmentAll) {
-            [self.controlsViewSegmentAll setEnabled:NO forSegmentAtIndex:0];
-            [self.controlsViewSegmentAll setEnabled:NO forSegmentAtIndex:1];
-        }
-    } else {
-        if (self.controlsViewSegmentEnds) [self.controlsViewSegmentEnds setEnabled:YES forSegmentAtIndex:0];
-        if (self.controlsViewNextRandom)  [self.controlsViewNextRandom setEnabled:YES forSegmentAtIndex:0];
-        if (self.controlsViewSegmentAll) {
-            [self.controlsViewSegmentAll setEnabled:YES forSegmentAtIndex:0];
-            [self.controlsViewSegmentAll setEnabled:YES forSegmentAtIndex:1];
-        }
-    }
-    
-    int latestPage = [[NSUserDefaults standardUserDefaults] integerForKey:iheartxkcd_UserDefaultLatestPage];
-    if ([self.dataObject comicID] == latestPage) {
-        if (self.controlsViewSegmentEnds) [self.controlsViewSegmentEnds setEnabled:NO forSegmentAtIndex:1];
-        if (self.controlsViewNextRandom)  [self.controlsViewNextRandom setEnabled:NO forSegmentAtIndex:2];
-        if (self.controlsViewSegmentAll) {
-            [self.controlsViewSegmentAll setEnabled:NO forSegmentAtIndex:3];
-            [self.controlsViewSegmentAll setEnabled:NO forSegmentAtIndex:4];
-        }
-    } else {
-        if (self.controlsViewSegmentEnds) [self.controlsViewSegmentEnds setEnabled:YES forSegmentAtIndex:1];
-        if (self.controlsViewNextRandom)  [self.controlsViewNextRandom setEnabled:YES forSegmentAtIndex:2];
-        if (self.controlsViewSegmentAll) {
-            [self.controlsViewSegmentAll setEnabled:YES forSegmentAtIndex:3];
-            [self.controlsViewSegmentAll setEnabled:YES forSegmentAtIndex:4];
-        }
-    }
-}
-
 -(void)checkLoadedState
 {
     if ([self.dataObject isLoaded]) {
@@ -518,31 +481,23 @@ typedef enum {
 
 - (void)toggleControls
 {
-    if ([self.controlsViewCanvas alpha] == 0) {
+    if (![self.navViewController isShowingControls]) {
         [self showControls];
     } else {
         [self hideControls];
-    }
-}
+    }}
 
 - (void)showControls
 {
     [self hideTitleAndAltText];
     [self.scrollView setScrollEnabled:NO];
-
-    [UIView animateWithDuration:pageOverlayToggleAnimationTime
-                     animations:^{self.controlsViewCanvas.alpha = 1.0;}
-                     completion:nil];
-    [self animateShowTitleBar];
+    [self.navViewController showControls];
 }
 
 - (void)hideControls
 {
     [self.scrollView setScrollEnabled:YES];
-    
-    [UIView animateWithDuration:pageOverlayToggleAnimationTime
-                     animations:^{self.controlsViewCanvas.alpha = 0;}
-                     completion:nil];
+    [self.navViewController hideControls];
     [self animateHideTitleBar];
 }
 
@@ -583,7 +538,7 @@ typedef enum {
             [self.favouriteButton setBackgroundImage:[UIImage imageNamed:comicIsFavouriteBackgroundImage] forState:UIControlStateNormal];
         }
     }
-    [self.favouritePickerView reloadData];
+    [self.navViewController reloadFavourites];
     
     ComicStore *store = [ComicStore sharedStore];
     [store addComic:self.dataObject];
@@ -603,82 +558,6 @@ typedef enum {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Facebook Login Needed" message:@"You must log into Facebook in your settings before you can post to Facebook" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
     }
-}
-
-#pragma mark - Comic control
--(IBAction)controlsViewSegmentAllIndexChanged
-{
-    switch (self.controlsViewSegmentAll.selectedSegmentIndex) {
-        case 0:
-            [self goFirst];
-            break;
-        case 1:
-            [self goPrevious];
-            break;
-        case 2:
-            [self goRandom];
-            break;
-        case 3:
-            [self goNext];
-            break;
-        case 4:
-            [self goLast];
-            break;
-    }
-    [self.controlsViewSegmentAll setSelectedSegmentIndex:UISegmentedControlNoSegment];
-}
--(IBAction)controlsViewSegmentEndsIndexChanged
-{
-    switch (self.controlsViewSegmentEnds.selectedSegmentIndex) {
-        case 0:
-            [self goFirst];
-            break;
-        case 1:
-            [self goLast];
-            break;
-    }
-    [self.controlsViewSegmentEnds setSelectedSegmentIndex:UISegmentedControlNoSegment];
-}
-
--(IBAction)controlsViewNextRandomIndexChanged
-{
-    switch (self.controlsViewNextRandom.selectedSegmentIndex) {
-        case 0:
-            [self goPrevious];
-            break;
-        case 1:
-            [self goRandom];
-            break;
-        case 2:
-            [self goNext];
-            break;
-    }
-    [self.controlsViewNextRandom setSelectedSegmentIndex:UISegmentedControlNoSegment];
-}
-
-- (void)goFirst
-{
-    [self.delegate loadFirstComic];
-}
-
-- (void)goLast
-{
-    [self.delegate loadLastComic];
-}
-
-- (void)goPrevious
-{
-    [self.delegate loadPreviousComic];
-}
-
-- (void)goRandom
-{
-    [self.delegate loadRandomComic];
-}
-
-- (void)goNext
-{
-    [self.delegate loadNextComic];
 }
 
 #pragma mark - UIScrollViewDelegate classes
@@ -711,24 +590,13 @@ typedef enum {
     
     if (self.wasAtMinimumLeft && self.scrollDirection == ScrollDirectionRight) {
         [self.scrollView setScrollEnabled:NO];
-        [self goPrevious];
+        [self.navViewController goPrevious];
     } else if (self.wasAtMaximumLeft && self.scrollDirection == ScrollDirectionLeft) {
         [self.scrollView setScrollEnabled:NO];
-        [self goNext];
+        [self.navViewController goNext];
     }
     self.wasAtMinimumLeft = NO;
     self.wasAtMaximumLeft = NO;
-}
-
-#pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    ComicStore *store = [ComicStore sharedStore];
-    NSArray *comics = [store favouriteComicsByKey];
-    ComicData *comicForRow = [store comicForKey:[comics objectAtIndex:[indexPath row]]];
-    
-    [self.delegate loadComicAtIndex:[comicForRow comicID]];
 }
 
 @end

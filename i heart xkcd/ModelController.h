@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "DataViewControlsProtocol.h"
+#import "NavigationViewControllerProtocol.h"
 
 #define iheartxkcd_UserDefaultLatestPage @"latestPage"
 #define iheartxkcd_UserDefaultLastUpdate @"lastUpdate"
@@ -23,7 +23,7 @@
 
 @interface ModelController : NSObject <UIPageViewControllerDataSource>
 
-@property (strong, nonatomic) id<ModelControllerDelegate, DataViewControlsProtocol> delegate;
+@property (strong, nonatomic) id<ModelControllerDelegate, NavigationViewControllerProtocol> delegate;
 
 - (DataViewController *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard;
 - (NSUInteger)indexOfViewController:(DataViewController *)viewController;

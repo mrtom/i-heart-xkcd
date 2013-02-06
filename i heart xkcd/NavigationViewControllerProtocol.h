@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol DataViewControlsProtocol <NSObject>
+@protocol NavigationViewControllerProtocol <NSObject>
 @required
 - (void)loadFirstComic;
 - (void)loadLastComic;
