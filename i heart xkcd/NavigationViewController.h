@@ -13,7 +13,6 @@
 @interface NavigationViewController : UIViewController<UITableViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UIView *controlsViewBacking;
-@property (strong, nonatomic) IBOutlet UIView *controlsViewCanvas;
 @property (strong, nonatomic) IBOutlet UITableView *favouritePickerView;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *controlsViewSegmentAll;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *controlsViewSegmentEnds;

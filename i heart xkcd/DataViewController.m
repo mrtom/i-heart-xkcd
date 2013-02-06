@@ -253,6 +253,9 @@ typedef enum {
     // Setup the alt text view
     [self configureAltTextViews];
     
+    // Setup navigation views
+    [self configureNavigationViews];
+    
     // Check segment state
     [self.navViewController setCurrentComic:[self.dataObject comicID]];
 }
@@ -383,6 +386,19 @@ typedef enum {
     }
 }
 
+-(void)configureNavigationViews
+{
+    // Place at the centre horizontally, and at the base vertically
+    CGRect navViewFrame = self.navViewController.view.frame;
+    
+    NSInteger x = self.view.bounds.size.width/2 - navViewFrame.size.width/2;
+    NSInteger y = self.view.bounds.size.height - altTextBackgroundPadding - navViewFrame.size.height;
+    navViewFrame.origin.x = x;
+    navViewFrame.origin.y = y;
+    
+    [self.navViewController.view setFrame:navViewFrame];
+}
+
 -(void)checkLoadedState
 {
     if ([self.dataObject isLoaded]) {
@@ -490,6 +506,7 @@ typedef enum {
 - (void)showControls
 {
     [self hideTitleAndAltText];
+    [self animateShowTitleBar];
     [self.scrollView setScrollEnabled:NO];
     [self.navViewController showControls];
 }

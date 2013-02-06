@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "i heart xkcd/DataViewController.m"
-         timestampString = "381803469.205757"
+         timestampString = "381839683.276744"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "435"
-         endingLineNumber = "435"
+         startingLineNumber = "451"
+         endingLineNumber = "451"
          landmarkName = "-animateShowTitleBar"
          landmarkType = "5">
       </FileBreakpoint>
