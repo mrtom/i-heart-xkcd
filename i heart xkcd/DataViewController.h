@@ -12,13 +12,12 @@
 #import "ModelController.h"
 #import "NavigationViewController.h"
 
-#define pageOverlayToggleAnimationTime 0.300
-
-@interface DataViewController : UIViewController <UIScrollViewDelegate, UIPopoverControllerDelegate, UITableViewDelegate>
+@interface DataViewController : UIViewController <UIScrollViewDelegate, UIPopoverControllerDelegate, UITableViewDelegate, UITabBarControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *loadingView;
+@property (strong, nonatomic) UITabBarController *tabBarController;
 
 @property (strong, nonatomic) ComicData *dataObject;
 

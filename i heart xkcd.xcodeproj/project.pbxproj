@@ -42,6 +42,13 @@
 		45B5A2891695F1650058A581 /* info@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45B5A2871695F1650058A581 /* info@2x.png */; };
 		45B5A2921695FB260058A581 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45B5A2901695FB260058A581 /* AboutViewController.m */; };
 		45B5A2951695FBEA0058A581 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45B5A2941695FBEA0058A581 /* AboutViewController.xib */; };
+		45C201781738308B00CA0A2C /* AltTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45C201771738308B00CA0A2C /* AltTextViewController.m */; };
+		45C2017B1738311C00CA0A2C /* FavouritesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45C2017A1738311C00CA0A2C /* FavouritesViewController.m */; };
+		45C2017E1738315B00CA0A2C /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45C2017D1738315B00CA0A2C /* SearchViewController.m */; };
+		45C201831738335F00CA0A2C /* first.png in Resources */ = {isa = PBXBuildFile; fileRef = 45C2017F1738335F00CA0A2C /* first.png */; };
+		45C201841738335F00CA0A2C /* first@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45C201801738335F00CA0A2C /* first@2x.png */; };
+		45C201851738335F00CA0A2C /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = 45C201811738335F00CA0A2C /* second.png */; };
+		45C201861738335F00CA0A2C /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45C201821738335F00CA0A2C /* second@2x.png */; };
 		45E238E2167BB51200FC38C4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45E238E1167BB51200FC38C4 /* QuartzCore.framework */; };
 		45E238F2167BC77E00FC38C4 /* xkcd-heart_57.png in Resources */ = {isa = PBXBuildFile; fileRef = 45E238EE167BC77D00FC38C4 /* xkcd-heart_57.png */; };
 		45E238F3167BC77E00FC38C4 /* xkcd-heart_72.png in Resources */ = {isa = PBXBuildFile; fileRef = 45E238EF167BC77D00FC38C4 /* xkcd-heart_72.png */; };
@@ -126,6 +133,17 @@
 		45B5A28F1695FB260058A581 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		45B5A2901695FB260058A581 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		45B5A2941695FBEA0058A581 /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
+		45C201761738308B00CA0A2C /* AltTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AltTextViewController.h; sourceTree = "<group>"; };
+		45C201771738308B00CA0A2C /* AltTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AltTextViewController.m; sourceTree = "<group>"; };
+		45C201791738311C00CA0A2C /* FavouritesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavouritesViewController.h; sourceTree = "<group>"; };
+		45C2017A1738311C00CA0A2C /* FavouritesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavouritesViewController.m; sourceTree = "<group>"; };
+		45C2017C1738315B00CA0A2C /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		45C2017D1738315B00CA0A2C /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
+		45C2017F1738335F00CA0A2C /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first.png; sourceTree = "<group>"; };
+		45C201801738335F00CA0A2C /* first@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "first@2x.png"; sourceTree = "<group>"; };
+		45C201811738335F00CA0A2C /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
+		45C201821738335F00CA0A2C /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
+		45C20187173835B600CA0A2C /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		45E238E1167BB51200FC38C4 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		45E238EE167BC77D00FC38C4 /* xkcd-heart_57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xkcd-heart_57.png"; sourceTree = "<group>"; };
 		45E238EF167BC77D00FC38C4 /* xkcd-heart_72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xkcd-heart_72.png"; sourceTree = "<group>"; };
@@ -238,13 +256,9 @@
 				455F87AE1677901F0060811E /* AppDelegate.m */,
 				455F87B61677901F0060811E /* RootViewController.h */,
 				455F87B71677901F0060811E /* RootViewController.m */,
+				45C20187173835B600CA0A2C /* Constants.h */,
 				455F87B91677901F0060811E /* DataViewController.h */,
 				455F87BA1677901F0060811E /* DataViewController.m */,
-				45F9216E16C1C5D700A2E3B0 /* NavigationViewController.h */,
-				45F9216F16C1C5D800A2E3B0 /* NavigationViewController.m */,
-				45F9217216C1D07A00A2E3B0 /* NavigationViewController_iPhone.xib */,
-				4509F4C416C1DC4F0071E4AA /* NavigationViewController_iPad.xib */,
-				453E5C7C167CC66300EFD8DB /* NavigationViewControllerProtocol.h */,
 				455F87BC1677901F0060811E /* ModelController.h */,
 				455F87BD1677901F0060811E /* ModelController.m */,
 				455F87F81678C08B0060811E /* ComicData.h */,
@@ -253,6 +267,17 @@
 				45E334861681F8EA00ED1E53 /* ComicStore.m */,
 				45E334771680E8E600ED1E53 /* ComicImageStore.h */,
 				45E334781680E8E600ED1E53 /* ComicImageStore.m */,
+				45C201761738308B00CA0A2C /* AltTextViewController.h */,
+				45C201771738308B00CA0A2C /* AltTextViewController.m */,
+				45C201791738311C00CA0A2C /* FavouritesViewController.h */,
+				45C2017A1738311C00CA0A2C /* FavouritesViewController.m */,
+				45C2017C1738315B00CA0A2C /* SearchViewController.h */,
+				45C2017D1738315B00CA0A2C /* SearchViewController.m */,
+				45F9216E16C1C5D700A2E3B0 /* NavigationViewController.h */,
+				45F9216F16C1C5D800A2E3B0 /* NavigationViewController.m */,
+				45F9217216C1D07A00A2E3B0 /* NavigationViewController_iPhone.xib */,
+				4509F4C416C1DC4F0071E4AA /* NavigationViewController_iPad.xib */,
+				453E5C7C167CC66300EFD8DB /* NavigationViewControllerProtocol.h */,
 				45B5A28F1695FB260058A581 /* AboutViewController.h */,
 				45B5A2901695FB260058A581 /* AboutViewController.m */,
 				45B5A2941695FBEA0058A581 /* AboutViewController.xib */,
@@ -269,6 +294,10 @@
 		455F87A51677901F0060811E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				45C2017F1738335F00CA0A2C /* first.png */,
+				45C201801738335F00CA0A2C /* first@2x.png */,
+				45C201811738335F00CA0A2C /* second.png */,
+				45C201821738335F00CA0A2C /* second@2x.png */,
 				45B5A2861695F1650058A581 /* info.png */,
 				45B5A2871695F1650058A581 /* info@2x.png */,
 				45E334901683606700ED1E53 /* f_logo.png */,
@@ -418,6 +447,10 @@
 				45B5A2951695FBEA0058A581 /* AboutViewController.xib in Resources */,
 				45F9217316C1D07B00A2E3B0 /* NavigationViewController_iPhone.xib in Resources */,
 				4509F4C516C1DC4F0071E4AA /* NavigationViewController_iPad.xib in Resources */,
+				45C201831738335F00CA0A2C /* first.png in Resources */,
+				45C201841738335F00CA0A2C /* first@2x.png in Resources */,
+				45C201851738335F00CA0A2C /* second.png in Resources */,
+				45C201861738335F00CA0A2C /* second@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -478,6 +511,9 @@
 				45E334871681F8EA00ED1E53 /* ComicStore.m in Sources */,
 				45B5A2921695FB260058A581 /* AboutViewController.m in Sources */,
 				45F9217016C1C5D900A2E3B0 /* NavigationViewController.m in Sources */,
+				45C201781738308B00CA0A2C /* AltTextViewController.m in Sources */,
+				45C2017B1738311C00CA0A2C /* FavouritesViewController.m in Sources */,
+				45C2017E1738315B00CA0A2C /* SearchViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

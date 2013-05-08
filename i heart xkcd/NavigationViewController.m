@@ -9,6 +9,7 @@
 #import "NavigationViewController.h"
 
 #import "ComicStore.h"
+#import "Constants.h"
 #import "DataViewController.h"
 #import "ModelController.h"
 #import "Settings.h"
@@ -27,6 +28,11 @@
         self = [super initWithNibName:@"NavigationViewController_iPad" bundle:nil];
     } else {
         self = [super initWithNibName:@"NavigationViewController_iPhone" bundle:nil];
+    }
+    
+    if (self) {
+        self.title = NSLocalizedString(@"Navigate", @"Navigate");
+        self.tabBarItem.image = [UIImage imageNamed:@"second"];
     }
     
     return self;

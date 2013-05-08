@@ -14,6 +14,16 @@
 
 @implementation AboutViewController
 
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        self.title = NSLocalizedString(@"About", @"About");
+        self.tabBarItem.image = [UIImage imageNamed:@"first"];
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
