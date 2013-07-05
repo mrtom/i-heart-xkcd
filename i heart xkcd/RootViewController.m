@@ -9,21 +9,34 @@
 #import "RootViewController.h"
 
 #import "ModelController.h"
+#import "Constants.h"
 
 #import "AboutViewController.h"
 #import "DataViewController.h"
 
+#import "AltTextViewController.h"
+#import "AltTextViewControllerProtocol.h"
+#import "FavouritesViewController.h"
+#import "SearchViewController.h"
+#import "NavigationViewController.h"
+#import "AboutViewController.h"
+
 #define pageCoverAnimationTime 0.3
 
 @interface RootViewController ()
+
 @property (readonly, strong, nonatomic) ModelController *modelController;
 @property NSUInteger currentIndex;
+@property DataViewController *currentViewController;
+@property (readwrite, nonatomic) double lastTimeOverlaysToggled;
+
 @end
 
 @implementation RootViewController
 
 @synthesize modelController = _modelController;
 @synthesize pageCover;
+@synthesize currentIndex = _currentIndex;
 
 + (void)initialize
 {
@@ -46,9 +59,10 @@
     [self.modelController setDelegate:self];
     
     int latestPage = [[NSUserDefaults standardUserDefaults] integerForKey:iheartxkcd_UserDefaultLatestPage];
-    self.currentIndex = latestPage;
+    self.currentIndex = latestPage; // Don't go via the setter here
 
     DataViewController *startingViewController = [self.modelController viewControllerAtIndex:self.currentIndex storyboard:self.storyboard];
+    self.currentViewController = startingViewController;
     NSArray *viewControllers = @[startingViewController];
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:NULL];
 
@@ -68,6 +82,45 @@
     pageCover.backgroundColor = [UIColor whiteColor];
     pageCover.alpha = 0.0;
     [self.view addSubview:pageCover];
+    
+    // Tab Bar for navigation
+    AltTextViewController *altTextViewController = [[AltTextViewController alloc] init];
+    [altTextViewController setDelegate:self];
+    FavouritesViewController *favouritesViewController = [[FavouritesViewController alloc] init];
+    [favouritesViewController setDelegate:self];
+    UIViewController *searchViewController = [[SearchViewController alloc] init];
+    NavigationViewController *navigationViewController = [[NavigationViewController alloc] init];
+    [navigationViewController setDelegate:self];
+    UIViewController *aboutViewController = [[AboutViewController alloc] init];
+    
+    self.tabBarController = [[UITabBarController alloc] init];
+    self.tabBarController.viewControllers = @[
+                                              altTextViewController,
+                                              favouritesViewController,
+                                              searchViewController,
+                                              navigationViewController,
+                                              aboutViewController];
+    [self.tabBarController.view setAlpha:0.0];
+
+    // Set the tab bar frame so it doesn't overlap the title bar
+    // FIXME: float titleBarHeight = self.titleLabel.frame.size.height;
+    float titleBarHeight = 20;
+    CGRect tabBarFrame = self.view.frame;
+    tabBarFrame.origin.y = titleBarHeight;
+    tabBarFrame.size.height = tabBarFrame.size.height - titleBarHeight;    
+    [self.tabBarController.view setFrame:tabBarFrame];
+    [self.view addSubview:self.tabBarController.view];
+    
+    // Setup gesture recognisers
+    UITapGestureRecognizer *pageViewTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+    pageViewTapRecognizer.numberOfTapsRequired = 1;
+    pageViewTapRecognizer.numberOfTouchesRequired = 1;
+    [self.pageViewController.view addGestureRecognizer:pageViewTapRecognizer];
+    
+    UISwipeGestureRecognizer *tabBarViewTapRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+    tabBarViewTapRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
+    tabBarViewTapRecognizer.numberOfTouchesRequired = 1;
+    [self.tabBarController.view addGestureRecognizer:tabBarViewTapRecognizer];
 }
 
 - (void)loadPageAtIndex:(NSInteger)index forDirection:(UIPageViewControllerNavigationDirection) direction andAnimation:(BOOL)animated
@@ -79,8 +132,30 @@
     [UIView animateWithDuration:pageCoverAnimationTime
                      animations:^{pageCover.alpha = 0.0;}
                      completion:^(BOOL finished){
-                         if (finished) self.currentIndex = index;
+                         if (finished) {
+                             [self setCurrentIndex:index];
+                             self.currentViewController = viewController;
+                         }
                      }];
+}
+
+- (NSUInteger)currentIndex
+{
+    return _currentIndex;
+}
+
+- (void)setCurrentIndex:(NSUInteger)index
+{
+    _currentIndex = index;
+
+    NSNumber *indexObject = [NSNumber numberWithInt:index];
+    NSDictionary *data = [[NSDictionary alloc] initWithObjectsAndKeys:
+                          indexObject, ComicLoadedAtIndexNotificationIndexKey,
+                          self.currentViewController.dataObject, ComicLoadedAtIndexNotificationDataKey,
+                          nil];
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    NSNotification *note = [NSNotification notificationWithName:ComicLoadedAtIndexNotificationName object:self userInfo:data];
+    [nc postNotification:note];
 }
 
 - (void)didReceiveMemoryWarning
@@ -91,8 +166,6 @@
 
 - (ModelController *)modelController
 {
-     // Return the model controller object, creating it if necessary.
-     // In more complex implementations, the model controller may be passed to the view controller.
     if (!_modelController) {
         _modelController = [[ModelController alloc] init];
     }
@@ -113,13 +186,66 @@
     [self loadPageAtIndex:self.currentIndex forDirection:UIPageViewControllerNavigationDirectionForward andAnimation:NO];
 }
 
-#pragma mark - UIPageViewController delegate methods
+#pragma mark - Handle gestures and touches
 
+- (BOOL)canToggleOverlays
+{
+    double timeNow = CACurrentMediaTime();
+    if (timeNow - self.lastTimeOverlaysToggled < pageOverlayToggleBounceLimit) {
+        return NO;
+    }
+    return YES;
+}
+
+- (void)handleTap:(UITapGestureRecognizer *)sender {
+    if (sender.state == UIGestureRecognizerStateEnded && [self canToggleOverlays]) {
+        self.lastTimeOverlaysToggled = CACurrentMediaTime();
+        
+        [self toggleTabBar];
+        [self.currentViewController handleTap];
+    }
+}
+
+- (void)toggleTabBar
+{
+    if ([self.tabBarController.view alpha] == 0) {
+        [self showTabBar];
+    } else {
+        [self hideTabBar];
+    }
+}
+
+- (void)showTabBar
+{
+    self.tabBarController.view.alpha = 0.0;
+    [self.view addSubview:self.tabBarController.view];
+    [UIView animateWithDuration:pageOverlayToggleAnimationTime
+                     animations:^{
+                         self.tabBarController.view.alpha = 1.0;
+                     }
+                     completion:nil];
+}
+
+- (void)hideTabBar
+{
+    [UIView animateWithDuration:pageOverlayToggleAnimationTime
+                     animations:^{
+                         self.tabBarController.view.alpha = 0;
+                     }
+                     completion:^ (BOOL finished){
+                         if (finished) {
+                             [self.tabBarController.view removeFromSuperview];
+                         }
+                     }];
+}
+
+#pragma mark - UIPageViewController delegate methods
 
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
 {
     DataViewController *currentViewController = [[pageViewController viewControllers] objectAtIndex:0];
-    self.currentIndex = [[currentViewController dataObject] comicID];
+    [self setCurrentIndex:[[currentViewController dataObject] comicID]];
+    self.currentViewController = currentViewController;
 }
 
 - (UIPageViewControllerSpineLocation)pageViewController:(UIPageViewController *)pageViewController spineLocationForInterfaceOrientation:(UIInterfaceOrientation)orientation
@@ -188,6 +314,19 @@
 - (void)loadComicAtIndex:(NSInteger)index
 {
     [self loadPageAtIndex:index forDirection:UIPageViewControllerNavigationDirectionForward andAnimation:NO];
+    [self hideTabBar];
+}
+
+#pragma mark AltTextViewControllerProtocol methods
+
+- (ComicData *)comicData
+{
+    return self.currentViewController.dataObject;
+}
+
+- (UIImageView *)imageView
+{
+    return self.currentViewController.imageView;
 }
 
 @end

@@ -41,11 +41,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    [self.view setAlpha:0];
-    
-    [self.favouritePickerView setDelegate:self];
-    [self.favouritePickerView setDataSource:[ComicStore sharedStore]];    
 }
 
 - (void)didReceiveMemoryWarning
@@ -94,31 +89,6 @@
             [self.controlsViewSegmentAll setEnabled:YES forSegmentAtIndex:4];
         }
     }
-}
-
-- (BOOL)isShowingControls
-{
-    return self.view.alpha == 1.0;
-}
-
-- (void)showControls
-{
-    [UIView animateWithDuration:pageOverlayToggleAnimationTime
-                     animations:^{self.view.alpha = 1.0;}
-                     completion:nil];
-}
-
-- (void)hideControls
-{
-    [UIView animateWithDuration:pageOverlayToggleAnimationTime
-                     animations:^{self.view.alpha = 0;}
-                     completion:nil];
-}
-
-- (void)reloadFavourites
-{
-    // FIXME: This would probably be better done using pub/sub
-    [self.favouritePickerView reloadData];
 }
 
 #pragma mark - Comic control
@@ -195,17 +165,6 @@
 - (void)goNext
 {
     [self.delegate loadNextComic];
-}
-
-#pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    ComicStore *store = [ComicStore sharedStore];
-    NSArray *comics = [store favouriteComicsByKey];
-    ComicData *comicForRow = [store comicForKey:[comics objectAtIndex:[indexPath row]]];
-    
-    [self.delegate loadComicAtIndex:[comicForRow comicID]];
 }
 
 @end

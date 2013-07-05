@@ -12,16 +12,15 @@
 #import "ModelController.h"
 #import "NavigationViewController.h"
 
-@interface DataViewController : UIViewController <UIScrollViewDelegate, UIPopoverControllerDelegate, UITableViewDelegate, UITabBarControllerDelegate>
+@interface DataViewController : UIViewController <UIScrollViewDelegate, UIPopoverControllerDelegate, UITableViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *loadingView;
-@property (strong, nonatomic) UITabBarController *tabBarController;
 
 @property (strong, nonatomic) ComicData *dataObject;
+@property UIImageView *imageView;
 
-@property (strong, nonatomic) id<NavigationViewControllerProtocol> delegate;
-@property (strong, nonatomic) NavigationViewController *navViewController;
+- (void)handleTap;
 
 @end

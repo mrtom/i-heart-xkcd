@@ -15,5 +15,4 @@
 - (void)loadPreviousComic;
 - (void)loadRandomComic;
 - (void)loadNextComic;
-- (void)loadComicAtIndex:(NSInteger)index;
 @end

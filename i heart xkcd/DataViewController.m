@@ -14,11 +14,6 @@
 #import <Social/Social.h>
 
 #import "Constants.h"
-#import "AltTextViewController.h"
-#import "FavouritesViewController.h"
-#import "SearchViewController.h"
-#import "NavigationViewController.h"
-#import "AboutViewController.h"
 
 #import "ComicStore.h"
 #import "ComicImageStore.h"
@@ -37,9 +32,7 @@ typedef enum {
 
 @interface DataViewController ()
 
-@property UIImageView *imageView;
-
-@property (readwrite, nonatomic) double lastTimeOverlaysToggled;
+@property BOOL isShowingInfo;
 @property BOOL shouldHideTitle;
 @property BOOL imageIsLargerThanScrollView;
 @property BOOL wasAtMinimumLeft;
@@ -51,12 +44,13 @@ typedef enum {
 
 @implementation DataViewController
 
-@synthesize delegate, previousContentX;
+@synthesize previousContentX;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
+    self.isShowingInfo = NO;
     self.shouldHideTitle = NO;
     self.imageIsLargerThanScrollView = NO;
     
@@ -76,46 +70,11 @@ typedef enum {
     
     [self.scrollView addSubview:self.imageView];
     
-    // Tab Bar
-    UIViewController *altTextViewController = [[AltTextViewController alloc] initWithData:self.dataObject forComic:self.imageView];
-    UIViewController *favouritesViewController = [[FavouritesViewController alloc] init];
-    UIViewController *searchViewController = [[SearchViewController alloc] init];
-    UIViewController *navigationViewController = [[NavigationViewController alloc] init];
-    UIViewController *aboutViewController = [[AboutViewController alloc] init];
-    self.tabBarController = [[UITabBarController alloc] init];
-    self.tabBarController.viewControllers = @[
-                                              altTextViewController,
-                                              favouritesViewController,
-                                              searchViewController,
-                                              navigationViewController,
-                                              aboutViewController];
-    [self.tabBarController.view setAlpha:0.0];
-    [self.view addSubview:self.tabBarController.view];
-    
-    // Setup Navigation Controls
-    self.navViewController = [[NavigationViewController alloc] init];
-    [self.navViewController setDelegate:self.delegate];
-    [self.view addSubview:self.navViewController.view];
-    
-    // Setup gesture recognisers
-    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
-    tapRecognizer.numberOfTapsRequired = 1;
-    tapRecognizer.numberOfTouchesRequired = 1;
-    [self.scrollView addGestureRecognizer:tapRecognizer];
-    
-    self.lastTimeOverlaysToggled = 0;
-    UITapGestureRecognizer *doubleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)];
-    doubleTapRecognizer.numberOfTapsRequired = 2;
-    doubleTapRecognizer.numberOfTouchesRequired = 1;
-    [self.view addGestureRecognizer:doubleTapRecognizer];
-
     // Setup internal state
     self.wasAtMinimumLeft = NO;
     self.wasAtMaximumLeft = NO;
     self.previousContentX = 0.0f;
-    self.scrollDirection = ScrollDirectionNone;
-    
-    [tapRecognizer requireGestureRecognizerToFail:doubleTapRecognizer];
+    self.scrollDirection = ScrollDirectionNone;    
 }
 
 - (void)didReceiveMemoryWarning
@@ -177,18 +136,9 @@ typedef enum {
     
     self.titleLabel.text = [NSString stringWithFormat:@"#%u: %@", [self.dataObject comicID], [self.dataObject safeTitle]];
 
-    // Set the tab bar frame so it doesn't overlap the title bar
-    float titleBarHeight = self.titleLabel.frame.size.height;
-    CGRect tabBarFrame = self.view.frame;
-    tabBarFrame.origin.y = titleBarHeight;
-    tabBarFrame.size.height = tabBarFrame.size.height - titleBarHeight;
-    [self.tabBarController.view setFrame:tabBarFrame];
-    
-    // Setup navigation views
-    [self configureNavigationViews];
-    
     // Check segment state
-    [self.navViewController setCurrentComic:[self.dataObject comicID]];
+    //[self.navViewController setCurrentComic:[self.dataObject comicID]];
+    // TODO: Make pub sub
 }
 
 -(void)configureImageLoadedFromXkcdWithImage:(UIImage *)image forScale:(NSInteger)scale
@@ -252,18 +202,18 @@ typedef enum {
     [self checkLoadedState];
 }
 
--(void)configureNavigationViews
-{
-    // Place at the centre horizontally, and at the base vertically
-    CGRect navViewFrame = self.navViewController.view.frame;
-    
-    NSInteger x = self.view.bounds.size.width/2 - navViewFrame.size.width/2;
-    NSInteger y = self.view.bounds.size.height - altTextBackgroundPadding - navViewFrame.size.height;
-    navViewFrame.origin.x = x;
-    navViewFrame.origin.y = y;
-    
-    [self.navViewController.view setFrame:navViewFrame];
-}
+//-(void)configureNavigationViews
+//{
+//    // Place at the centre horizontally, and at the base vertically
+//    CGRect navViewFrame = self.navViewController.view.frame;
+//    
+//    NSInteger x = self.view.bounds.size.width/2 - navViewFrame.size.width/2;
+//    NSInteger y = self.view.bounds.size.height - altTextBackgroundPadding - navViewFrame.size.height;
+//    navViewFrame.origin.x = x;
+//    navViewFrame.origin.y = y;
+//    
+//    [self.navViewController.view setFrame:navViewFrame];
+//}
 
 -(void)checkLoadedState
 {
@@ -287,29 +237,8 @@ typedef enum {
 
 #pragma mark - Handle gestures and touches
 
-- (BOOL)canToggleOverlays
-{
-    double timeNow = CACurrentMediaTime();
-    if (timeNow - self.lastTimeOverlaysToggled < pageOverlayToggleBounceLimit) {
-        return NO;
-    }
-    return YES;
-}
-
-- (void)handleTap:(UITapGestureRecognizer *)sender {
-    if (sender.state == UIGestureRecognizerStateEnded && [self canToggleOverlays]) {
-        self.lastTimeOverlaysToggled = CACurrentMediaTime();
-        
-        [self toggleTitleAndTabBar];
-    }
-}
-
-- (void)handleDoubleTap:(UITapGestureRecognizer *)sender {
-    if (sender.state == UIGestureRecognizerStateEnded && [self canToggleOverlays]) {
-        self.lastTimeOverlaysToggled = CACurrentMediaTime();
-        
-        [self toggleControls];
-    }
+- (void)handleTap {
+    [self toggleTitle];
 }
 
 - (void)animateShowTitleBar
@@ -331,61 +260,27 @@ typedef enum {
     }
 }
 
-- (void)toggleTitleAndTabBar
+- (void)toggleTitle
 {
-    if ([self.tabBarController.view alpha] == 0) {
-        [self showTitleAndTabBar];
+    if (!self.isShowingInfo) {
+        [self showTitle];
     } else {
-        [self hideTitleAndTabBar];
+        [self hideTitle];
     }
 }
 
-- (void)showTitleAndTabBar
+- (void)showTitle
 {
-    [self hideControls];
     [self.scrollView setScrollEnabled:NO];
-    
-    [UIView animateWithDuration:pageOverlayToggleAnimationTime
-                     animations:^{
-                         self.tabBarController.view.alpha = 1.0;
-                     }
-                     completion:nil];
     [self animateShowTitleBar];
+    self.isShowingInfo = YES;
 }
 
-- (void)hideTitleAndTabBar
+- (void)hideTitle
 {
     [self.scrollView setScrollEnabled:YES];
-    
-    [UIView animateWithDuration:pageOverlayToggleAnimationTime
-                     animations:^{
-                         self.tabBarController.view.alpha = 0;
-                     }
-                     completion:nil];
     [self animateHideTitleBar];
-}
-
-- (void)toggleControls
-{
-    if (![self.navViewController isShowingControls]) {
-        [self showControls];
-    } else {
-        [self hideControls];
-    }}
-
-- (void)showControls
-{
-    [self hideTitleAndTabBar];
-    [self animateShowTitleBar];
-    [self.scrollView setScrollEnabled:NO];
-    [self.navViewController showControls];
-}
-
-- (void)hideControls
-{
-    [self.scrollView setScrollEnabled:YES];
-    [self.navViewController hideControls];
-    [self animateHideTitleBar];
+    self.isShowingInfo = NO;
 }
 
 #pragma mark - UIScrollViewDelegate classes
@@ -418,10 +313,12 @@ typedef enum {
     
     if (self.wasAtMinimumLeft && self.scrollDirection == ScrollDirectionRight) {
         [self.scrollView setScrollEnabled:NO];
-        [self.navViewController goPrevious];
+        //[self.navViewController goPrevious];
+        // TODO: FIXME
     } else if (self.wasAtMaximumLeft && self.scrollDirection == ScrollDirectionLeft) {
         [self.scrollView setScrollEnabled:NO];
-        [self.navViewController goNext];
+        //[self.navViewController goNext];
+        // TODO: FIXME
     }
     self.wasAtMinimumLeft = NO;
     self.wasAtMaximumLeft = NO;

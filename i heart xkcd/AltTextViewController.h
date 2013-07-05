@@ -9,12 +9,12 @@
 #import <UIKit/UIKit.h>
 
 #import "ComicData.h"
+#import "AltTextViewControllerProtocol.h"
 
 @interface AltTextViewController : UIViewController
 
-@property (strong, nonatomic) ComicData *dataObject;
-@property (weak, nonatomic) UIImageView *comicView;
+@property (strong, nonatomic) id<AltTextViewControllerProtocol> delegate;
 
-- (id)initWithData: (ComicData *)dataObject forComic:(UIImageView *)comicView;
+- (id)init;
 
 @end

@@ -32,13 +32,10 @@
 
 @implementation AltTextViewController
 
-- (id)initWithData: (ComicData *)dataObject forComic:(UIImageView *)comicView;
+- (id)init;
 {
     self = [super init];
     if (self) {
-        self.dataObject = dataObject;
-        self.comicView = comicView;
-        
         self.title = NSLocalizedString(@"Alt Text", @"Alt Text");
         self.tabBarItem.image = [UIImage imageNamed:@"first"];
     }
@@ -48,6 +45,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self.view setBackgroundColor:[UIColor redColor]];
 	
     // Alt text overlay
     self.altTextCanvasView = [[UIView alloc] initWithFrame:self.view.bounds];
@@ -55,7 +54,7 @@
     [self.view addSubview:self.altTextCanvasView];
     
     self.altTextBackgroundView = [[UIView alloc] init];
-    [self.altTextBackgroundView setBackgroundColor:[UIColor blackColor]];
+    [self.altTextBackgroundView setBackgroundColor:altViewBackgroundColor];
     [self.altTextBackgroundView setAlpha:translutentAlpha];
     [self.altTextCanvasView addSubview:self.altTextBackgroundView];
     
@@ -77,7 +76,7 @@
     
     // Favourite and Facebook buttons
     self.favouriteButtonBackground = [[UIView alloc] initWithFrame:CGRectMake(0, 0, favouriteAndFacebookButtonSide, favouriteAndFacebookButtonSide)];
-    [self.favouriteButtonBackground setBackgroundColor:[UIColor blackColor]];
+    [self.favouriteButtonBackground setBackgroundColor:altViewBackgroundColor];
     [self.favouriteButtonBackground setAlpha:translutentAlpha];
     [self.altTextCanvasView addSubview:self.favouriteButtonBackground];
     
@@ -91,7 +90,7 @@
     CGRect shareButtonFrame = self.favouriteButtonBackground.frame;
     shareButtonFrame.origin.x += favouriteAndFacebookButtonSide;
     self.facebookShareButtonBackground = [[UIView alloc] initWithFrame:shareButtonFrame];
-    [self.facebookShareButtonBackground setBackgroundColor:[UIColor blackColor]];
+    [self.facebookShareButtonBackground setBackgroundColor:altViewBackgroundColor];
     [self.facebookShareButtonBackground setAlpha:translutentAlpha];
     [self.altTextCanvasView addSubview:self.facebookShareButtonBackground];
     
@@ -111,7 +110,8 @@
 
 -(void)configureAltTextViews
 {
-    NSString *altText = [self.dataObject alt];
+    ComicData *dataObject = [self.delegate comicData];
+    NSString *altText = [dataObject alt];
     NSLineBreakMode lineBreakMode = NSLineBreakByWordWrapping;
     UIFont *labelFont = [UIFont systemFontOfSize:17];
     [self.altTextView setText:altText];
@@ -155,7 +155,7 @@
     [self.favouriteButton setFrame:favFrame];
     [self.facebookShareButton setFrame:fbFrame];
     
-    if ([self.dataObject isFavourite]) {
+    if ([dataObject isFavourite]) {
         [self.favouriteButton setBackgroundImage:[UIImage imageNamed:comicIsFavouriteBackgroundImage] forState:UIControlStateNormal];
     } else {
         [self.favouriteButton setBackgroundImage:[UIImage imageNamed:comicIsNotFavouriteBackgroundImage] forState:UIControlStateNormal];
@@ -171,10 +171,12 @@
 - (void)facebookShare: (id)sender
 {
     if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
+        UIImageView *comicView = [self.delegate imageView];
+        ComicData *dataObject = [self.delegate comicData];
         [FBNativeDialogs presentShareDialogModallyFrom:self
                                            initialText:nil
-                                                 image:[self.comicView image]
-                                                   url:[self.dataObject imageURL]
+                                                 image:[comicView image]
+                                                   url:[dataObject imageURL]
                                                handler:nil];
         
     } else {
@@ -187,34 +189,39 @@
 {
     BOOL didSet = YES;
     ComicImageStore *imageStore = [ComicImageStore sharedStore];
+    ComicData *dataObject = [self.delegate comicData];
     
-    if ([self.dataObject isFavourite]) {
-        [self.dataObject setIsFavourite:NO];
-        [[ComicStore sharedStore] setAsNotFavourite:self.dataObject];
+    if ([dataObject isFavourite]) {
+        [dataObject setIsFavourite:NO];
+        [[ComicStore sharedStore] setAsNotFavourite:dataObject];
         
         if ([Settings shouldCacheFavourites]) {
-            didSet = [imageStore removeFavourite:self.dataObject];
+            didSet = [imageStore removeFavourite:dataObject];
         }
         if (didSet) {
             [self.favouriteButton setBackgroundImage:[UIImage imageNamed:comicIsNotFavouriteBackgroundImage] forState:UIControlStateNormal];
         }
     } else {
-        [self.dataObject setIsFavourite:YES];
-        [[ComicStore sharedStore] setAsFavourite:self.dataObject];
+        [dataObject setIsFavourite:YES];
+        [[ComicStore sharedStore] setAsFavourite:dataObject];
         
         if ([Settings shouldCacheFavourites]) {
-            // FIXME: Need to pub/sub this
-            //didSet = [imageStore pushComic:self.dataObject withImage:[self.imageView image]];
+            ComicImageStore *imageStore = [ComicImageStore sharedStore];
+            UIImage *image = [imageStore imageForComic:dataObject];
+            didSet = [imageStore pushComic:dataObject withImage:image];
         }
         if (didSet) {
             [self.favouriteButton setBackgroundImage:[UIImage imageNamed:comicIsFavouriteBackgroundImage] forState:UIControlStateNormal];
         }
     }
-    // FIXME: Need to pub/sub this
-    //[self.navViewController reloadFavourites];
+
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    NSNotification *note = [NSNotification notificationWithName:FavouritesSetUpdated object:self];
+    [nc postNotification:note];
     
+    // FIXME: Do this by NSNotifcationCenter instead?
     ComicStore *store = [ComicStore sharedStore];
-    [store addComic:self.dataObject];
+    [store addComic:dataObject];
     [store saveChanges];
 }
 
