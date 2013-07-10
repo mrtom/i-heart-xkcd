@@ -8,6 +8,24 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SearchViewController : UIViewController
+#import "RecentSearchesController.h"
+
+@interface SearchViewController : UIViewController <UISearchBarDelegate, UIPopoverControllerDelegate, RecentSearchesDelegate, UITableViewDataSource> {
+    UISearchBar *searchBar;
+    UITableView *resultsTable;
+    
+    RecentSearchesController *recentSearchesController;
+    UIPopoverController *recentSearchesPopoverController;
+    
+    UILabel *noResultsLabel;
+}
+
+@property (nonatomic, strong) IBOutlet UISearchBar *searchBar;
+@property (nonatomic, strong) IBOutlet UITableView *resultsTable;
+
+@property (nonatomic, strong) RecentSearchesController *recentSearchesController;
+@property (nonatomic, strong) UIPopoverController *recentSearchesPopoverController;
+
+@property (nonatomic, strong) IBOutlet UILabel *noResultsLabel;
 
 @end

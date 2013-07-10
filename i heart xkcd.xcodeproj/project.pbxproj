@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		4509F4C516C1DC4F0071E4AA /* NavigationViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4509F4C416C1DC4F0071E4AA /* NavigationViewController_iPad.xib */; };
+		450A48701786E372008CE1B7 /* RecentSearchesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 450A486F1786E372008CE1B7 /* RecentSearchesController.m */; };
+		452E688B1786F0C900939FCB /* SearchViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 452E688A1786F0C800939FCB /* SearchViewController~ipad.xib */; };
+		452E688D1786F1AB00939FCB /* SearchViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 452E688C1786F1AB00939FCB /* SearchViewController~iphone.xib */; };
 		453E5C78167BF75000EFD8DB /* UIImage+animatedGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 453E5C77167BF75000EFD8DB /* UIImage+animatedGIF.m */; };
 		453E5C7B167BF77500EFD8DB /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 453E5C7A167BF77500EFD8DB /* ImageIO.framework */; };
 		455317491774D90B00FFDD00 /* AltViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 455317481774D90B00FFDD00 /* AltViewController.m */; };
@@ -88,6 +91,10 @@
 /* Begin PBXFileReference section */
 		20AA35C19E044FD9BF7D6F78 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		4509F4C416C1DC4F0071E4AA /* NavigationViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NavigationViewController_iPad.xib; sourceTree = "<group>"; };
+		450A486E1786E372008CE1B7 /* RecentSearchesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecentSearchesController.h; sourceTree = "<group>"; };
+		450A486F1786E372008CE1B7 /* RecentSearchesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecentSearchesController.m; sourceTree = "<group>"; };
+		452E688A1786F0C800939FCB /* SearchViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "SearchViewController~ipad.xib"; sourceTree = "<group>"; };
+		452E688C1786F1AB00939FCB /* SearchViewController~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "SearchViewController~iphone.xib"; sourceTree = "<group>"; };
 		453E5C76167BF75000EFD8DB /* UIImage+animatedGIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+animatedGIF.h"; sourceTree = "<group>"; };
 		453E5C77167BF75000EFD8DB /* UIImage+animatedGIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+animatedGIF.m"; sourceTree = "<group>"; };
 		453E5C7A167BF77500EFD8DB /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
@@ -282,6 +289,10 @@
 				455317431774D00F00FFDD00 /* FavouritesViewControllerProtocol.h */,
 				45C2017C1738315B00CA0A2C /* SearchViewController.h */,
 				45C2017D1738315B00CA0A2C /* SearchViewController.m */,
+				452E688C1786F1AB00939FCB /* SearchViewController~iphone.xib */,
+				452E688A1786F0C800939FCB /* SearchViewController~ipad.xib */,
+				450A486E1786E372008CE1B7 /* RecentSearchesController.h */,
+				450A486F1786E372008CE1B7 /* RecentSearchesController.m */,
 				45F9216E16C1C5D700A2E3B0 /* NavigationViewController.h */,
 				45F9216F16C1C5D800A2E3B0 /* NavigationViewController.m */,
 				45F9217216C1D07A00A2E3B0 /* NavigationViewController_iPhone.xib */,
@@ -460,6 +471,8 @@
 				45C201841738335F00CA0A2C /* first@2x.png in Resources */,
 				45C201851738335F00CA0A2C /* second.png in Resources */,
 				45C201861738335F00CA0A2C /* second@2x.png in Resources */,
+				452E688B1786F0C900939FCB /* SearchViewController~ipad.xib in Resources */,
+				452E688D1786F1AB00939FCB /* SearchViewController~iphone.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -524,6 +537,7 @@
 				45C2017B1738311C00CA0A2C /* FavouritesViewController.m in Sources */,
 				45C2017E1738315B00CA0A2C /* SearchViewController.m in Sources */,
 				455317491774D90B00FFDD00 /* AltViewController.m in Sources */,
+				450A48701786E372008CE1B7 /* RecentSearchesController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
