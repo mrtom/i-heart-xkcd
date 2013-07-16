@@ -29,13 +29,7 @@
     [super viewDidLoad];
     [self.aboutXkcdTitle setNumberOfLines:1];
     [self.aboutIHeartXkcdTitle setNumberOfLines:1];
-
-    
-    UIBarButtonItem *doneItem = [[UIBarButtonItem alloc]
-                                 initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-                                 target:self
-                                 action:@selector(done:)];
-    [[self navigationItem] setRightBarButtonItem:doneItem];
+    [self.aboutIHeartXkcdTitle setNumberOfLines:1];
 }
 
 - (void)viewDidAppear:(BOOL)animated

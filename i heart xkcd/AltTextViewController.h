@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 
 #import "ComicData.h"
+#import "AltViewController.h"
 #import "AltTextViewControllerProtocol.h"
 
-@interface AltTextViewController : UIViewController
+@interface AltTextViewController : AltViewController
 
 @property (strong, nonatomic) id<AltTextViewControllerProtocol> delegate;
 

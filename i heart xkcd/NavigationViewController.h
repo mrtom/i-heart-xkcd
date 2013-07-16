@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+#import "AltViewController.h"
 #import "NavigationViewControllerProtocol.h"
 
-@interface NavigationViewController : UIViewController<UITableViewDelegate>
+@interface NavigationViewController : AltViewController<UITableViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UIView *controlsViewBacking;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *controlsViewSegmentAll;

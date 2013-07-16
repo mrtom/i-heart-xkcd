@@ -22,6 +22,8 @@
 #import "AboutViewController.h"
 
 #define pageCoverAnimationTime 0.3
+#define turnPageViewWidthPhone 20
+#define turnPageViewWidthPad 50
 
 @interface RootViewController ()
 
@@ -32,14 +34,18 @@
 
 @end
 
-@implementation RootViewController
+@implementation RootViewController {
+    NSInteger turnPageViewWidth;
+    CGFloat altViewOverlayAndTabCentreDelta;
+    CGPoint tabBarPullClosedOrigin;
+    CGPoint tabBarPullOpenOrigin;
+}
 
 @synthesize modelController = _modelController;
 @synthesize pageCover;
 @synthesize currentIndex = _currentIndex;
 
-+ (void)initialize
-{
++ (void)initialize {
     NSDictionary *defaults = [NSDictionary dictionaryWithObjectsAndKeys:
                               [NSNumber numberWithInt:1], iheartxkcd_UserDefaultLatestPage,
                               [NSNumber numberWithInt:0], iheartxkcd_UserDefaultLastUpdate,
@@ -48,8 +54,7 @@
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     // Configure the page view controller and add it as a child view controller.
@@ -83,12 +88,46 @@
     pageCover.alpha = 0.0;
     [self.view addSubview:pageCover];
     
+    // Move the page forward/backward gestures to their own view, so we can show/hide the tab bar separately
+    turnPageViewWidth = ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) ? turnPageViewWidthPad : turnPageViewWidthPhone;
+    
+    turnPageBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, turnPageViewWidth, self.view.bounds.size.height)];
+    [self.view addSubview:turnPageBackView];
+    
+    turnPageForwardView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width-turnPageViewWidth, 0, turnPageViewWidth, self.view.frame.size.height)];
+    [self.view addSubview:turnPageForwardView];
+    
+    [turnPageBackView setGestureRecognizers:self.pageViewController.gestureRecognizers];
+    [turnPageForwardView setGestureRecognizers:self.pageViewController.gestureRecognizers];
+
+    // Add the tab bar pull
+    self.tabBarPull = [[TabBarDraggerViewController alloc] initWithDelegate:self];
+    CGRect tabBarPullRect = self.tabBarPull.view.frame;
+
+    tabBarPullClosedOrigin.x = self.view.bounds.size.width - tabBarPullRect.size.width;
+    tabBarPullClosedOrigin.y = self.view.bounds.size.height - tabBarPullRect.size.height;
+    tabBarPullOpenOrigin = tabBarPullClosedOrigin;
+    tabBarPullOpenOrigin.x -= self.view.bounds.size.width;
+
+    tabBarPullRect.origin = tabBarPullClosedOrigin;
+    [self.tabBarPull.view setFrame:tabBarPullRect];
+    [self.view addSubview:self.tabBarPull.view];
+    
+    // Remove gesture recognizers from their original view, and set the Root VC as their delegate
+    for (UIGestureRecognizer *gr in self.pageViewController.gestureRecognizers) {
+        [self.pageViewController.view removeGestureRecognizer:gr];
+        [self.view removeGestureRecognizer:gr];
+        
+        gr.delegate = self;
+    }
+    
     // Tab Bar for navigation
     AltTextViewController *altTextViewController = [[AltTextViewController alloc] init];
     [altTextViewController setDelegate:self];
     FavouritesViewController *favouritesViewController = [[FavouritesViewController alloc] init];
     [favouritesViewController setDelegate:self];
-    UIViewController *searchViewController = [[SearchViewController alloc] init];
+    SearchViewController *searchViewController = [[SearchViewController alloc] init];
+    [searchViewController setDelegate:self];
     NavigationViewController *navigationViewController = [[NavigationViewController alloc] init];
     [navigationViewController setDelegate:self];
     UIViewController *aboutViewController = [[AboutViewController alloc] init];
@@ -100,31 +139,60 @@
                                               searchViewController,
                                               navigationViewController,
                                               aboutViewController];
-    [self.tabBarController.view setAlpha:0.0];
 
-    // Set the tab bar frame so it doesn't overlap the title bar
+    // Set the tab bar frame so it doesn't overlap the title bar, and hide off screen so we 'slide' it over
     // FIXME: float titleBarHeight = self.titleLabel.frame.size.height;
     float titleBarHeight = 20;
     CGRect tabBarFrame = self.view.frame;
     tabBarFrame.origin.y = titleBarHeight;
+    tabBarFrame.origin.x = self.view.frame.size.width;
     tabBarFrame.size.height = tabBarFrame.size.height - titleBarHeight;    
     [self.tabBarController.view setFrame:tabBarFrame];
     [self.view addSubview:self.tabBarController.view];
     
-    // Setup gesture recognisers
-    UITapGestureRecognizer *pageViewTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
-    pageViewTapRecognizer.numberOfTapsRequired = 1;
-    pageViewTapRecognizer.numberOfTouchesRequired = 1;
-    [self.pageViewController.view addGestureRecognizer:pageViewTapRecognizer];
+    altViewOverlayAndTabCentreDelta = self.tabBarController.view.center.x - self.tabBarPull.view.center.x;
+
     
+    // Setup gesture recognisers
     UISwipeGestureRecognizer *tabBarViewTapRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     tabBarViewTapRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
     tabBarViewTapRecognizer.numberOfTouchesRequired = 1;
     [self.tabBarController.view addGestureRecognizer:tabBarViewTapRecognizer];
 }
 
-- (void)loadPageAtIndex:(NSInteger)index forDirection:(UIPageViewControllerNavigationDirection) direction andAnimation:(BOOL)animated
-{
+- (BOOL)gestureRecognizer:(UIGestureRecognizer*)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    // This is a little hacky. For some reason, even tho the gr is removed from the main view in
+    // viewDidLoad, it still fires when we swipe outside of the page turning views. So check it's
+    // within one of those views (and that it's not the tab bar swipe gesture), and handle accordingly
+    NSInteger heightForSwipingTabBar = 50;
+    
+    if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
+        // We only want to mess with the swipes
+        UIPanGestureRecognizer *panGR = (UIPanGestureRecognizer *)gestureRecognizer;
+        
+        if (CGRectContainsPoint(turnPageBackView.bounds, [touch locationInView:turnPageBackView])) { // &&
+//            [panGR velocityInView:self.view].x > 0.0f) {
+            // If we swipe on the left edge of the screen, all good (unless it's the first page)
+            return self.currentIndex > 1;
+        }
+        
+        if (CGRectContainsPoint(turnPageForwardView.bounds, [touch locationInView:turnPageForwardView])) { // &&
+//            [panGR velocityInView:self.view].x < 0.0f) {
+            if (turnPageForwardView.frame.size.height - [touch locationInView:turnPageForwardView].y > heightForSwipingTabBar) {
+                // If we swiped on the right edge of the screen, and we're not at the bottom of the screen, all good
+                return self.currentIndex < [self.modelController indexOfLastComic];
+            } else {
+                [self handleTap:gestureRecognizer];
+            }
+        }
+        
+        return NO;
+    } else {
+        return YES;
+    }
+}
+
+- (void)loadPageAtIndex:(NSInteger)index forDirection:(UIPageViewControllerNavigationDirection) direction andAnimation:(BOOL)animated {
     DataViewController *viewController = [self.modelController viewControllerAtIndex:index storyboard:self.storyboard];
     NSArray *viewControllers = @[viewController];
     [self.pageViewController setViewControllers:viewControllers direction:direction animated:animated completion:NULL];
@@ -135,6 +203,7 @@
                          if (finished) {
                              [self setCurrentIndex:index];
                              self.currentViewController = viewController;
+                             [self hideTabBar];
                          }
                      }];
 }
@@ -197,40 +266,58 @@
     return YES;
 }
 
-- (void)handleTap:(UITapGestureRecognizer *)sender {
-    if (sender.state == UIGestureRecognizerStateEnded && [self canToggleOverlays]) {
+- (void)handleTap:(UIGestureRecognizer *)sender {
+    if ([self canToggleOverlays]) {
         self.lastTimeOverlaysToggled = CACurrentMediaTime();
         
         [self toggleTabBar];
-        [self.currentViewController handleTap];
     }
 }
 
 - (void)toggleTabBar
 {
-    if ([self.tabBarController.view alpha] == 0) {
-        [self showTabBar];
-    } else {
+    if (self.tabBarController.view.frame.origin.x == 0) {
         [self hideTabBar];
+    } else {
+        [self showTabBar];
     }
 }
 
 - (void)showTabBar
 {
-    self.tabBarController.view.alpha = 0.0;
     [self.view addSubview:self.tabBarController.view];
+    CGPoint viewLocation = self.tabBarController.view.center;
+    viewLocation.x = self.view.center.x;
+    
+    CGRect tabBarPullRect = self.tabBarPull.view.frame;
+    tabBarPullRect.origin.x = tabBarPullOpenOrigin.x;
+    tabBarPullRect.origin.y = tabBarPullOpenOrigin.y;
+    
+    [self.currentViewController showTitle];
+    
     [UIView animateWithDuration:pageOverlayToggleAnimationTime
                      animations:^{
-                         self.tabBarController.view.alpha = 1.0;
+                         self.tabBarController.view.center = viewLocation;
+                         self.tabBarPull.view.frame = tabBarPullRect;
                      }
                      completion:nil];
 }
 
 - (void)hideTabBar
 {
+    CGPoint viewLocation = self.tabBarController.view.center;
+    viewLocation.x = self.view.bounds.size.width + self.tabBarController.view.bounds.size.width/2;
+    
+    CGRect tabBarPullRect = self.tabBarPull.view.frame;
+    tabBarPullRect.origin.x = tabBarPullClosedOrigin.x;
+    tabBarPullRect.origin.y = tabBarPullClosedOrigin.y;
+    
+    [self.currentViewController hideTitle];
+    
     [UIView animateWithDuration:pageOverlayToggleAnimationTime
                      animations:^{
-                         self.tabBarController.view.alpha = 0;
+                         self.tabBarController.view.center = viewLocation;
+                         self.tabBarPull.view.frame = tabBarPullRect;
                      }
                      completion:^ (BOOL finished){
                          if (finished) {
@@ -314,7 +401,6 @@
 - (void)loadComicAtIndex:(NSInteger)index
 {
     [self loadPageAtIndex:index forDirection:UIPageViewControllerNavigationDirectionForward andAnimation:NO];
-    [self hideTabBar];
 }
 
 #pragma mark AltTextViewControllerProtocol methods
@@ -329,4 +415,47 @@
     return self.currentViewController.imageView;
 }
 
+#pragma mark TabBarDraggerProtocol methods
+
+- (void)handleTabBarDragged:(UIPanGestureRecognizer *)sender {
+    if ([sender state] == UIGestureRecognizerStateBegan) {
+        [self.view addSubview:self.tabBarController.view];
+    }
+    
+    if ([sender state] == UIGestureRecognizerStateEnded) {
+        CGFloat velocityX = [sender velocityInView:self.view].x;
+        CGFloat stoppedVelocity = 100.0f;
+        
+        // Determine if tab should be open or closed, and make the appropriate change
+        if (-1*stoppedVelocity <= velocityX && velocityX <= stoppedVelocity) {
+            // Close if the user stopped panning and removed finger
+            [self hideTabBar];
+        } else if (velocityX < stoppedVelocity) {
+            // Sliding to the left, open
+            [self showTabBar];
+        } else {
+            // Sliding to the right
+            [self hideTabBar];
+        }
+    } else {
+        // Move tab and view under finger
+        CGPoint pullLocation = self.tabBarPull.view.center;
+        pullLocation.x = [sender locationInView:self.view].x;
+        CGPoint viewLocation = self.tabBarController.view.center;
+        viewLocation.x = pullLocation.x + altViewOverlayAndTabCentreDelta;
+        
+        self.tabBarPull.view.center = pullLocation;
+        self.tabBarController.view.center = viewLocation;
+    }    
+}
+
+- (void)handleTabBarTapped:(UITapGestureRecognizer *)sender {
+    [self handleTap:sender];
+}
+
 @end
+
+
+
+
+

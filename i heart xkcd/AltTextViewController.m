@@ -9,6 +9,7 @@
 #import "AltTextViewController.h"
 
 #import <FacebookSDK/FacebookSDK.h>
+#import <QuartzCore/QuartzCore.h>
 #import <Social/Social.h>
 
 #import "ComicImageStore.h"
@@ -46,8 +47,6 @@
 {
     [super viewDidLoad];
     
-    [self.view setBackgroundColor:[UIColor redColor]];
-	
     // Alt text overlay
     self.altTextCanvasView = [[UIView alloc] initWithFrame:self.view.bounds];
     [self.altTextCanvasView setBackgroundColor:[UIColor clearColor]];
@@ -99,7 +98,7 @@
     [self.facebookShareButton setBackgroundImage:[UIImage imageNamed:isNotLoggedIntoFacebookBackgroundImage] forState:UIControlStateNormal];
     [self.facebookShareButton addTarget:self action:@selector(facebookShare:) forControlEvents:UIControlEventTouchUpInside];
     [self.facebookShareButton setUserInteractionEnabled:YES];
-    [self.altTextCanvasView addSubview:self.facebookShareButton];
+    [self.altTextCanvasView addSubview:self.facebookShareButton];    
 }
 
 - (void)viewWillAppear:(BOOL)animated

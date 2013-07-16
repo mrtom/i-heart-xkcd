@@ -5,6 +5,7 @@
 //  Created by Tom Elliott on 11/12/2012.
 //  Copyright (c) 2012 Tom Elliott. All rights reserved.
 //
+// FIXME: I've simplifeid this a lot, you can always set scroll to enabled now. This class can have a bunch of shite rmeoved
 
 #import "DataViewController.h"
 
@@ -284,44 +285,17 @@ typedef enum {
 }
 
 #pragma mark - UIScrollViewDelegate classes
-- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
-{
+
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
     return self.imageView;
 }
 
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
-{
-    float currentOffset = scrollView.contentOffset.x;
-    if (currentOffset <= 0.0f) {
-        self.wasAtMinimumLeft = YES;
-    }
-    
-    if (currentOffset >= ([self imageView].frame.size.width - [self scrollView].frame.size.width)) {
-        self.wasAtMaximumLeft = YES;
-    }
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    if (self.previousContentX > scrollView.contentOffset.x) {
-        self.scrollDirection = ScrollDirectionRight;
-    } else if (self.previousContentX < scrollView.contentOffset.x) {
-        self.scrollDirection = ScrollDirectionLeft;        
-    }
-    
-    self.previousContentX = scrollView.contentOffset.x;
-    
-    if (self.wasAtMinimumLeft && self.scrollDirection == ScrollDirectionRight) {
-        [self.scrollView setScrollEnabled:NO];
-        //[self.navViewController goPrevious];
-        // TODO: FIXME
-    } else if (self.wasAtMaximumLeft && self.scrollDirection == ScrollDirectionLeft) {
-        [self.scrollView setScrollEnabled:NO];
-        //[self.navViewController goNext];
-        // TODO: FIXME
-    }
-    self.wasAtMinimumLeft = NO;
-    self.wasAtMaximumLeft = NO;
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+
 }
 
 @end

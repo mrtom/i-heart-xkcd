@@ -13,8 +13,8 @@
 #define pageOverlayToggleAnimationTime 0.300
 #define pageOverlayToggleBounceLimit pageOverlayToggleAnimationTime+0.025
 
-#define altViewBackgroundColor [UIColor blackColor]
-#define translutentAlpha 0.8
+#define altViewBackgroundColor [UIColor clearColor]
+#define translutentAlpha 0.3
 
 #define altTextBackgroundPadding 15           // Padding between the alt text background and the parent view
 #define altTextPadding 10                     // Padding between the alt text and the alt text background

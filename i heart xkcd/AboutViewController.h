@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AboutViewController : UIViewController <UINavigationControllerDelegate>
+#import "AltViewController.h"
+
+@interface AboutViewController : AltViewController <UINavigationControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel *aboutXkcdTitle;
 @property (strong, nonatomic) IBOutlet UITextView *aboutXkcdBody;

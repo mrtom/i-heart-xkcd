@@ -41,6 +41,10 @@
     favouritesTableRect.size.width = favouritesTableRect.size.width - 40;
     
     self.favouritePickerView = [[UITableView alloc] initWithFrame:favouritesTableRect];
+    [self.favouritePickerView setBackgroundColor:[UIColor clearColor]];
+    [self.favouritePickerView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+    [self.favouritePickerView setSeparatorColor:[UIColor lightGrayColor]];
+    
     [self.favouritePickerView setDelegate:self];
     [self.favouritePickerView setDataSource:[ComicStore sharedStore]];
     [self.view addSubview:self.favouritePickerView];
@@ -70,6 +74,9 @@
     ComicData *comicForRow = [store comicForKey:[comics objectAtIndex:[indexPath row]]];
     
     [self.delegate loadComicAtIndex:[comicForRow comicID]];
+    
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
 }
 
 @end

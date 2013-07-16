@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4509F4C516C1DC4F0071E4AA /* NavigationViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4509F4C416C1DC4F0071E4AA /* NavigationViewController_iPad.xib */; };
 		450A48701786E372008CE1B7 /* RecentSearchesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 450A486F1786E372008CE1B7 /* RecentSearchesController.m */; };
+		450EFA8617956A7900A9A006 /* 1238.png in Resources */ = {isa = PBXBuildFile; fileRef = 450EFA8517956A7900A9A006 /* 1238.png */; };
 		452E688B1786F0C900939FCB /* SearchViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 452E688A1786F0C800939FCB /* SearchViewController~ipad.xib */; };
 		452E688D1786F1AB00939FCB /* SearchViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 452E688C1786F1AB00939FCB /* SearchViewController~iphone.xib */; };
 		453E5C78167BF75000EFD8DB /* UIImage+animatedGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 453E5C77167BF75000EFD8DB /* UIImage+animatedGIF.m */; };
@@ -41,6 +42,11 @@
 		455F87F71677974F0060811E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 455F87F61677974F0060811E /* MobileCoreServices.framework */; };
 		455F87FA1678C08B0060811E /* ComicData.m in Sources */ = {isa = PBXBuildFile; fileRef = 455F87F91678C08B0060811E /* ComicData.m */; };
 		456E4E2F1679E63B0099B88E /* terrible_small_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 456E4E2E1679E63B0099B88E /* terrible_small_logo.png */; };
+		458608071795CEFA00FDA5AB /* SearchRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 458608061795CEFA00FDA5AB /* SearchRequest.m */; };
+		4590E335179522AF00F5C9FF /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4590E334179522AF00F5C9FF /* CoreImage.framework */; };
+		459C073A17904F7400B49CF9 /* TabBarDraggerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 459C073917904F7400B49CF9 /* TabBarDraggerViewController.m */; };
+		459C073D1791D80100B49CF9 /* TabBarPull@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 459C073C1791D80100B49CF9 /* TabBarPull@2x.png */; };
+		459C073F1791DCEF00B49CF9 /* TabBarPull.png in Resources */ = {isa = PBXBuildFile; fileRef = 459C073E1791DCEF00B49CF9 /* TabBarPull.png */; };
 		45A0D0D11680C18200B589A6 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 45A0D0D01680C18200B589A6 /* Settings.bundle */; };
 		45B5A2881695F1650058A581 /* info.png in Resources */ = {isa = PBXBuildFile; fileRef = 45B5A2861695F1650058A581 /* info.png */; };
 		45B5A2891695F1650058A581 /* info@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45B5A2871695F1650058A581 /* info@2x.png */; };
@@ -93,6 +99,7 @@
 		4509F4C416C1DC4F0071E4AA /* NavigationViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NavigationViewController_iPad.xib; sourceTree = "<group>"; };
 		450A486E1786E372008CE1B7 /* RecentSearchesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecentSearchesController.h; sourceTree = "<group>"; };
 		450A486F1786E372008CE1B7 /* RecentSearchesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecentSearchesController.m; sourceTree = "<group>"; };
+		450EFA8517956A7900A9A006 /* 1238.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1238.png; sourceTree = "<group>"; };
 		452E688A1786F0C800939FCB /* SearchViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "SearchViewController~ipad.xib"; sourceTree = "<group>"; };
 		452E688C1786F1AB00939FCB /* SearchViewController~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "SearchViewController~iphone.xib"; sourceTree = "<group>"; };
 		453E5C76167BF75000EFD8DB /* UIImage+animatedGIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+animatedGIF.h"; sourceTree = "<group>"; };
@@ -138,6 +145,15 @@
 		455F87F81678C08B0060811E /* ComicData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComicData.h; sourceTree = "<group>"; };
 		455F87F91678C08B0060811E /* ComicData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComicData.m; sourceTree = "<group>"; };
 		456E4E2E1679E63B0099B88E /* terrible_small_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = terrible_small_logo.png; sourceTree = "<group>"; };
+		458608051795CEFA00FDA5AB /* SearchRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchRequest.h; sourceTree = "<group>"; };
+		458608061795CEFA00FDA5AB /* SearchRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchRequest.m; sourceTree = "<group>"; };
+		458608081795DB4F00FDA5AB /* SearchViewControllerProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchViewControllerProtocol.h; sourceTree = "<group>"; };
+		4590E334179522AF00F5C9FF /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		459C073817904F7400B49CF9 /* TabBarDraggerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarDraggerViewController.h; sourceTree = "<group>"; };
+		459C073917904F7400B49CF9 /* TabBarDraggerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarDraggerViewController.m; sourceTree = "<group>"; };
+		459C073B179050FB00B49CF9 /* TabBarDraggerProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TabBarDraggerProtocol.h; sourceTree = "<group>"; };
+		459C073C1791D80100B49CF9 /* TabBarPull@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TabBarPull@2x.png"; sourceTree = "<group>"; };
+		459C073E1791DCEF00B49CF9 /* TabBarPull.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TabBarPull.png; path = "Resources not in app bundle/TabBarPull.png"; sourceTree = SOURCE_ROOT; };
 		45A0D0D01680C18200B589A6 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		45B5A2861695F1650058A581 /* info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = info.png; sourceTree = "<group>"; };
 		45B5A2871695F1650058A581 /* info@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info@2x.png"; sourceTree = "<group>"; };
@@ -190,6 +206,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4590E335179522AF00F5C9FF /* CoreImage.framework in Frameworks */,
 				453E5C7B167BF77500EFD8DB /* ImageIO.framework in Frameworks */,
 				45E238E2167BB51200FC38C4 /* QuartzCore.framework in Frameworks */,
 				455F87F71677974F0060811E /* MobileCoreServices.framework in Frameworks */,
@@ -221,6 +238,7 @@
 		455F878F1677901E0060811E = {
 			isa = PBXGroup;
 			children = (
+				4590E334179522AF00F5C9FF /* CoreImage.framework */,
 				455F87A41677901F0060811E /* i heart xkcd */,
 				455F87D11677901F0060811E /* i heart xkcdTests */,
 				455F879D1677901E0060811E /* Frameworks */,
@@ -264,8 +282,6 @@
 			children = (
 				453E5C76167BF75000EFD8DB /* UIImage+animatedGIF.h */,
 				453E5C77167BF75000EFD8DB /* UIImage+animatedGIF.m */,
-				455317471774D90B00FFDD00 /* AltViewController.h */,
-				455317481774D90B00FFDD00 /* AltViewController.m */,
 				455F87AD1677901F0060811E /* AppDelegate.h */,
 				455F87AE1677901F0060811E /* AppDelegate.m */,
 				45C20187173835B600CA0A2C /* Constants.h */,
@@ -281,6 +297,8 @@
 				45E334861681F8EA00ED1E53 /* ComicStore.m */,
 				45E334771680E8E600ED1E53 /* ComicImageStore.h */,
 				45E334781680E8E600ED1E53 /* ComicImageStore.m */,
+				455317471774D90B00FFDD00 /* AltViewController.h */,
+				455317481774D90B00FFDD00 /* AltViewController.m */,
 				45C201761738308B00CA0A2C /* AltTextViewController.h */,
 				45C201771738308B00CA0A2C /* AltTextViewController.m */,
 				45C201BF173ADB9300CA0A2C /* AltTextViewControllerProtocol.h */,
@@ -289,8 +307,11 @@
 				455317431774D00F00FFDD00 /* FavouritesViewControllerProtocol.h */,
 				45C2017C1738315B00CA0A2C /* SearchViewController.h */,
 				45C2017D1738315B00CA0A2C /* SearchViewController.m */,
+				458608081795DB4F00FDA5AB /* SearchViewControllerProtocol.h */,
 				452E688C1786F1AB00939FCB /* SearchViewController~iphone.xib */,
 				452E688A1786F0C800939FCB /* SearchViewController~ipad.xib */,
+				458608051795CEFA00FDA5AB /* SearchRequest.h */,
+				458608061795CEFA00FDA5AB /* SearchRequest.m */,
 				450A486E1786E372008CE1B7 /* RecentSearchesController.h */,
 				450A486F1786E372008CE1B7 /* RecentSearchesController.m */,
 				45F9216E16C1C5D700A2E3B0 /* NavigationViewController.h */,
@@ -301,6 +322,9 @@
 				45B5A28F1695FB260058A581 /* AboutViewController.h */,
 				45B5A2901695FB260058A581 /* AboutViewController.m */,
 				45B5A2941695FBEA0058A581 /* AboutViewController.xib */,
+				459C073817904F7400B49CF9 /* TabBarDraggerViewController.h */,
+				459C073917904F7400B49CF9 /* TabBarDraggerViewController.m */,
+				459C073B179050FB00B49CF9 /* TabBarDraggerProtocol.h */,
 				45E334821681E15800ED1E53 /* Settings.h */,
 				45E334831681E15800ED1E53 /* Settings.m */,
 				455F87BF1677901F0060811E /* MainStoryboard_iPhone.storyboard */,
@@ -314,6 +338,7 @@
 		455F87A51677901F0060811E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				450EFA8517956A7900A9A006 /* 1238.png */,
 				45C2017F1738335F00CA0A2C /* first.png */,
 				45C201801738335F00CA0A2C /* first@2x.png */,
 				45C201811738335F00CA0A2C /* second.png */,
@@ -334,6 +359,8 @@
 				45E238F9167BC78D00FC38C4 /* Default-Portrait~ipad.png */,
 				45E238F7167BC78D00FC38C4 /* Default-Landscape@2x~ipad.png */,
 				45E238F8167BC78D00FC38C4 /* Default-Landscape~ipad.png */,
+				459C073E1791DCEF00B49CF9 /* TabBarPull.png */,
+				459C073C1791D80100B49CF9 /* TabBarPull@2x.png */,
 				45E238EE167BC77D00FC38C4 /* xkcd-heart_57.png */,
 				45E238EF167BC77D00FC38C4 /* xkcd-heart_72.png */,
 				45E238F0167BC77E00FC38C4 /* xkcd-heart_114.png */,
@@ -473,6 +500,9 @@
 				45C201861738335F00CA0A2C /* second@2x.png in Resources */,
 				452E688B1786F0C900939FCB /* SearchViewController~ipad.xib in Resources */,
 				452E688D1786F1AB00939FCB /* SearchViewController~iphone.xib in Resources */,
+				459C073D1791D80100B49CF9 /* TabBarPull@2x.png in Resources */,
+				459C073F1791DCEF00B49CF9 /* TabBarPull.png in Resources */,
+				450EFA8617956A7900A9A006 /* 1238.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -538,6 +568,8 @@
 				45C2017E1738315B00CA0A2C /* SearchViewController.m in Sources */,
 				455317491774D90B00FFDD00 /* AltViewController.m in Sources */,
 				450A48701786E372008CE1B7 /* RecentSearchesController.m in Sources */,
+				459C073A17904F7400B49CF9 /* TabBarDraggerViewController.m in Sources */,
+				458608071795CEFA00FDA5AB /* SearchRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

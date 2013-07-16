@@ -8,7 +8,15 @@
 
 #import "SearchViewController.h"
 
+#import "SearchRequest.h"
+
+#define TITLE_KEY @"safe_title"
+#define ID_KEY @"num"
+
 @interface SearchViewController ()
+
+@property (strong, nonatomic) SearchRequest *searchRequest;
+@property (strong, nonatomic) NSArray *searchResults;
 
 @end
 
@@ -23,7 +31,8 @@
     
     if (self) {
         self.title = NSLocalizedString(@"Search", @"Search");
-        self.tabBarItem.image = [UIImage imageNamed:@"first"];        
+        self.tabBarItem.image = [UIImage imageNamed:@"first"];
+        self.searchResults = [[NSArray alloc] init];
     }
     
     return self;
@@ -32,6 +41,7 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    self.searchRequest = [[SearchRequest alloc] init];
     
     // Create and configure a search bar.
     searchBar.delegate = self;
@@ -40,16 +50,8 @@
     searchBar.tintColor = [UIColor blackColor];
     
     [resultsTable setDataSource:self];
+    [resultsTable setDelegate:self];
     [noResultsLabel setAlpha:0.0f];
-    
-    
-    //[self.view addSubview:searchBar];
-    
-//    // Create a bar button item using the search bar as its view.
-//    UIBarButtonItem *searchItem = [[UIBarButtonItem alloc] initWithCustomView:searchBar];
-//    // Create a space item and set it and the search bar as the items for the toolbar.
-//    UIBarButtonItem *spaceItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:NULL];
-//    toolbar.items = [NSArray arrayWithObjects:spaceItem, searchItem, nil];
     
     // Create and configure the recent searches controller.
     recentSearchesController = [[RecentSearchesController alloc] initWithStyle:UITableViewStylePlain];
@@ -67,9 +69,30 @@
     
     // TODO: For now, just reload data
     // TODO: If we get no results, show the 'no results' string
-    [resultsTable reloadData];
+    [self.searchRequest searchWithQuery:searchString success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        [self handleValidResult:JSON];
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        [self handleErrorResult:JSON];
+    }];
     
     [searchBar resignFirstResponder];
+}
+
+- (void)handleValidResult:(id)JSON
+{
+    [self.noResultsLabel setAlpha:0.0f];
+    [self.resultsTable setAlpha:1.0f];
+    
+    self.searchResults = JSON;
+    
+    [resultsTable reloadData];
+}
+
+- (void)handleErrorResult:(id)JSON
+{
+    [self.noResultsLabel setText:@"Error searching"];
+    [self.noResultsLabel setAlpha:1.0f];
+    [self.resultsTable setAlpha:0.0f];
 }
 
 
@@ -141,8 +164,13 @@
 }
 
 
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {    
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     [recentSearchesController filterResultsUsingString:searchText];
+    
+    if ([searchText length] == 0) {
+        self.searchResults = [[NSArray alloc] init];
+        [resultsTable reloadData];
+    }
 }
 
 
@@ -172,8 +200,12 @@
     if (cell==nil) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
-        
-    [cell.textLabel setText:[NSString stringWithFormat:@"A search result for %@, %d", searchBar.text, [indexPath row]]];
+    
+    NSInteger row = [indexPath row];
+    NSString *title = [[self.searchResults objectAtIndex:row] valueForKeyPath:TITLE_KEY];
+    NSString *comic_id = [[self.searchResults objectAtIndex:row] valueForKeyPath:ID_KEY];
+    [cell.textLabel setText:[NSString stringWithFormat:@"%@: %@", comic_id, title]];
+    [cell.textLabel setTextColor:[UIColor whiteColor]];
     
     return cell;
 }
@@ -185,9 +217,18 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return arc4random() % 30;
+    return [self.searchResults count];
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSInteger row = [indexPath row];
+    NSString* comic_id = [[self.searchResults objectAtIndex:row] valueForKeyPath:ID_KEY];
+    [self.delegate loadComicAtIndex:[comic_id integerValue]];
+    
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+}
 
 #pragma mark -
 #pragma mark View lifecycle

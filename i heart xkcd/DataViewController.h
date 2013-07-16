@@ -22,5 +22,7 @@
 @property UIImageView *imageView;
 
 - (void)handleTap;
+- (void)showTitle;
+- (void)hideTitle;
 
 @end

@@ -146,6 +146,7 @@
     ComicData *comicForRow = [store comicForKey:[comics objectAtIndex:[indexPath row]]];
     
     [cell.textLabel setText:[comicForRow safeTitle]];
+    [cell.textLabel setTextColor:[UIColor whiteColor]];
     
     return cell;
 }

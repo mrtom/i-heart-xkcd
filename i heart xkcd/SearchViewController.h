@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+#import "AltViewController.h"
 #import "RecentSearchesController.h"
 
-@interface SearchViewController : UIViewController <UISearchBarDelegate, UIPopoverControllerDelegate, RecentSearchesDelegate, UITableViewDataSource> {
+#import "SearchViewControllerProtocol.h"
+
+@interface SearchViewController : AltViewController<UISearchBarDelegate, UIPopoverControllerDelegate, RecentSearchesDelegate, UITableViewDataSource, UITableViewDelegate> {
     UISearchBar *searchBar;
     UITableView *resultsTable;
     
@@ -27,5 +30,7 @@
 @property (nonatomic, strong) UIPopoverController *recentSearchesPopoverController;
 
 @property (nonatomic, strong) IBOutlet UILabel *noResultsLabel;
+
+@property (strong, nonatomic) id<SearchViewControllerProtocol> delegate;
 
 @end
