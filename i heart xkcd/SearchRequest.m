@@ -40,7 +40,6 @@ NSString *const SEARCH_API = @"http://iheartxkcd.com/search";
                                                                                         failure:failure];
     
     [operation start];
-
 }
 
 - (NSString*) encodeToPercentEscapeString:(NSString *)string

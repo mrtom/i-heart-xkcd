@@ -22,7 +22,7 @@
 
 @implementation SearchViewController
 
-@synthesize searchBar, resultsTable, recentSearchesController, recentSearchesPopoverController, noResultsLabel;
+@synthesize searchBar, resultsTable, recentSearchesController, recentSearchesPopoverController, noResultsLabel, activitySpinner;
 
 #pragma mark Create and manage the search results controller
 
@@ -52,12 +52,18 @@
     [resultsTable setDataSource:self];
     [resultsTable setDelegate:self];
     [noResultsLabel setAlpha:0.0f];
+    [activitySpinner removeFromSuperview];
     
     // Create and configure the recent searches controller.
     recentSearchesController = [[RecentSearchesController alloc] initWithStyle:UITableViewStylePlain];
     recentSearchesController.delegate = self;
     
     // note: the UIPopoverController will be created later on demand, if required
+    
+    // Add gesture recognizers
+    UITapGestureRecognizer *tableViewGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tableTapped:)];
+    [tableViewGR setNumberOfTapsRequired:1];
+    [resultsTable addGestureRecognizer:tableViewGR];
 }
 
 - (void)finishSearchWithString:(NSString *)searchString {
@@ -67,8 +73,9 @@
         self.recentSearchesPopoverController = nil;        
     }
     
-    // TODO: For now, just reload data
-    // TODO: If we get no results, show the 'no results' string
+    [self.view addSubview:activitySpinner];
+    [activitySpinner startAnimating];
+    
     [self.searchRequest searchWithQuery:searchString success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         [self handleValidResult:JSON];
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
@@ -80,19 +87,33 @@
 
 - (void)handleValidResult:(id)JSON
 {
+    [activitySpinner removeFromSuperview];
     [self.noResultsLabel setAlpha:0.0f];
     [self.resultsTable setAlpha:1.0f];
     
     self.searchResults = JSON;
     
     [resultsTable reloadData];
+    
+    if ([self.searchResults count] == 0) {
+        [self.noResultsLabel setText:@"No Results"];
+        [self.noResultsLabel setAlpha:1.0f];
+        [self.resultsTable setAlpha:0.0f];
+    }
 }
 
 - (void)handleErrorResult:(id)JSON
 {
+    [activitySpinner removeFromSuperview];
     [self.noResultsLabel setText:@"Error searching"];
     [self.noResultsLabel setAlpha:1.0f];
     [self.resultsTable setAlpha:0.0f];
+}
+
+#pragma mark - Gesture Recognizers
+- (void)tableTapped:(UIGestureRecognizer *) sender
+{
+    [self.searchBar resignFirstResponder];
 }
 
 

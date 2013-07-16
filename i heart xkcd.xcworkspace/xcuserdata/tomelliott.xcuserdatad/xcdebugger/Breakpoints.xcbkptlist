@@ -60,11 +60,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "i heart xkcd/SearchViewController.m"
-         timestampString = "395698322.369663"
+         timestampString = "395703489.501035"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "118"
-         endingLineNumber = "118"
+         startingLineNumber = "139"
+         endingLineNumber = "139"
          landmarkName = "-searchBarTextDidBeginEditing:"
          landmarkType = "5">
       </FileBreakpoint>

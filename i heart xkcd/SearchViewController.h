@@ -30,6 +30,7 @@
 @property (nonatomic, strong) UIPopoverController *recentSearchesPopoverController;
 
 @property (nonatomic, strong) IBOutlet UILabel *noResultsLabel;
+@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *activitySpinner;
 
 @property (strong, nonatomic) id<SearchViewControllerProtocol> delegate;
 
