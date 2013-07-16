@@ -13,7 +13,6 @@
 
 @interface NavigationViewController : AltViewController<UITableViewDelegate>
 
-@property (strong, nonatomic) IBOutlet UIView *controlsViewBacking;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *controlsViewSegmentAll;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *controlsViewSegmentEnds;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *controlsViewNextRandom;

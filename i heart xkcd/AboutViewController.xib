@@ -145,14 +145,17 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<bool key="IBUIScrollEnabled">NO</bool>
 								<bool key="IBUIEditable">NO</bool>
-								<string type="base64-UTF8" key="IBUIText">aSBoZWFydCB4a2NkIGlzIHdyaXR0ZW4gYW5kIG1haW50YWluZWQgYnkgVG9tIEVsbGlvdHQuIFlvdSBj
+								<object class="NSMutableString" key="IBUIText">
+									<bytes key="NS.bytes">aSBoZWFydCB4a2NkIGlzIHdyaXR0ZW4gYW5kIG1haW50YWluZWQgYnkgVG9tIEVsbGlvdHQuIFlvdSBj
 YW4gY29udGFjdCBtZSBhdCBpaGVhcnR4a2NkQHRlbGxpb3R0Lm5ldC4KCllvdSBjYW4gbmF2aWdhdGUg
-cHJldmlvdXMgY29taWNzIGJ5IHN3aXBpbmcgZnJvbSB0aGUgbGVmdCB0byB0aGUgcmlnaHQuIExhdGVy
-IGNvbWljcyBhcmUgYWNjZXNzZWQgYnkgc3dpcGluZyBmcm9tIHRoZSByaWdodCB0byB0aGUgbGVmdC4K
-CkJ5IHRhcHBpbmcgb25jZSBvbiBhbiBpbWFnZSwgeW91IHdpbGwgYnJpbmcgdXAgdGhlIGFsdCB0ZXh0
-IGFuZCB0aGUgYWJpbGl0eSB0byBzaGFyZSB2aWEgRmFjZWJvb2suCgpCeSBkb3VibGUgdGFwcGluZyBv
-biBhbiBpbWFnZSwgeW91IHdpbGwgYnJpbmcgdXAgYSBuYXZpZ2F0aW9uIHZpZXcgZm9yIHNlbGVjdGlu
-ZyB0aGUgZmlyc3QsIGxhc3QsIHByZXZpb3VzLCBuZXh0IG9yIHJhbmRvbSBjb21pY3MuA</string>
+cHJldmlvdXMgY29taWNzIGJ5IHN3aXBpbmcgZnJvbSB0aGUgbGVmdCB0byB0aGUgcmlnaHQgZnJvbSB0
+aGUgZWRnZXMgb2YgdGhlIHNjcmVlbi4gTGF0ZXIgY29taWNzIGFyZSBhY2Nlc3NlZCBieSBzd2lwaW5n
+IGZyb20gdGhlIHJpZ2h0IHRvIHRoZSBsZWZ0LgoKUHVsbGluZyB0aGUgdGFiIGJhciBhdCB0aGUgYm90
+dG9tIHJpZ2h0IG9mIHRoZSBzY3JlZW4gYnJpbmdzIHVwIGFkZGl0aW9uYWwgaW5mb3JtYXRpb24gYWJv
+dXQgZWFjaCBjb21pYywgYXMgd2VsbCBhcyBvcHRpb25zIGZvciB2aWV3aW5nIGZhdm91cml0ZSBjb21p
+Y3MsIHNlYXJjaGluZyB0aGUgY29taWMgYXJjaGl2ZSBhbmQgbmF2aWdhdGlvbiBieSBzZWxlY3Rpbmcg
+dGhlIGZpcnN0LCBsYXN0LCBwcmV2aW91cywgbmV4dCBvciBhIHJhbmRvbSBjb21pYy4</bytes>
+								</object>
 								<reference key="IBUITextColor" ref="969051010"/>
 								<object class="IBUITextInputTraits" key="IBUITextInputTraits">
 									<int key="IBUIAutocapitalizationType">2</int>

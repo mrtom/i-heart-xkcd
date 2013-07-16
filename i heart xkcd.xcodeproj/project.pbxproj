@@ -43,6 +43,7 @@
 		455F87FA1678C08B0060811E /* ComicData.m in Sources */ = {isa = PBXBuildFile; fileRef = 455F87F91678C08B0060811E /* ComicData.m */; };
 		456E4E2F1679E63B0099B88E /* terrible_small_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 456E4E2E1679E63B0099B88E /* terrible_small_logo.png */; };
 		458608071795CEFA00FDA5AB /* SearchRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 458608061795CEFA00FDA5AB /* SearchRequest.m */; };
+		4586080A1795F8DA00FDA5AB /* AboutViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 458608091795F8DA00FDA5AB /* AboutViewController~ipad.xib */; };
 		4590E335179522AF00F5C9FF /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4590E334179522AF00F5C9FF /* CoreImage.framework */; };
 		459C073A17904F7400B49CF9 /* TabBarDraggerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 459C073917904F7400B49CF9 /* TabBarDraggerViewController.m */; };
 		459C073D1791D80100B49CF9 /* TabBarPull@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 459C073C1791D80100B49CF9 /* TabBarPull@2x.png */; };
@@ -148,6 +149,7 @@
 		458608051795CEFA00FDA5AB /* SearchRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchRequest.h; sourceTree = "<group>"; };
 		458608061795CEFA00FDA5AB /* SearchRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchRequest.m; sourceTree = "<group>"; };
 		458608081795DB4F00FDA5AB /* SearchViewControllerProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchViewControllerProtocol.h; sourceTree = "<group>"; };
+		458608091795F8DA00FDA5AB /* AboutViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "AboutViewController~ipad.xib"; sourceTree = "<group>"; };
 		4590E334179522AF00F5C9FF /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		459C073817904F7400B49CF9 /* TabBarDraggerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarDraggerViewController.h; sourceTree = "<group>"; };
 		459C073917904F7400B49CF9 /* TabBarDraggerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarDraggerViewController.m; sourceTree = "<group>"; };
@@ -322,6 +324,7 @@
 				45B5A28F1695FB260058A581 /* AboutViewController.h */,
 				45B5A2901695FB260058A581 /* AboutViewController.m */,
 				45B5A2941695FBEA0058A581 /* AboutViewController.xib */,
+				458608091795F8DA00FDA5AB /* AboutViewController~ipad.xib */,
 				459C073817904F7400B49CF9 /* TabBarDraggerViewController.h */,
 				459C073917904F7400B49CF9 /* TabBarDraggerViewController.m */,
 				459C073B179050FB00B49CF9 /* TabBarDraggerProtocol.h */,
@@ -503,6 +506,7 @@
 				459C073D1791D80100B49CF9 /* TabBarPull@2x.png in Resources */,
 				459C073F1791DCEF00B49CF9 /* TabBarPull.png in Resources */,
 				450EFA8617956A7900A9A006 /* 1238.png in Resources */,
+				4586080A1795F8DA00FDA5AB /* AboutViewController~ipad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

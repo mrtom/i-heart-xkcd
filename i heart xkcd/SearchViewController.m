@@ -52,7 +52,7 @@
     [resultsTable setDataSource:self];
     [resultsTable setDelegate:self];
     [noResultsLabel setAlpha:0.0f];
-    [activitySpinner removeFromSuperview];
+    [activitySpinner setAlpha:0.0f];
     
     // Create and configure the recent searches controller.
     recentSearchesController = [[RecentSearchesController alloc] initWithStyle:UITableViewStylePlain];
@@ -73,7 +73,8 @@
         self.recentSearchesPopoverController = nil;        
     }
     
-    [self.view addSubview:activitySpinner];
+    [noResultsLabel setAlpha:0.0f];
+    [activitySpinner setAlpha:1.0f];
     [activitySpinner startAnimating];
     
     [self.searchRequest searchWithQuery:searchString success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
@@ -87,7 +88,7 @@
 
 - (void)handleValidResult:(id)JSON
 {
-    [activitySpinner removeFromSuperview];
+    [activitySpinner setAlpha:0.0f];
     [self.noResultsLabel setAlpha:0.0f];
     [self.resultsTable setAlpha:1.0f];
     
@@ -104,7 +105,7 @@
 
 - (void)handleErrorResult:(id)JSON
 {
-    [activitySpinner removeFromSuperview];
+    [activitySpinner setAlpha:0.0f];
     [self.noResultsLabel setText:@"Error searching"];
     [self.noResultsLabel setAlpha:1.0f];
     [self.resultsTable setAlpha:0.0f];
