@@ -145,7 +145,7 @@
     NSArray *comics = [store favouriteComicsByKey];
     ComicData *comicForRow = [store comicForKey:[comics objectAtIndex:[indexPath row]]];
     
-    [cell.textLabel setText:[comicForRow safeTitle]];
+    [cell.textLabel setText:[NSString stringWithFormat:@"#%d: %@", [comicForRow comicID], [comicForRow safeTitle]]];
     [cell.textLabel setTextColor:[UIColor whiteColor]];
     
     return cell;

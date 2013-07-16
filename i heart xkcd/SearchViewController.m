@@ -204,7 +204,7 @@
     NSInteger row = [indexPath row];
     NSString *title = [[self.searchResults objectAtIndex:row] valueForKeyPath:TITLE_KEY];
     NSString *comic_id = [[self.searchResults objectAtIndex:row] valueForKeyPath:ID_KEY];
-    [cell.textLabel setText:[NSString stringWithFormat:@"%@: %@", comic_id, title]];
+    [cell.textLabel setText:[NSString stringWithFormat:@"#%@: %@", comic_id, title]];
     [cell.textLabel setTextColor:[UIColor whiteColor]];
     
     return cell;
