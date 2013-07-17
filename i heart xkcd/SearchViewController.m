@@ -17,6 +17,7 @@
 
 @property (strong, nonatomic) SearchRequest *searchRequest;
 @property (strong, nonatomic) NSArray *searchResults;
+@property (strong, nonatomic) UITapGestureRecognizer *tableViewGR;
 
 @end
 
@@ -49,8 +50,8 @@
     searchBar.showsCancelButton = NO;
     searchBar.tintColor = [UIColor blackColor];
     
-    [resultsTable setDataSource:self];
-    [resultsTable setDelegate:self];
+    resultsTable.dataSource = self;
+    resultsTable.delegate = self;
     [noResultsLabel setAlpha:0.0f];
     [activitySpinner setAlpha:0.0f];
     
@@ -61,9 +62,11 @@
     // note: the UIPopoverController will be created later on demand, if required
     
     // Add gesture recognizers
-    UITapGestureRecognizer *tableViewGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tableTapped:)];
-    [tableViewGR setNumberOfTapsRequired:1];
-    [resultsTable addGestureRecognizer:tableViewGR];
+    // We want to allow the table to be tapped so we can cancel the keyboard if the search bar looses focus
+    // However, adding the GR to the table makes selecting cells harder. So, create the GR here, but only
+    // add it when the search bar has focus
+    _tableViewGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tableTapped:)];
+    [_tableViewGR setNumberOfTapsRequired:1];
 }
 
 - (void)finishSearchWithString:(NSString *)searchString {
@@ -136,6 +139,8 @@
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)aSearchBar {
     
+    [resultsTable addGestureRecognizer:_tableViewGR];
+    
     [searchBar becomeFirstResponder];
     if (!self.view.window.isKeyWindow) {
         [self.view.window makeKeyAndVisible];
@@ -182,6 +187,7 @@
             self.recentSearchesPopoverController = nil;
         }
     }
+    [resultsTable removeGestureRecognizer:_tableViewGR];
     [aSearchBar resignFirstResponder];
 }
 
