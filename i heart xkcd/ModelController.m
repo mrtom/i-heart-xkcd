@@ -83,6 +83,9 @@ NSString *const XKCD_API = @"http://dynamic.xkcd.com/api-0/jsonp/";
         
         [self.comicStore addComic:frontPage];
         
+        // Setup the 404 page
+        [self add404];
+        
         [self configureComicDataFromXkcd];
     }
     return self;
@@ -163,6 +166,29 @@ NSString *const XKCD_API = @"http://dynamic.xkcd.com/api-0/jsonp/";
 - (NSUInteger)indexOfViewController:(DataViewController *)viewController
 {
     return viewController.dataObject.comicID;
+}
+
+- (void)add404
+{
+    ComicData *fourOhfourPage = [[ComicData alloc] init];
+    
+    [fourOhfourPage setDay:NSNotFound];
+    [fourOhfourPage setMonth:NSNotFound];
+    [fourOhfourPage setYear:NSNotFound];
+    
+    [fourOhfourPage setComicID:404];
+    
+    [fourOhfourPage setLink:@""];
+    [fourOhfourPage setNews:@""];
+    [fourOhfourPage setTitle:@"[Not Found]"];
+    [fourOhfourPage setSafeTitle:@"[Not Found]"];
+    [fourOhfourPage setTranscript:@""];
+    [fourOhfourPage setAlt:@"Not Found"];
+    [fourOhfourPage setImageURL:Nil];
+    
+    [fourOhfourPage setIsLoaded:YES];
+    
+    [self.comicStore addComic:fourOhfourPage];
 }
 
 #pragma mark - Page View Controller Data Source

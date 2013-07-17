@@ -109,34 +109,39 @@ typedef enum {
     [self.imageView setFrame:CGRectMake(0, 0, imageSize.width, imageSize.height)];
     self.imageView.center = CGPointMake((self.scrollView.bounds.size.width/2),(self.scrollView.bounds.size.height/2));
 
-    // Note: The scale stuff here is a *lot* hacky.
-    // Asumption: The comics have been designed to look good at about 1024, i.e. a 'normal' web viewing experience
-    // This means they should be doubled up on the retina iPad, but not the other iOS devices.
-    // However, when we save the image to the image store, we store it doubled up, so don't double again
-    ComicImageStore *imageStore = [ComicImageStore sharedStore];
-    UIImage *storedImage = [imageStore imageForComic:self.dataObject];
-    if (storedImage) {
-        [self.imageView setImage:storedImage];
-        [self configureImageLoadedFromXkcdWithImage:storedImage forScale:1];
+    // 404 doesn't exist - heh. If it's 404, just ignore
+    if ([self.dataObject comicID] == 404) {
+        [self checkLoadedState];
     } else {
-        // Get the image from XKCD. This is async!
-        [self.imageView setImageWithURLRequest:[NSURLRequest requestWithURL:[self.dataObject imageURL]] placeholderImage:placeHolderImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image){
-            
-            NSInteger scale = 1;
-            if ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] &&
-                ([UIScreen mainScreen].scale == 2.0)) {
-                // Retina display
-                scale = 2;
-            }
-
-            [this configureImageLoadedFromXkcdWithImage:image forScale:scale];
-            [[ComicImageStore sharedStore] pushComic:this.dataObject withImage:image];
-            
-        } failure:nil];
+        // Note: The scale stuff here is a *lot* hacky.
+        // Asumption: The comics have been designed to look good at about 1024, i.e. a 'normal' web viewing experience
+        // This means they should be doubled up on the retina iPad, but not the other iOS devices.
+        // However, when we save the image to the image store, we store it doubled up, so don't double again
+        ComicImageStore *imageStore = [ComicImageStore sharedStore];
+        UIImage *storedImage = [imageStore imageForComic:self.dataObject];
+        if (storedImage) {
+            [self.imageView setImage:storedImage];
+            [self configureImageLoadedFromXkcdWithImage:storedImage forScale:1];
+        } else {
+            // Get the image from XKCD. This is async!
+            [self.imageView setImageWithURLRequest:[NSURLRequest requestWithURL:[self.dataObject imageURL]] placeholderImage:placeHolderImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image){
+                
+                NSInteger scale = 1;
+                if ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] &&
+                    ([UIScreen mainScreen].scale == 2.0)) {
+                    // Retina display
+                    scale = 2;
+                }
+                
+                [this configureImageLoadedFromXkcdWithImage:image forScale:scale];
+                [[ComicImageStore sharedStore] pushComic:this.dataObject withImage:image];
+                
+            } failure:nil];
+        }
     }
     
     self.titleLabel.text = [NSString stringWithFormat:@"#%u: %@", [self.dataObject comicID], [self.dataObject safeTitle]];
-
+    
     // Check segment state
     //[self.navViewController setCurrentComic:[self.dataObject comicID]];
     // TODO: Make pub sub
@@ -247,7 +252,7 @@ typedef enum {
     // If we shouldn't hide it, it'll never be hidden, so we don't have to do anything
     if (self.shouldHideTitle) {
         [UIView animateWithDuration:pageOverlayToggleAnimationTime
-                         animations:^{self.titleLabel.alpha = translutentAlpha;}
+                         animations:^{self.titleLabel.alpha = 1.0f;}
                          completion:nil];
     }
 }
