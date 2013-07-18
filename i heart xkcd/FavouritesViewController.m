@@ -24,6 +24,7 @@
 {
     self = [super init];
     if (self) {
+        self.trackedViewName = @"Favourites View Controller";
         self.title = NSLocalizedString(@"Favourites", @"Favourites");
         self.tabBarItem.image = [UIImage imageNamed:@"TabBarHeart.png"];
     }

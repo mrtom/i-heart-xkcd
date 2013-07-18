@@ -31,6 +31,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     
     if (self) {
+        self.trackedViewName = @"Search View Controller";
         self.title = NSLocalizedString(@"Search", @"Search");
         self.tabBarItem.image = [UIImage imageNamed:@"TabBarSearch.png"];
         self.searchResults = [[NSArray alloc] init];

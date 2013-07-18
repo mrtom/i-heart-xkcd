@@ -9,10 +9,11 @@
 #import <UIKit/UIKit.h>
 
 #import "ComicData.h"
+#import "GAITrackedViewController.h"
 #import "ModelController.h"
 #import "NavigationViewController.h"
 
-@interface DataViewController : UIViewController <UIScrollViewDelegate, UIPopoverControllerDelegate, UITableViewDelegate>
+@interface DataViewController : GAITrackedViewController <UIScrollViewDelegate, UIPopoverControllerDelegate, UITableViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;

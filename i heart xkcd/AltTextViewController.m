@@ -37,6 +37,7 @@
 {
     self = [super init];
     if (self) {
+        self.trackedViewName = @"Alt Text View Controller";
         self.title = NSLocalizedString(@"Alt Text", @"Alt Text");
         self.tabBarItem.image = [UIImage imageNamed:@"TabBarAltText.png"];
     }

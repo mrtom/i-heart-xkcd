@@ -86,6 +86,7 @@
 		45E7815817968AC600A1DD03 /* TabBarPull.png in Resources */ = {isa = PBXBuildFile; fileRef = 45E7815717968AC600A1DD03 /* TabBarPull.png */; };
 		45E7815A17968AD200A1DD03 /* TabBarSearch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45E7815917968AD200A1DD03 /* TabBarSearch@2x.png */; };
 		45E7816217982CA300A1DD03 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 45E7816117982CA300A1DD03 /* libGoogleAnalytics.a */; };
+		45E7816417982D2300A1DD03 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45E7816317982D2300A1DD03 /* CoreData.framework */; };
 		45F9217016C1C5D900A2E3B0 /* NavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F9216F16C1C5D800A2E3B0 /* NavigationViewController.m */; };
 		45F9217316C1D07B00A2E3B0 /* NavigationViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45F9217216C1D07A00A2E3B0 /* NavigationViewController_iPhone.xib */; };
 		6818A5818E8C498CB0C59D49 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 20AA35C19E044FD9BF7D6F78 /* libPods.a */; };
@@ -214,6 +215,7 @@
 		45E7815F17982CA300A1DD03 /* GAITransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITransaction.h; path = GAI/GAITransaction.h; sourceTree = "<group>"; };
 		45E7816017982CA300A1DD03 /* GAITransactionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITransactionItem.h; path = GAI/GAITransactionItem.h; sourceTree = "<group>"; };
 		45E7816117982CA300A1DD03 /* libGoogleAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalytics.a; path = GAI/libGoogleAnalytics.a; sourceTree = "<group>"; };
+		45E7816317982D2300A1DD03 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		45F9216E16C1C5D700A2E3B0 /* NavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationViewController.h; sourceTree = "<group>"; };
 		45F9216F16C1C5D800A2E3B0 /* NavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationViewController.m; sourceTree = "<group>"; };
 		45F9217216C1D07A00A2E3B0 /* NavigationViewController_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NavigationViewController_iPhone.xib; sourceTree = "<group>"; };
@@ -225,11 +227,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45E7816217982CA300A1DD03 /* libGoogleAnalytics.a in Frameworks */,
+				455F87F5167796DC0060811E /* SystemConfiguration.framework in Frameworks */,
+				45E7816417982D2300A1DD03 /* CoreData.framework in Frameworks */,
 				4590E335179522AF00F5C9FF /* CoreImage.framework in Frameworks */,
 				453E5C7B167BF77500EFD8DB /* ImageIO.framework in Frameworks */,
 				45E238E2167BB51200FC38C4 /* QuartzCore.framework in Frameworks */,
 				455F87F71677974F0060811E /* MobileCoreServices.framework in Frameworks */,
-				455F87F5167796DC0060811E /* SystemConfiguration.framework in Frameworks */,
 				455F87EB167790E40060811E /* Accounts.framework in Frameworks */,
 				455F87E9167790DF0060811E /* Social.framework in Frameworks */,
 				455F87E7167790DA0060811E /* AdSupport.framework in Frameworks */,
@@ -238,7 +242,6 @@
 				455F87A31677901E0060811E /* CoreGraphics.framework in Frameworks */,
 				455F87E3167790C90060811E /* FacebookSDK.framework in Frameworks */,
 				6818A5818E8C498CB0C59D49 /* libPods.a in Frameworks */,
-				45E7816217982CA300A1DD03 /* libGoogleAnalytics.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,6 +261,7 @@
 		455F878F1677901E0060811E = {
 			isa = PBXGroup;
 			children = (
+				45E7816317982D2300A1DD03 /* CoreData.framework */,
 				4590E334179522AF00F5C9FF /* CoreImage.framework */,
 				455F87A41677901F0060811E /* i heart xkcd */,
 				455F87D11677901F0060811E /* i heart xkcdTests */,

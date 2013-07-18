@@ -10,6 +10,7 @@
 #import <AFNetworking/AFNetworking.h>
 #import <FacebookSDK/FacebookSDK.h>
 
+#import "GAI.h"
 #import "Settings.h"
 #import "ComicStore.h"
 #import "ComicImageStore.h"
@@ -18,7 +19,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    // Google Analytics
+    [GAI sharedInstance].trackUncaughtExceptions = YES;
+    [GAI sharedInstance].dispatchInterval = 20;
+    [GAI sharedInstance].debug = YES;
+    id<GAITracker> tracker = [[GAI sharedInstance] trackerWithTrackingId:@"UA-37436006-2"];
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(defaultsChanged) name:NSUserDefaultsDidChangeNotification object:nil];
     
     [[ComicStore sharedStore] logCacheInfo];

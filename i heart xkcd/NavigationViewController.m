@@ -31,6 +31,7 @@
     }
     
     if (self) {
+        self.trackedViewName = @"Navigation View Controller";
         self.title = NSLocalizedString(@"Navigate", @"Navigate");
         self.tabBarItem.image = [UIImage imageNamed:@"TabBarNavigate.png"];
     }

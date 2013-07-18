@@ -18,6 +18,7 @@
 {
     self = [super init];
     if (self) {
+        self.trackedViewName = @"About View Controller";
         self.title = NSLocalizedString(@"About", @"About");
         self.tabBarItem.image = [UIImage imageNamed:@"TabBarAbout.png"];
     }

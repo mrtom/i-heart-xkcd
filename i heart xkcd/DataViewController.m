@@ -15,9 +15,10 @@
 #import <Social/Social.h>
 
 #import "Constants.h"
-
+#import "GAI.h"
 #import "ComicStore.h"
 #import "ComicImageStore.h"
+
 #import "ModelController.h"
 #import "NavigationViewController.h"
 #import "Settings.h"
@@ -46,6 +47,17 @@ typedef enum {
 @implementation DataViewController
 
 @synthesize previousContentX;
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    
+    if (self) {
+        self.trackedViewName = @"Data View Controller";
+    }
+    
+    return self;
+}
 
 - (void)viewDidLoad
 {
@@ -238,6 +250,13 @@ typedef enum {
 - (void)setDataObject:(ComicData *)dataObject
 {
     _dataObject = dataObject;
+    
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker sendEventWithCategory:@"ComicLoaded"
+                        withAction:@""
+                         withLabel:[NSString stringWithFormat:@"%d", [dataObject comicID]]
+                         withValue:[NSNumber numberWithInt:[dataObject comicID]]];
+    
     [self configureView];
 }
 
