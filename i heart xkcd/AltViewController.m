@@ -38,8 +38,6 @@
 - (void)blurBackground
 {
     self.altBackgroundCoverView = [[UIView alloc] initWithFrame:self.view.bounds];
-    //[self.altBackgroundCoverView setBackgroundColor:[UIColor blackColor]];
-    //[self.altBackgroundCoverView setAlpha:0.4f];
     [self.altBackgroundCoverView setBackgroundColor:[UIColor colorWithRed:0.25f green:0.25f blue:0.25f alpha:0.6f]];
     [self.view addSubview:self.altBackgroundCoverView];
     [self.view sendSubviewToBack:self.altBackgroundCoverView];

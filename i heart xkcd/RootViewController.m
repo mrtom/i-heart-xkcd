@@ -164,8 +164,6 @@
     // This is a little hacky. For some reason, even tho the gr is removed from the main view in
     // viewDidLoad, it still fires when we swipe outside of the page turning views. So check it's
     // within one of those views (and that it's not the tab bar swipe gesture), and handle accordingly
-    NSInteger heightForSwipingTabBar = 50;
-    
     if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
         // We only want to mess with the swipes
         UIPanGestureRecognizer *panGR = (UIPanGestureRecognizer *)gestureRecognizer;
@@ -177,13 +175,8 @@
         }
         
         if (CGRectContainsPoint(turnPageForwardView.bounds, [touch locationInView:turnPageForwardView])) { // &&
-//            [panGR velocityInView:self.view].x < 0.0f) {
-            if (turnPageForwardView.frame.size.height - [touch locationInView:turnPageForwardView].y > heightForSwipingTabBar) {
-                // If we swiped on the right edge of the screen, and we're not at the bottom of the screen, all good
-                return self.currentIndex < [self.modelController indexOfLastComic];
-            } else {
-                [self handleTap:gestureRecognizer];
-            }
+//          [panGR velocityInView:self.view].x < 0.0f) {
+            return self.currentIndex < [self.modelController indexOfLastComic];
         }
         
         return NO;

@@ -19,7 +19,7 @@
     self = [super init];
     if (self) {
         self.title = NSLocalizedString(@"About", @"About");
-        self.tabBarItem.image = [UIImage imageNamed:@"first"];
+        self.tabBarItem.image = [UIImage imageNamed:@"TabBarAbout.png"];
     }
     return self;
 }
@@ -30,22 +30,28 @@
     [self.aboutXkcdTitle setNumberOfLines:1];
     [self.aboutIHeartXkcdTitle setNumberOfLines:1];
     [self.aboutIHeartXkcdTitle setNumberOfLines:1];
+    [self.aboutIHeartXkcdTitle setNumberOfLines:1];
+
+    [self.scrollView setTranslatesAutoresizingMaskIntoConstraints:YES];
+    [self.aboutXkcdBody setTranslatesAutoresizingMaskIntoConstraints:YES];
+    [self.aboutXkcdTitle setTranslatesAutoresizingMaskIntoConstraints:YES];
+    [self.aboutIHeartXkcdBody setTranslatesAutoresizingMaskIntoConstraints:YES];
+    [self.aboutIHeartXkcdTitle setTranslatesAutoresizingMaskIntoConstraints:YES];
+    
+    NSLog(@"%f, %f", self.view.frame.size.width, self.view.frame.size.height);
+    NSLog(@"%f, %f", self.scrollView.contentSize.width, self.scrollView.contentSize.height);
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [self.aboutXkcdBody sizeToFit];
+    [self.aboutIHeartXkcdBody sizeToFit];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (void)done: (id)sender
-{
-    [[self presentingViewController] dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

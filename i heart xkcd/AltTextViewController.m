@@ -38,7 +38,7 @@
     self = [super init];
     if (self) {
         self.title = NSLocalizedString(@"Alt Text", @"Alt Text");
-        self.tabBarItem.image = [UIImage imageNamed:@"first"];
+        self.tabBarItem.image = [UIImage imageNamed:@"TabBarAltText.png"];
     }
     return self;
 }

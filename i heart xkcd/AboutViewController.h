@@ -12,6 +12,7 @@
 
 @interface AboutViewController : AltViewController <UINavigationControllerDelegate>
 
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet UILabel *aboutXkcdTitle;
 @property (strong, nonatomic) IBOutlet UITextView *aboutXkcdBody;
 @property (strong, nonatomic) IBOutlet UILabel *aboutIHeartXkcdTitle;

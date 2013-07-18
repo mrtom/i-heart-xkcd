@@ -32,7 +32,7 @@
     
     if (self) {
         self.title = NSLocalizedString(@"Search", @"Search");
-        self.tabBarItem.image = [UIImage imageNamed:@"first"];
+        self.tabBarItem.image = [UIImage imageNamed:@"TabBarSearch.png"];
         self.searchResults = [[NSArray alloc] init];
     }
     

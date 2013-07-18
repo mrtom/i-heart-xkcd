@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "i heart xkcd/DataViewController.m"
-         timestampString = "395268054.421245"
+         timestampString = "395765323.044405"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "247"
-         endingLineNumber = "247"
+         startingLineNumber = "252"
+         endingLineNumber = "252"
          landmarkName = "-animateShowTitleBar"
          landmarkType = "5">
       </FileBreakpoint>
@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "i heart xkcd/RootViewController.m"
-         timestampString = "395697110.446026"
+         timestampString = "395708634.145785"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "383"
-         endingLineNumber = "383"
+         startingLineNumber = "376"
+         endingLineNumber = "376"
          landmarkName = "-loadPreviousComic"
          landmarkType = "5">
       </FileBreakpoint>
@@ -34,11 +34,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "i heart xkcd/RootViewController.m"
-         timestampString = "395697110.446026"
+         timestampString = "395708634.145785"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "335"
-         endingLineNumber = "335"
+         startingLineNumber = "328"
+         endingLineNumber = "328"
          landmarkName = "-pageViewController:didFinishAnimating:previousViewControllers:transitionCompleted:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -60,11 +60,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "i heart xkcd/SearchViewController.m"
-         timestampString = "395705501.309857"
+         timestampString = "395766297.2491"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "140"
-         endingLineNumber = "140"
+         startingLineNumber = "145"
+         endingLineNumber = "145"
          landmarkName = "-searchBarTextDidBeginEditing:"
          landmarkType = "5">
       </FileBreakpoint>

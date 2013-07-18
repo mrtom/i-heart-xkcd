@@ -47,7 +47,6 @@
 		4590E335179522AF00F5C9FF /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4590E334179522AF00F5C9FF /* CoreImage.framework */; };
 		459C073A17904F7400B49CF9 /* TabBarDraggerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 459C073917904F7400B49CF9 /* TabBarDraggerViewController.m */; };
 		459C073D1791D80100B49CF9 /* TabBarPull@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 459C073C1791D80100B49CF9 /* TabBarPull@2x.png */; };
-		459C073F1791DCEF00B49CF9 /* TabBarPull.png in Resources */ = {isa = PBXBuildFile; fileRef = 459C073E1791DCEF00B49CF9 /* TabBarPull.png */; };
 		45A0D0D11680C18200B589A6 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 45A0D0D01680C18200B589A6 /* Settings.bundle */; };
 		45B5A2881695F1650058A581 /* info.png in Resources */ = {isa = PBXBuildFile; fileRef = 45B5A2861695F1650058A581 /* info.png */; };
 		45B5A2891695F1650058A581 /* info@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45B5A2871695F1650058A581 /* info@2x.png */; };
@@ -80,6 +79,13 @@
 		45E334931683606700ED1E53 /* f_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45E334911683606700ED1E53 /* f_logo@2x.png */; };
 		45E33496168360C500ED1E53 /* f_logo_disabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 45E33494168360C500ED1E53 /* f_logo_disabled.png */; };
 		45E33497168360C500ED1E53 /* f_logo_disabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45E33495168360C500ED1E53 /* f_logo_disabled@2x.png */; };
+		45E7815217968A8E00A1DD03 /* TabBarAbout@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45E7814D17968A8E00A1DD03 /* TabBarAbout@2x.png */; };
+		45E7815317968A8E00A1DD03 /* TabBarAltText@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45E7814E17968A8E00A1DD03 /* TabBarAltText@2x.png */; };
+		45E7815417968A8E00A1DD03 /* TabBarHeart@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45E7814F17968A8E00A1DD03 /* TabBarHeart@2x.png */; };
+		45E7815517968A8E00A1DD03 /* TabBarNavigate@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45E7815017968A8E00A1DD03 /* TabBarNavigate@2x.png */; };
+		45E7815817968AC600A1DD03 /* TabBarPull.png in Resources */ = {isa = PBXBuildFile; fileRef = 45E7815717968AC600A1DD03 /* TabBarPull.png */; };
+		45E7815A17968AD200A1DD03 /* TabBarSearch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45E7815917968AD200A1DD03 /* TabBarSearch@2x.png */; };
+		45E7816217982CA300A1DD03 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 45E7816117982CA300A1DD03 /* libGoogleAnalytics.a */; };
 		45F9217016C1C5D900A2E3B0 /* NavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F9216F16C1C5D800A2E3B0 /* NavigationViewController.m */; };
 		45F9217316C1D07B00A2E3B0 /* NavigationViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45F9217216C1D07A00A2E3B0 /* NavigationViewController_iPhone.xib */; };
 		6818A5818E8C498CB0C59D49 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 20AA35C19E044FD9BF7D6F78 /* libPods.a */; };
@@ -155,7 +161,6 @@
 		459C073917904F7400B49CF9 /* TabBarDraggerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarDraggerViewController.m; sourceTree = "<group>"; };
 		459C073B179050FB00B49CF9 /* TabBarDraggerProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TabBarDraggerProtocol.h; sourceTree = "<group>"; };
 		459C073C1791D80100B49CF9 /* TabBarPull@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TabBarPull@2x.png"; sourceTree = "<group>"; };
-		459C073E1791DCEF00B49CF9 /* TabBarPull.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TabBarPull.png; path = "Resources not in app bundle/TabBarPull.png"; sourceTree = SOURCE_ROOT; };
 		45A0D0D01680C18200B589A6 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		45B5A2861695F1650058A581 /* info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = info.png; sourceTree = "<group>"; };
 		45B5A2871695F1650058A581 /* info@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info@2x.png"; sourceTree = "<group>"; };
@@ -197,6 +202,18 @@
 		45E334911683606700ED1E53 /* f_logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "f_logo@2x.png"; sourceTree = "<group>"; };
 		45E33494168360C500ED1E53 /* f_logo_disabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = f_logo_disabled.png; sourceTree = "<group>"; };
 		45E33495168360C500ED1E53 /* f_logo_disabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "f_logo_disabled@2x.png"; sourceTree = "<group>"; };
+		45E7814D17968A8E00A1DD03 /* TabBarAbout@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TabBarAbout@2x.png"; sourceTree = "<group>"; };
+		45E7814E17968A8E00A1DD03 /* TabBarAltText@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TabBarAltText@2x.png"; sourceTree = "<group>"; };
+		45E7814F17968A8E00A1DD03 /* TabBarHeart@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TabBarHeart@2x.png"; sourceTree = "<group>"; };
+		45E7815017968A8E00A1DD03 /* TabBarNavigate@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TabBarNavigate@2x.png"; sourceTree = "<group>"; };
+		45E7815717968AC600A1DD03 /* TabBarPull.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TabBarPull.png; sourceTree = "<group>"; };
+		45E7815917968AD200A1DD03 /* TabBarSearch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TabBarSearch@2x.png"; sourceTree = "<group>"; };
+		45E7815C17982CA300A1DD03 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAI.h; path = GAI/GAI.h; sourceTree = "<group>"; };
+		45E7815D17982CA300A1DD03 /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITrackedViewController.h; path = GAI/GAITrackedViewController.h; sourceTree = "<group>"; };
+		45E7815E17982CA300A1DD03 /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITracker.h; path = GAI/GAITracker.h; sourceTree = "<group>"; };
+		45E7815F17982CA300A1DD03 /* GAITransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITransaction.h; path = GAI/GAITransaction.h; sourceTree = "<group>"; };
+		45E7816017982CA300A1DD03 /* GAITransactionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITransactionItem.h; path = GAI/GAITransactionItem.h; sourceTree = "<group>"; };
+		45E7816117982CA300A1DD03 /* libGoogleAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalytics.a; path = GAI/libGoogleAnalytics.a; sourceTree = "<group>"; };
 		45F9216E16C1C5D700A2E3B0 /* NavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationViewController.h; sourceTree = "<group>"; };
 		45F9216F16C1C5D800A2E3B0 /* NavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationViewController.m; sourceTree = "<group>"; };
 		45F9217216C1D07A00A2E3B0 /* NavigationViewController_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NavigationViewController_iPhone.xib; sourceTree = "<group>"; };
@@ -221,6 +238,7 @@
 				455F87A31677901E0060811E /* CoreGraphics.framework in Frameworks */,
 				455F87E3167790C90060811E /* FacebookSDK.framework in Frameworks */,
 				6818A5818E8C498CB0C59D49 /* libPods.a in Frameworks */,
+				45E7816217982CA300A1DD03 /* libGoogleAnalytics.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,6 +300,7 @@
 		455F87A41677901F0060811E /* i heart xkcd */ = {
 			isa = PBXGroup;
 			children = (
+				45E7815B17982C9400A1DD03 /* GAI */,
 				453E5C76167BF75000EFD8DB /* UIImage+animatedGIF.h */,
 				453E5C77167BF75000EFD8DB /* UIImage+animatedGIF.m */,
 				455F87AD1677901F0060811E /* AppDelegate.h */,
@@ -362,8 +381,13 @@
 				45E238F9167BC78D00FC38C4 /* Default-Portrait~ipad.png */,
 				45E238F7167BC78D00FC38C4 /* Default-Landscape@2x~ipad.png */,
 				45E238F8167BC78D00FC38C4 /* Default-Landscape~ipad.png */,
-				459C073E1791DCEF00B49CF9 /* TabBarPull.png */,
+				45E7815717968AC600A1DD03 /* TabBarPull.png */,
 				459C073C1791D80100B49CF9 /* TabBarPull@2x.png */,
+				45E7814D17968A8E00A1DD03 /* TabBarAbout@2x.png */,
+				45E7814E17968A8E00A1DD03 /* TabBarAltText@2x.png */,
+				45E7814F17968A8E00A1DD03 /* TabBarHeart@2x.png */,
+				45E7815017968A8E00A1DD03 /* TabBarNavigate@2x.png */,
+				45E7815917968AD200A1DD03 /* TabBarSearch@2x.png */,
 				45E238EE167BC77D00FC38C4 /* xkcd-heart_57.png */,
 				45E238EF167BC77D00FC38C4 /* xkcd-heart_72.png */,
 				45E238F0167BC77E00FC38C4 /* xkcd-heart_114.png */,
@@ -394,6 +418,19 @@
 				455F87D41677901F0060811E /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		45E7815B17982C9400A1DD03 /* GAI */ = {
+			isa = PBXGroup;
+			children = (
+				45E7815C17982CA300A1DD03 /* GAI.h */,
+				45E7815D17982CA300A1DD03 /* GAITrackedViewController.h */,
+				45E7815E17982CA300A1DD03 /* GAITracker.h */,
+				45E7815F17982CA300A1DD03 /* GAITransaction.h */,
+				45E7816017982CA300A1DD03 /* GAITransactionItem.h */,
+				45E7816117982CA300A1DD03 /* libGoogleAnalytics.a */,
+			);
+			name = GAI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -504,9 +541,14 @@
 				452E688B1786F0C900939FCB /* SearchViewController~ipad.xib in Resources */,
 				452E688D1786F1AB00939FCB /* SearchViewController~iphone.xib in Resources */,
 				459C073D1791D80100B49CF9 /* TabBarPull@2x.png in Resources */,
-				459C073F1791DCEF00B49CF9 /* TabBarPull.png in Resources */,
 				450EFA8617956A7900A9A006 /* 1238.png in Resources */,
 				4586080A1795F8DA00FDA5AB /* AboutViewController~ipad.xib in Resources */,
+				45E7815217968A8E00A1DD03 /* TabBarAbout@2x.png in Resources */,
+				45E7815317968A8E00A1DD03 /* TabBarAltText@2x.png in Resources */,
+				45E7815417968A8E00A1DD03 /* TabBarHeart@2x.png in Resources */,
+				45E7815517968A8E00A1DD03 /* TabBarNavigate@2x.png in Resources */,
+				45E7815817968AC600A1DD03 /* TabBarPull.png in Resources */,
+				45E7815A17968AD200A1DD03 /* TabBarSearch@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -694,6 +736,10 @@
 				GCC_PREFIX_HEADER = "i heart xkcd/i heart xkcd-Prefix.pch";
 				INFOPLIST_FILE = "i heart xkcd/i heart xkcd-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/i heart xkcd/GAI\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-framework",
@@ -722,6 +768,10 @@
 				GCC_PREFIX_HEADER = "i heart xkcd/i heart xkcd-Prefix.pch";
 				INFOPLIST_FILE = "i heart xkcd/i heart xkcd-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/i heart xkcd/GAI\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-framework",

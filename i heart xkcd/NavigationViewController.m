@@ -32,7 +32,7 @@
     
     if (self) {
         self.title = NSLocalizedString(@"Navigate", @"Navigate");
-        self.tabBarItem.image = [UIImage imageNamed:@"second"];
+        self.tabBarItem.image = [UIImage imageNamed:@"TabBarNavigate.png"];
     }
     
     return self;
