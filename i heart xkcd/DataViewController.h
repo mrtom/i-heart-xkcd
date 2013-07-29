@@ -26,4 +26,7 @@
 - (void)showTitle;
 - (void)hideTitle;
 
+- (CGPoint)comicOffset;
+- (CGSize)comicSize;
+
 @end

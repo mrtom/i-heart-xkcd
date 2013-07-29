@@ -288,8 +288,6 @@
     
     [self.currentViewController showTitle];
     
-    
-    
     UIViewController *selectedVC = [self.tabBarController selectedViewController];
     if ([selectedVC isKindOfClass:AltViewController.class]) {
         [(AltViewController *)selectedVC handleToggleAnimatingOpen:(viewLocation)];
@@ -313,6 +311,11 @@
     tabBarPullRect.origin.y = tabBarPullClosedOrigin.y;
     
     [self.currentViewController hideTitle];
+    
+    UIViewController *selectedVC = [self.tabBarController selectedViewController];
+    if ([selectedVC isKindOfClass:AltViewController.class]) {
+        [(AltViewController *)selectedVC handleToggleAnimatingClosed:(viewLocation)];
+    }
     
     [UIView animateWithDuration:pageOverlayToggleAnimationTime
                      animations:^{
@@ -340,6 +343,8 @@
     self.pageViewController.doubleSided = NO;
     return UIPageViewControllerSpineLocationMin;
 }
+
+#pragma mark - UIPageViewController delegate methods end
 
 - (void) switchToPageViewControllerWithoutPageTurnForIndex:(NSInteger) index
 {
@@ -410,9 +415,19 @@
     return self.currentViewController.dataObject;
 }
 
-- (UIImageView *)imageView
+- (UIImageView *)comicImage
 {
     return self.currentViewController.imageView;
+}
+
+- (CGPoint)comicOffset
+{
+    return [self.currentViewController comicOffset];
+}
+
+- (CGSize)comicSize
+{
+    return [self.currentViewController comicSize];
 }
 
 #pragma mark TabBarDraggerProtocol methods

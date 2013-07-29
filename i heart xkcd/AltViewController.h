@@ -20,5 +20,6 @@
 - (void)handleToggleStarted;
 - (void)handleViewMoved:(CGPoint)centreLocationInSuperview;
 - (void)handleToggleAnimatingOpen:(CGPoint)centreLocationInSuperview;
+- (void)handleToggleAnimatingClosed:(CGPoint)centreLocationInSuperview;
 
 @end

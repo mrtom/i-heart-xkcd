@@ -13,6 +13,8 @@
 @protocol AltViewControllerProtocol <NSObject>
 @required
 - (ComicData *)comicData;
-- (UIImageView *)imageView;
+- (UIImageView *)comicImage;
+- (CGPoint)comicOffset;
+- (CGSize)comicSize;
 
 @end

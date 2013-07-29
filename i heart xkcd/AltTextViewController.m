@@ -171,7 +171,7 @@
 - (void)facebookShare: (id)sender
 {
     if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
-        UIImageView *comicView = [self.delegate imageView];
+        UIImageView *comicView = [self.delegate comicImage];
         ComicData *dataObject = [self.delegate comicData];
         [FBNativeDialogs presentShareDialogModallyFrom:self
                                            initialText:nil

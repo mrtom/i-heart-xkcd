@@ -308,6 +308,14 @@ typedef enum {
     self.isShowingInfo = NO;
 }
 
+- (CGPoint)comicOffset {
+    return [self.scrollView contentOffset];
+}
+
+- (CGSize)comicSize {
+    return [self.scrollView contentSize];
+}
+
 #pragma mark - UIScrollViewDelegate classes
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {

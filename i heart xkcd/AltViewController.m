@@ -14,14 +14,18 @@
 #define TITLE_BAR_HEIGHT 20
 
 @interface AltViewController ()
+@property CGSize comicSize;
+@property CGPoint comicOffset;
 
-@property UIView *altBackgroundView; // A container for the image filling the TabBarControllers content
-@property UIImageView *altBackgroundImageView; // The image itself, which may be bigger or smaller than the TabBarControllers content
-@property UIView *altBackgroundCoverView; // Provides the color to the blur
+@property (nonatomic, strong) UIView *altBackgroundView; // A container for the image filling the TabBarControllers content
+@property (nonatomic, strong) UIImageView *altBackgroundImageView; // The image itself, which may be bigger or smaller than the TabBarControllers content
+@property (nonatomic, strong) UIView *altBackgroundCoverView; // Provides the color to the blur
 
 @end
 
 @implementation AltViewController
+
+@synthesize altBackgroundView, altBackgroundImageView, altBackgroundCoverView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -34,6 +38,7 @@
 
 - (void)viewDidLoad
 {
+    // TODO: When the TabBarController is visible and you switch views, make sure the filtered image is in the right location
     [super viewDidLoad];
     
     self.altBackgroundCoverView = [[UIView alloc] initWithFrame:self.view.frame];
@@ -45,25 +50,26 @@
     [self.altBackgroundView setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:self.altBackgroundView];
     [self.view sendSubviewToBack:self.altBackgroundView];
+
+    self.altBackgroundImageView = [[UIImageView alloc] initWithFrame:self.view.frame];
+    [self.altBackgroundView addSubview:self.altBackgroundImageView];
     
     [self blurBackground];
-    [self.altBackgroundView addSubview:self.altBackgroundImageView];    
 }
 
 - (void)blurBackground
 {
-    UIImageView *comic = [self.delegate imageView];
-    CGRect backgroundViewFrame = CGRectApplyAffineTransform(comic.frame, CGAffineTransformMakeTranslation(0, -TITLE_BAR_HEIGHT));
+    UIImageView *comic = [self.delegate comicImage];
     
-    self.altBackgroundImageView = [[UIImageView alloc] initWithFrame:backgroundViewFrame];
-    UIImage *theImage = [[self.delegate imageView] image];
-    NSLog(@"%@", [self.delegate comicData].title);
+    CGRect backgroundImageViewFrame = CGRectApplyAffineTransform(comic.frame, CGAffineTransformMakeTranslation(0, -TITLE_BAR_HEIGHT));
+    self.altBackgroundImageView.frame = backgroundImageViewFrame;
+    UIImage *theImage = [comic image];
     
     //create our blurred image
     CIContext *context = [CIContext contextWithOptions:nil];
     CIImage *inputImage = [CIImage imageWithCGImage:theImage.CGImage];
     
-    //setting up Gaussian Blur (we could use one of many filters offered by Core Image)
+    //setting up Gaussian Blur
     CIFilter *filter = [CIFilter filterWithName:@"CIGaussianBlur"];
     [filter setValue:inputImage forKey:kCIInputImageKey];
     [filter setValue:[NSNumber numberWithFloat:5.0f] forKey:@"inputRadius"];
@@ -72,29 +78,53 @@
     CGImageRef cgImage = [context createCGImage:result fromRect:[inputImage extent]];
     
     //add our blurred image to the view
-    self.altBackgroundImageView.image = [UIImage imageWithCGImage:cgImage];
+    [self.altBackgroundImageView setImage:[UIImage imageWithCGImage:cgImage]];
 }
 
 - (void)handleToggleStarted
 {
+    // TODO: We should run blurBackground when the comic is chosen, using pub/sub. Not when toggling is started
+    // (as it performs an expensive operation immediately that could be pre-rendered)
     [self blurBackground];
+    self.comicSize = [self.delegate comicSize];
+    self.comicOffset = [self.delegate comicOffset];
 }
 
 - (void)handleViewMoved:(CGPoint)centreLocationInSuperview
 {
     // We need to move the origin of the background image view so it's centre
     // is always exactly the same as the centre of the AltViewControllers superview
-    // Also, we're only scrolling in an x direction
-    CGPoint imageLocation = CGPointMake(([self.view superview].bounds.size.width/2) - centreLocationInSuperview.x + self.altBackgroundView.bounds.size.width/2, self.altBackgroundView.center.y);
+    CGPoint imageLocation = CGPointMake(
+                                        ([self.view superview].bounds.size.width/2) - centreLocationInSuperview.x + self.altBackgroundView.bounds.size.width/2 - self.comicOffset.x,
+                                        self.altBackgroundView.center.y - self.comicOffset.y
+                                        );
     self.altBackgroundView.center = imageLocation;
 }
 
 - (void)handleToggleAnimatingOpen:(CGPoint)centreLocationInSuperview
 {
-    CGPoint openOrigin = CGPointMake([self.view superview].bounds.size.width/2, self.altBackgroundView.center.y);
+    CGPoint openOrigin = CGPointMake(
+                                     [self.view superview].bounds.size.width/2 - self.comicOffset.x,
+                                     self.altBackgroundView.center.y - self.comicOffset.y
+                                     );
+    [self animateImageTo:openOrigin];
+    
+}
+
+- (void)handleToggleAnimatingClosed:(CGPoint)centreLocationInSuperview
+{
+    CGPoint closeOrigin = CGPointMake(
+                                     -[self.view superview].bounds.size.width/2 - self.comicOffset.x,
+                                     self.altBackgroundView.center.y - self.comicOffset.y
+                                     );
+    [self animateImageTo:closeOrigin];
+}
+
+- (void)animateImageTo:(CGPoint)location
+{
     [UIView animateWithDuration:pageOverlayToggleAnimationTime
                      animations:^{
-                         self.altBackgroundView.center = openOrigin;
+                         self.altBackgroundView.center = location;
                      }
                      completion:nil];
 }
