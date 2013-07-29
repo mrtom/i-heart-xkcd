@@ -438,6 +438,7 @@
     if ([sender state] == UIGestureRecognizerStateBegan) {
         if ([selectedVC isKindOfClass:AltViewController.class]) {
             [(AltViewController *)selectedVC handleToggleStarted];
+            [self.currentViewController showTitle];
         }
         [self.view addSubview:self.tabBarController.view];
     }
