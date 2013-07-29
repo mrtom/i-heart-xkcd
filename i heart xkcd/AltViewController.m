@@ -10,10 +10,14 @@
 
 #import "Constants.h"
 
+// FIXME: This shouldn't be here :(
+#define TITLE_BAR_HEIGHT 20
+
 @interface AltViewController ()
 
-@property UIImageView *altBackgroundView;
-@property UIView *altBackgroundCoverView;
+@property UIView *altBackgroundView; // A container for the image filling the TabBarControllers content
+@property UIImageView *altBackgroundImageView; // The image itself, which may be bigger or smaller than the TabBarControllers content
+@property UIView *altBackgroundCoverView; // Provides the color to the blur
 
 @end
 
@@ -32,18 +36,28 @@
 {
     [super viewDidLoad];
     
-    [self blurBackground];
-}
-
-- (void)blurBackground
-{
-    self.altBackgroundCoverView = [[UIView alloc] initWithFrame:self.view.bounds];
+    self.altBackgroundCoverView = [[UIView alloc] initWithFrame:self.view.frame];
     [self.altBackgroundCoverView setBackgroundColor:[UIColor colorWithRed:0.25f green:0.25f blue:0.25f alpha:0.6f]];
     [self.view addSubview:self.altBackgroundCoverView];
     [self.view sendSubviewToBack:self.altBackgroundCoverView];
     
-    self.altBackgroundView = [[UIImageView alloc] initWithFrame:self.view.bounds];
-    UIImage *theImage = [UIImage imageNamed:@"1238.png"];
+    self.altBackgroundView = [[UIView alloc] initWithFrame:self.view.frame];
+    [self.altBackgroundView setBackgroundColor:[UIColor whiteColor]];
+    [self.view addSubview:self.altBackgroundView];
+    [self.view sendSubviewToBack:self.altBackgroundView];
+    
+    [self blurBackground];
+    [self.altBackgroundView addSubview:self.altBackgroundImageView];    
+}
+
+- (void)blurBackground
+{
+    UIImageView *comic = [self.delegate imageView];
+    CGRect backgroundViewFrame = CGRectApplyAffineTransform(comic.frame, CGAffineTransformMakeTranslation(0, -TITLE_BAR_HEIGHT));
+    
+    self.altBackgroundImageView = [[UIImageView alloc] initWithFrame:backgroundViewFrame];
+    UIImage *theImage = [[self.delegate imageView] image];
+    NSLog(@"%@", [self.delegate comicData].title);
     
     //create our blurred image
     CIContext *context = [CIContext contextWithOptions:nil];
@@ -58,10 +72,31 @@
     CGImageRef cgImage = [context createCGImage:result fromRect:[inputImage extent]];
     
     //add our blurred image to the view
-    self.altBackgroundView.image = [UIImage imageWithCGImage:cgImage];
-    
-    [self.view addSubview:self.altBackgroundView];
-    [self.view sendSubviewToBack:self.altBackgroundView];
+    self.altBackgroundImageView.image = [UIImage imageWithCGImage:cgImage];
+}
+
+- (void)handleToggleStarted
+{
+    [self blurBackground];
+}
+
+- (void)handleViewMoved:(CGPoint)centreLocationInSuperview
+{
+    // We need to move the origin of the background image view so it's centre
+    // is always exactly the same as the centre of the AltViewControllers superview
+    // Also, we're only scrolling in an x direction
+    CGPoint imageLocation = CGPointMake(([self.view superview].bounds.size.width/2) - centreLocationInSuperview.x + self.altBackgroundView.bounds.size.width/2, self.altBackgroundView.center.y);
+    self.altBackgroundView.center = imageLocation;
+}
+
+- (void)handleToggleAnimatingOpen:(CGPoint)centreLocationInSuperview
+{
+    CGPoint openOrigin = CGPointMake([self.view superview].bounds.size.width/2, self.altBackgroundView.center.y);
+    [UIView animateWithDuration:pageOverlayToggleAnimationTime
+                     animations:^{
+                         self.altBackgroundView.center = openOrigin;
+                     }
+                     completion:nil];
 }
 
 - (void)didReceiveMemoryWarning

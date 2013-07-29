@@ -24,6 +24,7 @@
     [GAI sharedInstance].dispatchInterval = 20;
     [GAI sharedInstance].debug = YES;
     id<GAITracker> tracker = [[GAI sharedInstance] trackerWithTrackingId:@"UA-37436006-2"];
+    [tracker setUseHttps:YES];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(defaultsChanged) name:NSUserDefaultsDidChangeNotification object:nil];
     

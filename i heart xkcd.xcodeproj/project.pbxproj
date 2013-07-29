@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		4509F4C516C1DC4F0071E4AA /* NavigationViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4509F4C416C1DC4F0071E4AA /* NavigationViewController_iPad.xib */; };
 		450A48701786E372008CE1B7 /* RecentSearchesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 450A486F1786E372008CE1B7 /* RecentSearchesController.m */; };
-		450EFA8617956A7900A9A006 /* 1238.png in Resources */ = {isa = PBXBuildFile; fileRef = 450EFA8517956A7900A9A006 /* 1238.png */; };
 		452E688B1786F0C900939FCB /* SearchViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 452E688A1786F0C800939FCB /* SearchViewController~ipad.xib */; };
 		452E688D1786F1AB00939FCB /* SearchViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 452E688C1786F1AB00939FCB /* SearchViewController~iphone.xib */; };
 		453E5C78167BF75000EFD8DB /* UIImage+animatedGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 453E5C77167BF75000EFD8DB /* UIImage+animatedGIF.m */; };
@@ -107,7 +106,6 @@
 		4509F4C416C1DC4F0071E4AA /* NavigationViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NavigationViewController_iPad.xib; sourceTree = "<group>"; };
 		450A486E1786E372008CE1B7 /* RecentSearchesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecentSearchesController.h; sourceTree = "<group>"; };
 		450A486F1786E372008CE1B7 /* RecentSearchesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecentSearchesController.m; sourceTree = "<group>"; };
-		450EFA8517956A7900A9A006 /* 1238.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1238.png; sourceTree = "<group>"; };
 		452E688A1786F0C800939FCB /* SearchViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "SearchViewController~ipad.xib"; sourceTree = "<group>"; };
 		452E688C1786F1AB00939FCB /* SearchViewController~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "SearchViewController~iphone.xib"; sourceTree = "<group>"; };
 		453E5C76167BF75000EFD8DB /* UIImage+animatedGIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+animatedGIF.h"; sourceTree = "<group>"; };
@@ -179,7 +177,6 @@
 		45C201811738335F00CA0A2C /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
 		45C201821738335F00CA0A2C /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
 		45C20187173835B600CA0A2C /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
-		45C201BF173ADB9300CA0A2C /* AltTextViewControllerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AltTextViewControllerProtocol.h; sourceTree = "<group>"; };
 		45E238E1167BB51200FC38C4 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		45E238EE167BC77D00FC38C4 /* xkcd-heart_57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xkcd-heart_57.png"; sourceTree = "<group>"; };
 		45E238EF167BC77D00FC38C4 /* xkcd-heart_72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xkcd-heart_72.png"; sourceTree = "<group>"; };
@@ -216,6 +213,7 @@
 		45E7816017982CA300A1DD03 /* GAITransactionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITransactionItem.h; path = GAI/GAITransactionItem.h; sourceTree = "<group>"; };
 		45E7816117982CA300A1DD03 /* libGoogleAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalytics.a; path = GAI/libGoogleAnalytics.a; sourceTree = "<group>"; };
 		45E7816317982D2300A1DD03 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		45E7816517994D9C00A1DD03 /* AltViewControllerProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AltViewControllerProtocol.h; sourceTree = "<group>"; };
 		45F9216E16C1C5D700A2E3B0 /* NavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationViewController.h; sourceTree = "<group>"; };
 		45F9216F16C1C5D800A2E3B0 /* NavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationViewController.m; sourceTree = "<group>"; };
 		45F9217216C1D07A00A2E3B0 /* NavigationViewController_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NavigationViewController_iPhone.xib; sourceTree = "<group>"; };
@@ -324,9 +322,9 @@
 				45E334781680E8E600ED1E53 /* ComicImageStore.m */,
 				455317471774D90B00FFDD00 /* AltViewController.h */,
 				455317481774D90B00FFDD00 /* AltViewController.m */,
+				45E7816517994D9C00A1DD03 /* AltViewControllerProtocol.h */,
 				45C201761738308B00CA0A2C /* AltTextViewController.h */,
 				45C201771738308B00CA0A2C /* AltTextViewController.m */,
-				45C201BF173ADB9300CA0A2C /* AltTextViewControllerProtocol.h */,
 				45C201791738311C00CA0A2C /* FavouritesViewController.h */,
 				45C2017A1738311C00CA0A2C /* FavouritesViewController.m */,
 				455317431774D00F00FFDD00 /* FavouritesViewControllerProtocol.h */,
@@ -364,7 +362,6 @@
 		455F87A51677901F0060811E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				450EFA8517956A7900A9A006 /* 1238.png */,
 				45C2017F1738335F00CA0A2C /* first.png */,
 				45C201801738335F00CA0A2C /* first@2x.png */,
 				45C201811738335F00CA0A2C /* second.png */,
@@ -545,7 +542,6 @@
 				452E688B1786F0C900939FCB /* SearchViewController~ipad.xib in Resources */,
 				452E688D1786F1AB00939FCB /* SearchViewController~iphone.xib in Resources */,
 				459C073D1791D80100B49CF9 /* TabBarPull@2x.png in Resources */,
-				450EFA8617956A7900A9A006 /* 1238.png in Resources */,
 				4586080A1795F8DA00FDA5AB /* AboutViewController~ipad.xib in Resources */,
 				45E7815217968A8E00A1DD03 /* TabBarAbout@2x.png in Resources */,
 				45E7815317968A8E00A1DD03 /* TabBarAltText@2x.png in Resources */,

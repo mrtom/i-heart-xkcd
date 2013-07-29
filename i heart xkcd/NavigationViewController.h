@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import "AltViewController.h"
+#import "AltViewControllerProtocol.h"
 #import "NavigationViewControllerProtocol.h"
 
 @interface NavigationViewController : AltViewController<UITableViewDelegate>
@@ -17,7 +18,7 @@
 @property (strong, nonatomic) IBOutlet UISegmentedControl *controlsViewSegmentEnds;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *controlsViewNextRandom;
 
-@property (strong, nonatomic) id<NavigationViewControllerProtocol> delegate;
+@property (strong, nonatomic) id<AltViewControllerProtocol, NavigationViewControllerProtocol> delegate;
 @property (nonatomic) NSInteger currentComic;
 
 - (void)goPrevious;

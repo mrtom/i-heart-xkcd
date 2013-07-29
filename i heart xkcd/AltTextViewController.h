@@ -10,11 +10,8 @@
 
 #import "ComicData.h"
 #import "AltViewController.h"
-#import "AltTextViewControllerProtocol.h"
 
 @interface AltTextViewController : AltViewController
-
-@property (strong, nonatomic) id<AltTextViewControllerProtocol> delegate;
 
 - (id)init;
 

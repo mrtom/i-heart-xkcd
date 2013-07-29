@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import "AltViewController.h"
+#import "AltViewControllerProtocol.h"
 #import "RecentSearchesController.h"
 
 #import "SearchViewControllerProtocol.h"
@@ -32,6 +33,6 @@
 @property (nonatomic, strong) IBOutlet UILabel *noResultsLabel;
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView *activitySpinner;
 
-@property (strong, nonatomic) id<SearchViewControllerProtocol> delegate;
+@property (strong, nonatomic) id<AltViewControllerProtocol, SearchViewControllerProtocol> delegate;
 
 @end

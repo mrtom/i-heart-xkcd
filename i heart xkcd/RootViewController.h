@@ -9,13 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "ModelController.h"
 #import "DataViewController.h"
-#import "AltTextViewControllerProtocol.h"
+#import "AltViewControllerProtocol.h"
 #import "FavouritesViewControllerProtocol.h"
 #import "NavigationViewControllerProtocol.h"
 #import "SearchViewControllerProtocol.h"
 #import "TabBarDraggerViewController.h"
 
-@interface RootViewController : UIViewController <UIPageViewControllerDelegate, ModelControllerDelegate, NavigationViewControllerProtocol, FavouritesViewControllerProtocol, AltTextViewControllerProtocol, UITabBarControllerDelegate, UIGestureRecognizerDelegate, TabBarDraggerProtocol, SearchViewControllerProtocol> {
+@interface RootViewController : UIViewController <UIPageViewControllerDelegate, ModelControllerDelegate, NavigationViewControllerProtocol, FavouritesViewControllerProtocol, AltViewControllerProtocol, UITabBarControllerDelegate, UIGestureRecognizerDelegate, TabBarDraggerProtocol, SearchViewControllerProtocol> {
     UIView *pageCover;
     UIView *turnPageForwardView;
     UIView *turnPageBackView;

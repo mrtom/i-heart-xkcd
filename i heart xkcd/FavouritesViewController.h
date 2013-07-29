@@ -7,14 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AltViewController.h"
 
+#import "AltViewController.h"
+#import "AltViewControllerProtocol.h"
 #import "FavouritesViewControllerProtocol.h"
 
 @interface FavouritesViewController : AltViewController<UITableViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *favouritePickerView;
-@property (strong, nonatomic) id<FavouritesViewControllerProtocol> delegate;
+@property (strong, nonatomic) id<AltViewControllerProtocol, FavouritesViewControllerProtocol> delegate;
 
 - (void)reloadFavourites:(NSNotification*)notification;
 

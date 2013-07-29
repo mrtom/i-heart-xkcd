@@ -8,8 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+#import "AltViewControllerProtocol.h"
 #import "GAITrackedViewController.h"
 
-@interface AltViewController : GAITrackedViewController
+@interface AltViewController : GAITrackedViewController {
+
+}
+
+@property (nonatomic, strong) id<AltViewControllerProtocol> delegate;
+
+- (void)handleToggleStarted;
+- (void)handleViewMoved:(CGPoint)centreLocationInSuperview;
+- (void)handleToggleAnimatingOpen:(CGPoint)centreLocationInSuperview;
 
 @end

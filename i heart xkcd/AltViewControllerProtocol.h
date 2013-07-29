@@ -1,8 +1,8 @@
 //
-//  AltTextViewControllerProtocol.h
+//  AltViewControllerProtocol.h
 //  i heart xkcd
 //
-//  Created by Tom Elliott on 08/05/2013.
+//  Created by Tom Elliott on 19/07/2013.
 //  Copyright (c) 2013 Tom Elliott. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 
 #import "ComicData.h"
 
-@protocol AltTextViewControllerProtocol <NSObject>
+@protocol AltViewControllerProtocol <NSObject>
 @required
 - (ComicData *)comicData;
 - (UIImageView *)imageView;

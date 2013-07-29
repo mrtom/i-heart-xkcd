@@ -15,7 +15,6 @@
 #import "DataViewController.h"
 
 #import "AltTextViewController.h"
-#import "AltTextViewControllerProtocol.h"
 #import "FavouritesViewController.h"
 #import "SearchViewController.h"
 #import "NavigationViewController.h"
@@ -130,7 +129,8 @@
     [searchViewController setDelegate:self];
     NavigationViewController *navigationViewController = [[NavigationViewController alloc] init];
     [navigationViewController setDelegate:self];
-    UIViewController *aboutViewController = [[AboutViewController alloc] init];
+    AltViewController *aboutViewController = [[AboutViewController alloc] init];
+    [aboutViewController setDelegate:self];
     
     self.tabBarController = [[UITabBarController alloc] init];
     self.tabBarController.viewControllers = @[
@@ -146,7 +146,7 @@
     CGRect tabBarFrame = self.view.frame;
     tabBarFrame.origin.y = titleBarHeight;
     tabBarFrame.origin.x = self.view.frame.size.width;
-    tabBarFrame.size.height = tabBarFrame.size.height - titleBarHeight;    
+    tabBarFrame.size.height = tabBarFrame.size.height - titleBarHeight;
     [self.tabBarController.view setFrame:tabBarFrame];
     [self.view addSubview:self.tabBarController.view];
     
@@ -288,6 +288,13 @@
     
     [self.currentViewController showTitle];
     
+    
+    
+    UIViewController *selectedVC = [self.tabBarController selectedViewController];
+    if ([selectedVC isKindOfClass:AltViewController.class]) {
+        [(AltViewController *)selectedVC handleToggleAnimatingOpen:(viewLocation)];
+    }
+    
     [UIView animateWithDuration:pageOverlayToggleAnimationTime
                      animations:^{
                          self.tabBarController.view.center = viewLocation;
@@ -396,7 +403,7 @@
     [self loadPageAtIndex:index forDirection:UIPageViewControllerNavigationDirectionForward andAnimation:NO];
 }
 
-#pragma mark AltTextViewControllerProtocol methods
+#pragma mark AltViewControllerProtocol methods
 
 - (ComicData *)comicData
 {
@@ -411,7 +418,12 @@
 #pragma mark TabBarDraggerProtocol methods
 
 - (void)handleTabBarDragged:(UIPanGestureRecognizer *)sender {
+    UIViewController *selectedVC = [self.tabBarController selectedViewController];
+    
     if ([sender state] == UIGestureRecognizerStateBegan) {
+        if ([selectedVC isKindOfClass:AltViewController.class]) {
+            [(AltViewController *)selectedVC handleToggleStarted];
+        }
         [self.view addSubview:self.tabBarController.view];
     }
     
@@ -439,6 +451,10 @@
         
         self.tabBarPull.view.center = pullLocation;
         self.tabBarController.view.center = viewLocation;
+        
+        if ([selectedVC isKindOfClass:AltViewController.class]) {
+            [(AltViewController *)selectedVC handleViewMoved:(viewLocation)];
+        }
     }    
 }
 
