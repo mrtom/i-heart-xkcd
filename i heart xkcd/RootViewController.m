@@ -24,12 +24,20 @@
 #define turnPageViewWidthPhone 20
 #define turnPageViewWidthPad 50
 
+typedef enum {
+    AltViewClosed,
+    AltViewOpening,
+    AltViewClosing,
+    AltViewOpen
+} AltViewState;
+
 @interface RootViewController ()
 
 @property (readonly, strong, nonatomic) ModelController *modelController;
 @property NSUInteger currentIndex;
 @property DataViewController *currentViewController;
 @property (readwrite, nonatomic) double lastTimeOverlaysToggled;
+@property AltViewState altViewState;
 
 @end
 
@@ -151,6 +159,7 @@
     [self.view addSubview:self.tabBarController.view];
     
     altViewOverlayAndTabCentreDelta = self.tabBarController.view.center.x - self.tabBarPull.view.center.x;
+    self.altViewState = AltViewClosed;
 
     
     // Setup gesture recognisers
@@ -288,6 +297,7 @@
     
     [self.currentViewController showTitle];
     
+    self.altViewState = AltViewOpening;
     UIViewController *selectedVC = [self.tabBarController selectedViewController];
     if ([selectedVC isKindOfClass:AltViewController.class]) {
         [(AltViewController *)selectedVC handleToggleAnimatingOpen:(viewLocation)];
@@ -298,7 +308,11 @@
                          self.tabBarController.view.center = viewLocation;
                          self.tabBarPull.view.frame = tabBarPullRect;
                      }
-                     completion:nil];
+                     completion:^ (BOOL finished) {
+                         if (finished) {
+                             self.altViewState = AltViewOpen;
+                         }
+                     }];
 }
 
 - (void)hideTabBar
@@ -312,6 +326,7 @@
     
     [self.currentViewController hideTitle];
     
+    self.altViewState = AltViewClosing;
     UIViewController *selectedVC = [self.tabBarController selectedViewController];
     if ([selectedVC isKindOfClass:AltViewController.class]) {
         [(AltViewController *)selectedVC handleToggleAnimatingClosed:(viewLocation)];
@@ -325,6 +340,7 @@
                      completion:^ (BOOL finished){
                          if (finished) {
                              [self.tabBarController.view removeFromSuperview];
+                             self.altViewState = AltViewClosed;
                          }
                      }];
 }
@@ -437,6 +453,7 @@
     
     if ([sender state] == UIGestureRecognizerStateBegan) {
         if ([selectedVC isKindOfClass:AltViewController.class]) {
+            self.altViewState = AltViewOpening;
             [(AltViewController *)selectedVC handleToggleStarted];
             [self.currentViewController showTitle];
         }
