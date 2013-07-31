@@ -39,13 +39,12 @@ typedef enum {
 @property (readwrite, nonatomic) double lastTimeOverlaysToggled;
 @property AltViewState altViewState;
 
+@property NSLayoutConstraint *tabBarPullHConstraint;
+
 @end
 
 @implementation RootViewController {
     NSInteger turnPageViewWidth;
-    CGFloat altViewOverlayAndTabCentreDelta;
-    CGPoint tabBarPullClosedOrigin;
-    CGPoint tabBarPullOpenOrigin;
 }
 
 @synthesize modelController = _modelController;
@@ -109,16 +108,14 @@ typedef enum {
 
     // Add the tab bar pull
     self.tabBarPull = [[TabBarDraggerViewController alloc] initWithDelegate:self];
-    CGRect tabBarPullRect = self.tabBarPull.view.frame;
-
-    tabBarPullClosedOrigin.x = self.view.bounds.size.width - tabBarPullRect.size.width;
-    tabBarPullClosedOrigin.y = self.view.bounds.size.height - tabBarPullRect.size.height;
-    tabBarPullOpenOrigin = tabBarPullClosedOrigin;
-    tabBarPullOpenOrigin.x -= self.view.bounds.size.width;
-
-    tabBarPullRect.origin = tabBarPullClosedOrigin;
-    [self.tabBarPull.view setFrame:tabBarPullRect];
-    [self.view addSubview:self.tabBarPull.view];
+    UIView *tabBarPullView = self.tabBarPull.view;
+    [self.view addSubview:tabBarPullView];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[tabBarPullView]|"
+                                                                      options:nil
+                                                                      metrics:nil
+                                                                        views:NSDictionaryOfVariableBindings(tabBarPullView)]];
+    self.tabBarPullHConstraint = [NSLayoutConstraint constraintWithItem:tabBarPullView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1 constant:0];
+    [self.view addConstraint:self.tabBarPullHConstraint];
     
     // Remove gesture recognizers from their original view, and set the Root VC as their delegate
     for (UIGestureRecognizer *gr in self.pageViewController.gestureRecognizers) {
@@ -147,18 +144,8 @@ typedef enum {
                                               searchViewController,
                                               navigationViewController,
                                               aboutViewController];
-
-    // Set the tab bar frame so it doesn't overlap the title bar, and hide off screen so we 'slide' it over
-    // FIXME: float titleBarHeight = self.titleLabel.frame.size.height;
-    float titleBarHeight = 20;
-    CGRect tabBarFrame = self.view.frame;
-    tabBarFrame.origin.y = titleBarHeight;
-    tabBarFrame.origin.x = self.view.frame.size.width;
-    tabBarFrame.size.height = tabBarFrame.size.height - titleBarHeight;
-    [self.tabBarController.view setFrame:tabBarFrame];
-    [self.view addSubview:self.tabBarController.view];
+    [self layoutTabBarController];
     
-    altViewOverlayAndTabCentreDelta = self.tabBarController.view.center.x - self.tabBarPull.view.center.x;
     self.altViewState = AltViewClosed;
 
     
@@ -259,6 +246,28 @@ typedef enum {
 
 #pragma mark - Handle gestures and touches
 
+- (void)layoutTabBarController
+{
+    // Set the tab bar frame so it doesn't overlap the title bar, and hide off screen so we 'slide' it over
+    // FIXME: TitleLabel was moved to dataViewController
+    // float titleBarHeight = self.titleLabel.frame.size.height;
+    UIView *superview = self.view;
+    UIView *tabBarPullView = self.tabBarPull.view;
+    UIView *tabBarControllerView = self.tabBarController.view;
+    tabBarControllerView.translatesAutoresizingMaskIntoConstraints = NO;
+
+    [self.view addSubview:tabBarControllerView];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[tabBarPullView][tabBarControllerView(==superview)]"
+                                                                      options:nil
+                                                                      metrics:nil
+                                                                        views:NSDictionaryOfVariableBindings(tabBarPullView, tabBarControllerView, superview)]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-titleBarHeight-[tabBarControllerView]|"
+                                                                      options:nil
+                                                                      metrics:@{@"titleBarHeight":@20.0}
+                                                                        views:NSDictionaryOfVariableBindings(tabBarControllerView)]];
+
+}
+
 - (BOOL)canToggleOverlays
 {
     double timeNow = CACurrentMediaTime();
@@ -287,13 +296,8 @@ typedef enum {
 
 - (void)showTabBar
 {
-    [self.view addSubview:self.tabBarController.view];
     CGPoint viewLocation = self.tabBarController.view.center;
     viewLocation.x = self.view.center.x;
-    
-    CGRect tabBarPullRect = self.tabBarPull.view.frame;
-    tabBarPullRect.origin.x = tabBarPullOpenOrigin.x;
-    tabBarPullRect.origin.y = tabBarPullOpenOrigin.y;
     
     [self.currentViewController showTitle];
     
@@ -303,10 +307,10 @@ typedef enum {
         [(AltViewController *)selectedVC handleToggleAnimatingOpen:(viewLocation)];
     }
     
+    self.tabBarPullHConstraint.constant = -self.view.bounds.size.width;
     [UIView animateWithDuration:pageOverlayToggleAnimationTime
                      animations:^{
-                         self.tabBarController.view.center = viewLocation;
-                         self.tabBarPull.view.frame = tabBarPullRect;
+                         [self.view layoutIfNeeded];
                      }
                      completion:^ (BOOL finished) {
                          if (finished) {
@@ -320,10 +324,6 @@ typedef enum {
     CGPoint viewLocation = self.tabBarController.view.center;
     viewLocation.x = self.view.bounds.size.width + self.tabBarController.view.bounds.size.width/2;
     
-    CGRect tabBarPullRect = self.tabBarPull.view.frame;
-    tabBarPullRect.origin.x = tabBarPullClosedOrigin.x;
-    tabBarPullRect.origin.y = tabBarPullClosedOrigin.y;
-    
     [self.currentViewController hideTitle];
     
     self.altViewState = AltViewClosing;
@@ -332,14 +332,13 @@ typedef enum {
         [(AltViewController *)selectedVC handleToggleAnimatingClosed:(viewLocation)];
     }
     
+    self.tabBarPullHConstraint.constant = 0;
     [UIView animateWithDuration:pageOverlayToggleAnimationTime
                      animations:^{
-                         self.tabBarController.view.center = viewLocation;
-                         self.tabBarPull.view.frame = tabBarPullRect;
+                         [self.view layoutIfNeeded];
                      }
                      completion:^ (BOOL finished){
                          if (finished) {
-                             [self.tabBarController.view removeFromSuperview];
                              self.altViewState = AltViewClosed;
                          }
                      }];
@@ -480,10 +479,9 @@ typedef enum {
         CGPoint pullLocation = self.tabBarPull.view.center;
         pullLocation.x = [sender locationInView:self.view].x;
         CGPoint viewLocation = self.tabBarController.view.center;
-        viewLocation.x = pullLocation.x + altViewOverlayAndTabCentreDelta;
+        viewLocation.x = pullLocation.x + self.tabBarController.view.bounds.size.width/2;
         
-        self.tabBarPull.view.center = pullLocation;
-        self.tabBarController.view.center = viewLocation;
+        self.tabBarPullHConstraint.constant = pullLocation.x - self.view.bounds.size.width;
         
         if ([selectedVC isKindOfClass:AltViewController.class]) {
             [(AltViewController *)selectedVC handleViewMoved:(viewLocation)];

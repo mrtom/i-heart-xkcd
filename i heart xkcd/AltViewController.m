@@ -86,6 +86,8 @@
     // TODO: We should run blurBackground when the comic is chosen, using pub/sub. Not when toggling is started
     // (as it performs an expensive operation immediately that could be pre-rendered)
     [self blurBackground];
+    [self viewWillAppear:YES];
+    
     self.comicSize = [self.delegate comicSize];
     self.comicOffset = [self.delegate comicOffset];
 }

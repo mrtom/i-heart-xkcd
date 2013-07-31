@@ -29,12 +29,13 @@
 {
     [super viewDidLoad];
     
-    // Set size
-    CGRect bounds = self.view.bounds;
-    bounds.size.width = TabBarDraggerViewControllerWidth;
-    bounds.size.height = TabBarDraggerViewControllerHeight;
-    
-    [self.view setBounds:bounds];
+    // Set constraints
+    UIView *view = self.view;
+    view.translatesAutoresizingMaskIntoConstraints = NO;
+
+    // Set width and height
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0 constant:30]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0 constant:50]];
     
     // Set visuals
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"TabBarPull.png"]]];
