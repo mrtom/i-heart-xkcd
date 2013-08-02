@@ -8,17 +8,15 @@
 
 #import "RootViewController.h"
 
-#import "ModelController.h"
-#import "Constants.h"
-
 #import "AboutViewController.h"
-#import "DataViewController.h"
-
 #import "AltTextViewController.h"
+#import "ComicData.h"
+#import "Constants.h"
+#import "DataViewController.h"
 #import "FavouritesViewController.h"
-#import "SearchViewController.h"
 #import "NavigationViewController.h"
-#import "AboutViewController.h"
+#import "SearchViewController.h"
+#import "TabBarDraggerViewController.h"
 
 #define pageCoverAnimationTime 0.3
 #define turnPageViewWidthPhone 20

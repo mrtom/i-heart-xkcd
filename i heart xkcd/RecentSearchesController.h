@@ -12,7 +12,6 @@ extern NSString *RecentSearchesKey;
 
 @class RecentSearchesController;
 
-
 @protocol RecentSearchesDelegate
 // Sent when the user selects a row in the recent searches list.
 - (void)recentSearchesController:(RecentSearchesController *)controller didSelectString:(NSString *)searchString;

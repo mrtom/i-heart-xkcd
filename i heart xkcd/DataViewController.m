@@ -15,10 +15,10 @@
 #import <Social/Social.h>
 
 #import "Constants.h"
-#import "GAI.h"
+#import "ComicData.h"
 #import "ComicStore.h"
 #import "ComicImageStore.h"
-
+#import "GAI.h"
 #import "ModelController.h"
 #import "NavigationViewController.h"
 #import "Settings.h"

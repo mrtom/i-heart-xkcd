@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "ComicData.h"
 #import "AltViewController.h"
 
 @interface AltTextViewController : AltViewController

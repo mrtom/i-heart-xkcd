@@ -13,6 +13,7 @@
 #import <Social/Social.h>
 
 #import "ComicImageStore.h"
+#import "ComicData.h"
 #import "ComicStore.h"
 #import "Constants.h"
 #import "Settings.h"

@@ -7,13 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ModelController.h"
-#import "DataViewController.h"
+
 #import "AltViewControllerProtocol.h"
 #import "FavouritesViewControllerProtocol.h"
+#import "ModelController.h"
 #import "NavigationViewControllerProtocol.h"
 #import "SearchViewControllerProtocol.h"
-#import "TabBarDraggerViewController.h"
+#import "TabBarDraggerProtocol.h"
+
+@class TabBarDraggerViewController;
 
 @interface RootViewController : UIViewController <UIPageViewControllerDelegate, ModelControllerDelegate, NavigationViewControllerProtocol, FavouritesViewControllerProtocol, AltViewControllerProtocol, UITabBarControllerDelegate, UIGestureRecognizerDelegate, TabBarDraggerProtocol, SearchViewControllerProtocol> {
     UIView *pageCover;

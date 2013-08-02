@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "ComicData.h"
+@class ComicData;
 
 @protocol AltViewControllerProtocol <NSObject>
 @required

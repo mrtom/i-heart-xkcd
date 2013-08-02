@@ -11,7 +11,6 @@
 #import "AltViewController.h"
 #import "AltViewControllerProtocol.h"
 #import "RecentSearchesController.h"
-
 #import "SearchViewControllerProtocol.h"
 
 @interface SearchViewController : AltViewController<UISearchBarDelegate, UIPopoverControllerDelegate, RecentSearchesDelegate, UITableViewDataSource, UITableViewDelegate> {

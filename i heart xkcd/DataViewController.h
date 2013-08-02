@@ -8,10 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-#import "ComicData.h"
 #import "GAITrackedViewController.h"
-#import "ModelController.h"
-#import "NavigationViewController.h"
+
+@class ComicData;
 
 @interface DataViewController : GAITrackedViewController <UIScrollViewDelegate, UIPopoverControllerDelegate, UITableViewDelegate>
 

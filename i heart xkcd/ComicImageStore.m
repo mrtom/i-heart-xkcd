@@ -8,6 +8,7 @@
 
 #import "ComicImageStore.h"
 
+#import "ComicData.h"
 #import "Settings.h"
 
 @interface ComicImageStore ()
